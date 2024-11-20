@@ -111,7 +111,7 @@ function set_new_tag_from_session($session_id, $event)
 	while ($array = mysqli_fetch_array($query)) {
 		$contact_id = $array['client_id'];
 
-		$GLOBALS['mysqli']->query("REPLACE INTO contact2tag SET tag_id = '$tag_id', contact_id = '$contact_id', activate = 1, verify_key='' ") or die(msysql_error());
+		$GLOBALS['mysqli']->query("REPLACE INTO contact2tag SET tag_id = '$tag_id', contact_id = '$contact_id', activate = 1, verify_key='', set_listbuilding ='' ") or die(msysql_error());
 	}
 	return $tag_id;
 }
