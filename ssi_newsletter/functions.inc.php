@@ -102,7 +102,7 @@ function set_new_tag_from_session($session_id, $event)
 	// Wenn Tag nicht exisitiert dann neuen Tag anlegen
 	if (!$tag_id) {
 		// Tag anlegen
-		$GLOBALS['mysqli']->query("INSERT INTO tag SET title = '$title', description = '',  user_id = '{$_SESSION['user_id']}', session_id = '$session_id' , event = '$event', alert=0 ") or die(mysqli_error($GLOBALS['mysqli']));
+		$GLOBALS['mysqli']->query("INSERT INTO tag SET title = '$title', description = '',  user_id = '{$_SESSION['user_id']}', session_id = '$session_id' , event = '$event', alert=0, alert_email='' ") or die(mysqli_error($GLOBALS['mysqli']));
 		$tag_id = mysqli_insert_id($GLOBALS['mysqli']);
 	}
 
