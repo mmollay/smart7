@@ -1,0 +1,74 @@
+$(document).ready(function () {
+
+});
+
+
+function after_form_account(id) {
+
+	if (id == 'ok') {
+		$('#message').message({ status: 'info', title: 'The account has been saved!' });
+		$('#modal_form').modal('hide');
+		table_reload();
+	} else {
+		$('#message').message({
+			status: 'error', title: 'System error:' + id
+		});
+	}
+
+}
+
+function after_form_client(id) {
+
+	if (id == 'ok') {
+		$('#message').message({ status: 'info', title: 'The account has been saved!' });
+		$('#modal_form').modal('hide');
+		table_reload();
+	} else {
+		$('#message').message({
+			status: 'error', title: 'System error:' + id
+		});
+	}
+
+}
+
+function after_form_investment(id) {
+
+	if (id == 'ok') {
+		$('#message').message({ status: 'info', title: 'The investment has been saved!' });
+		$('#modal_form').modal('hide');
+		table_reload();
+	} else {
+		$('#message').message({
+			status: 'error', title: 'System error:' + id
+		});
+	}
+
+}
+
+function after_form_broker(id) {
+
+	if (id == 'ok') {
+		$('#message').message({ status: 'info', title: 'The account has been saved!' });
+		$('#modal_form').modal('hide');
+		table_reload();
+	} else {
+		$('#message').message({
+			status: 'error', title: 'System error:' + id
+		});
+	}
+
+}
+
+function after_form_server(id) {
+
+	if (id == 'ok') {
+		$('#message').message({ status: 'info', title: 'The account has been saved!' });
+		$('#modal_form').modal('hide');
+		table_reload();
+	} else {
+		$('#message').message({
+			status: 'error', title: 'System error:' + id
+		});
+	}
+
+}

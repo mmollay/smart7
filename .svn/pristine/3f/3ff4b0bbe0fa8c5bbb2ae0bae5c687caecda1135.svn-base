@@ -1,0 +1,113 @@
+<?php
+//$user_id = $_SESSION['user_id'];
+
+$arr['ajax'] = array(
+    'success' => "afterFormSubmit(data)", // Change the function name according to the actual function
+    'dataType' => "html"
+);
+
+// Adjust the SQL array to access the clients table instead of ssi_trader.broker
+$arr['sql'] = array(
+    'query' => "SELECT * FROM ssi_trader.clients WHERE client_id = '{$_POST['update_id']}'" // Adjusted to the clients table
+);
+
+// Adjusting the fields to be compatible with the clients table
+$arr['field']['email'] = array( // Use 'email' as the username
+    'tab' => '1',
+    'type' => 'input',
+    'label' => 'Email (Username)',
+    'focus' => true
+);
+
+$arr['field']['password'] = array( // Password field remains unchanged
+    'tab' => '1',
+    'type' => 'input',
+    'label' => 'Password'
+);
+
+$arr['field'][] = array('type' => 'div', 'class' => 'fields width');
+
+// Adding new fields based on the clients table
+$arr['field']['first_name'] = array(
+    'tab' => '1',
+    'type' => 'input',
+    'label' => 'First Name',
+);
+
+$arr['field']['last_name'] = array(
+    'tab' => '1',
+    'type' => 'input',
+    'label' => 'Last Name',
+);
+
+$arr['field'][] = array('type' => 'div_close');
+
+$arr['field']['phone'] = array(
+    'tab' => '1',
+    'type' => 'input',
+    'label' => 'Phone'
+);
+
+$arr['field'][] = array('type' => 'div', 'class' => 'equal fields');
+
+$arr['field']['address'] = array(
+    'tab' => '1',
+    'type' => 'input',
+    'label' => 'Address',
+    'wide' => 'eight'
+);
+
+$arr['field']['city'] = array(
+    'tab' => '1',
+    'type' => 'input',
+    'label' => 'City',
+    'wide' => 'eight'
+);
+
+$arr['field']['state'] = array(
+    'tab' => '1',
+    'type' => 'dropdown',
+    'array' => 'country',
+    'label' => 'State',
+    'wide' => 'eight'
+);
+
+$arr['field']['zip'] = array(
+    'tab' => '1',
+    'type' => 'input',
+    'label' => 'ZIP Code',
+    'wide' => 'four'
+);
+
+$arr['field'][] = array('type' => 'div_close');
+
+
+//Shows just server that are not already assigned to the user
+$query_serverlist = "
+SELECT s.server_id, CONCAT(s.name, ' (', s.url, ')') AS name
+FROM ssi_trader.servers AS s
+WHERE s.server_id NOT IN (
+    SELECT c.server_id 
+    FROM ssi_trader.clients AS c 
+    WHERE c.server_id IS NOT NULL AND c.client_id != '" . $_POST['update_id'] . "'
+) OR s.server_id IN (
+    SELECT c.server_id
+    FROM ssi_trader.clients AS c
+    WHERE c.client_id = '" . $_POST['update_id'] . "'
+)
+ORDER BY s.name ASC
+";
+
+//$query_serverlist = "SELECT server_id, CONCAT(name, ' (', url, ')') AS name FROM ssi_trader.server ORDER BY name ASC";
+
+$arr['field']['server_id'] = array(
+    'tab' => '1',
+    'type' => 'dropdown',
+    'label' => 'Windows Server',
+    'array_mysql' => $query_serverlist,
+    'text' => 'name',
+    'class' => 'fluid search selection'
+);
+
+// Updating your JavaScript
+$add_js .= "<script type=\"text/javascript\" src=\"js/form_after.js\"></script>"; // Ensure the file name is correct

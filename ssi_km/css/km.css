@@ -1,0 +1,106 @@
+@CHARSET "UTF-8";
+
+.#show_time {
+	color:white;
+}
+
+/*Kennzeichen single*/
+.car_nr {
+	border: 1px solid silver;
+	border-radius: 4px;
+	font-size: 16px;
+	padding: 3px 3px 3px 6px;
+	color: #5B5B5B;
+	margin: 0px 15px 20px 15px;
+	text-align: center;
+	box-shadow: 3px 3px 3px #CCCCCC;
+	text-shadow: 1px 1px 1px silver;
+	background: url('../img/flagg_at.gif') 5px center no-repeat white;
+}
+
+/*Kennzeichen select*/
+.select_car_nr_save {
+	border: 1px solid silver;
+	border-radius: 4px;
+	font-size: 16px;
+	padding: 3px 3px 3px 6px;
+	color: #5B5B5B;
+	width: 90%;
+	text-align: center;
+	font-family: 'Duru sans', arial;
+	box-shadow: 3px 3px 3px #CCCCCC;
+	text-shadow: 1px 1px 1px silver;
+}
+
+/*Kennzeichen title*/
+.car_nr_title {
+	text-align: center;
+	font-weight: bold;
+}
+
+/*Kennzeichen single*/
+#change_year {
+	font-size: 14px;
+	font-family: 'Duru sans', arial;
+	padding: 3px;
+	color: #5B5B5B;
+}
+
+/*Farblabel fuer die Tabellen*/
+.color_label {
+	border: 1px solid silver;
+	border-radius: 4px;
+	width: 14px;
+	margin-right: 5px;
+	height: 14px;
+	float: left;
+}
+
+.text_timer_running {
+	color: gray;
+	font-weight: bold;
+}
+
+.icon_km {
+	margin-top: 5px;
+	height: 50px;
+	width: 70px;
+	display: block;
+	box-shadow: inset 0px -2px 0px #888;
+	border-radius: 10px;
+}
+
+.icon_car {
+	background: url('../img/auto-icon.png') 8px 5px no-repeat;
+}
+
+.icon_motorbike {
+	background: url('../img/motorbike-icon.png') 8px 10px no-repeat;
+}
+
+.icon_bike {
+	background: url('../img/bike-icon.png') 4px 5px no-repeat;
+	background-size: 60px;
+}
+
+.icon_small {
+	margin-top: 5px;
+	height: 15px;
+	text-align: center;
+	font-size: 140%;
+}
+
+.icon_small_car {
+	background: url('../img/auto-icon.png') 5px 3px no-repeat;
+	background-size: 40px;
+}
+
+.icon_small_motorbike {
+	background: url('../img/motorbike-icon.png') 5px 4px no-repeat;
+	background-size: 40px;
+}
+
+.icon_small_bike {
+	background: url('../img/bike-icon.png') 5px 0px no-repeat;
+	background-size: 50px;
+}

@@ -1,0 +1,12 @@
+# martin@ssi.at 08.09.2020
+# Install routine for the server
+# root 
+
+# needet for smart-kit 
+# for ssl zertificat and apche-conf settings
+
+chown hpc:apache live/ -R
+chown hpc:apache archive/ -R
+chown hpc:apache renewal -R
+chown hpc:apache /etc/apache2/sites-available -R
+chown hpc:apache /etc/apache2/sites-enabled -R

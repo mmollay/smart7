@@ -1,0 +1,76 @@
+$(document).ready(function () {
+});
+
+// JavaScript-Code, um die Bestellungen zu holen und Toast-Nachrichten anzuzeigen
+function fetchOrders() {
+
+    // Zeige eine Benachrichtigung, dass der Ladevorgang begonnen hat
+    showToast('Fetching orders...', 'info');
+
+    // Deaktiviere den Button, um weitere Klicks zu verhindern
+    var fetchButton = document.querySelector("button[onclick='fetchOrders();']");
+    fetchButton.disabled = true;
+
+    $.ajax({
+        url: 'exec/fetch_orders.php?token=52a36a36e2e6da849685b71f466dde56',
+        type: 'GET',
+        dataType: 'json', // Erwartet JSON als Rückgabetyp
+        success: function (response) {
+            console.log(response);
+            // Verarbeite Erfolgsnachrichten
+            if (response.data && response.data.length > 0) {
+                response.data.forEach(function (item) {
+                    showToast(item.message, item.type);
+                });
+            }
+            // Verarbeite Fehlermeldungen
+            if (response.errors && response.errors.length > 0) {
+                response.errors.forEach(function (error) {
+                    showToast(error.message, error.type);
+                });
+            }
+            // Wenn keine URLs gefunden wurden oder ein anderer Fehler auftrat
+            if (!response.success) {
+                showToast('An operation error occurred.', 'error');
+            }
+        },
+        error: function (xhr, status, error) {
+            showToast('AJAX request failed: ' + error, 'error');
+        },
+        complete: function () {
+            // Reaktiviere den Button, wenn der AJAX-Aufruf abgeschlossen ist
+            fetchButton.disabled = false;
+            // Optional: Aktualisiere/entferne die Benachrichtigung, dass der Ladevorgang abgeschlossen ist
+            showToast('Fetch operation complete.', 'success');
+        }
+    });
+}
+
+// Anpassung der showToast Funktion, um Fomantic-UI Toasts zu verwenden
+function showToast(message, type = 'info') {
+    let toastSettings = {
+        class: 'info', // Standard-Klasse
+        message: message,
+        position: 'top right',
+        displayTime: 4000,
+        closeIcon: true,
+        opacity: 0.9
+    };
+
+    // Setze die Klasse basierend auf dem Typ
+    switch (type) {
+        case 'success':
+            toastSettings.class = 'success';
+            break;
+        case 'error':
+            toastSettings.class = 'error';
+            break;
+        case 'info':
+            toastSettings.class = 'info'; // Oder eine andere Standardklasse, falls vorhanden
+            break;
+        // Weitere Typen können hier hinzugefügt werden
+    }
+
+    // Zeige den Toast an
+    $('body').toast(toastSettings);
+}

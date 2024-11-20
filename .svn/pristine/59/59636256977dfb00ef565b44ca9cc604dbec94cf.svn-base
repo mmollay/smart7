@@ -1,0 +1,13 @@
+<?php
+include ('../config.inc.php');
+include ('../../ssi_smart/smart_form/include_form.php');
+
+$arr ['form'] = array ('action' => "ajax/form_edit2.php",'id' => 'form_edit','class'=>'center' );
+$arr ['ajax'] = array ('success' => "$('#message').toast({ class: 'red ', title: 'Prozess geststopt!', 'position':'top center' });",'dataType' => "html" );
+$arr ['hidden'] ['list_id'] = 'form_home';
+$arr ['hidden'] ['kill_all'] = 1;
+$arr ['button'] ['submit'] = array ('value' => "Kill the Trade",'color' => 'red','class' => 'huge' );
+$output = call_form ( $arr );
+echo $output ['html'];
+echo $output ['js'];
+

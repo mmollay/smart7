@@ -1,0 +1,105 @@
+<?
+include(__DIR__ . "/../config.inc.php");
+include('../../ssi_smart/smart_form/include_form.php');
+
+//Check status of the strategy
+$url = getSingleServerIpByUserId($mysqli, $_SESSION['user_id']);
+$url .= "/getActiveStrategies";
+// echo $url;
+//echo $url;
+$jsonString = sendCurlRequest($url, $data);
+$array = json_decode($jsonString, true);
+
+// Initialisierung der Variablen für das Formular
+$arr = ['form' => [], 'class' => 'equal width'];
+$arr['field'][] = array('type' => 'div', 'class' => 'fields');
+
+// Standardmäßig alle Buttons auf 'disabled' setzen
+$buttonsState = [
+    'startEmaHedge' => 'disabled',
+    'stopEmaHedge' => 'disabled',
+    'startReverseEmaHedge' => 'disabled',
+    'stopReverseEmaHedge' => 'disabled',
+    'startManualHedge' => 'disabled',
+    'stopManualHedge' => 'disabled',
+];
+
+// Überprüfung, ob eine aktive Strategie vorhanden ist
+if (isset($array['activeStrategy'])) {
+    // Alle Buttons entfernen und nur den relevanten Stop-Button anzeigen
+    $buttonsState = [
+        'startEmaHedge' => false,
+        'stopEmaHedge' => false,
+        'startReverseEmaHedge' => false,
+        'stopReverseEmaHedge' => false,
+        'startManualHedge' => false,
+        'stopManualHedge' => false,
+    ];
+
+    // Den entsprechenden Stop-Button aktivieren
+    $buttonsState['stop' . $array['activeStrategy']] = true;
+} else {
+    // Wenn keine Strategie aktiv ist, alle Start-Buttons anzeigen und Stop-Buttons entfernen
+    $buttonsState = [
+        'startEmaHedge' => true,
+        'stopEmaHedge' => false, // Stop wird nicht angezeigt
+        'startReverseEmaHedge' => true,
+        'stopReverseEmaHedge' => false, // Stop wird nicht angezeigt
+        'startManualHedge' => true,
+        'stopManualHedge' => false, // Stop wird nicht angezeigt
+    ];
+}
+
+// Generieren des HTML-Formulars basierend auf dem Zustand der Buttons
+foreach ($buttonsState as $button => $show) {
+
+    $icon = strpos($button, 'start') !== false ? 'play' : 'stop';
+    $colorClass = strpos($button, 'start') !== false ? 'green' : 'red';
+
+    if ($show) {
+        // Button anzeigen
+        $buttonText = str_replace(['start', 'stop'], ['Start ', 'Stop '], $button); // Ersetzt 'start'/'stop' durch 'Start'/'Stop' im Button-Text
+        $arr['field'][$button] = [
+            'type' => 'button',
+            'value' => $buttonText,
+            'onclick' => "post_ema('$button')",
+            'class' => "$colorClass fluid",
+            'icon' => $icon
+        ];
+    } else {
+        // Button nicht ins Array aufnehmen, um ihn nicht anzuzeigen
+        unset($arr['field'][$button]);
+    }
+}
+
+// Aufruf der Funktion, um das Formular zu erstellen und auszugeben
+$arr['field'][] = array('type' => 'div_close');
+$output = call_form($arr);
+echo $output['html'];
+
+
+// $arr['form'] = array();
+// $arr['field'][] = array('type' => 'div', 'class' => 'fields');
+// $arr['field']['startEmaHedge'] = array('type' => 'button', 'value' => 'Start EmaHedge', 'onclick' => "post_ema('startEmaHedge')", 'class' => "fluid", 'wide' => 'eight');
+// $arr['field']['stopEmaHedge'] = array('type' => 'button', 'value' => 'Stop EmaHedge', 'onclick' => "post_ema('stopEmaHedge')", 'class' => "fluid", 'wide' => 'eight');
+// $arr['field'][] = array('type' => 'div_close');
+
+// $arr['field'][] = array('type' => 'div', 'class' => 'fields');
+// $arr['field']['startReverseEmaHedge'] = array('type' => 'button', 'value' => 'Start Reverse EmaHedge', 'onclick' => "post_ema('startReverseEmaHedge')", 'class' => "fluid", 'wide' => 'eight');
+// $arr['field']['stopReverseEmaHedge'] = array('type' => 'button', 'value' => 'Stop Reverse EmaHedge', 'onclick' => "post_ema('stopReverseEmaHedge')", 'class' => "fluid", 'wide' => 'eight');
+// $arr['field'][] = array('type' => 'div_close');
+// $arr['field'][] = array('type' => 'div', 'class' => 'fields');
+// $arr['field']['startManualHedge'] = array('type' => 'button', 'value' => 'Start ManualHedge', 'onclick' => "post_ema('startManualHedge')", 'class' => "fluid", 'wide' => 'eight');
+// $arr['field']['stopManualHedge'] = array('type' => 'button', 'value' => 'Stop ManualHedge', 'onclick' => "post_ema('stopManualHedge')", 'class' => "fluid", 'wide' => 'eight');
+// $arr['field'][] = array('type' => 'div_close');
+
+// $output = call_form($arr);
+// echo $output['html'];
+
+//baue ein select für Manaull oder Automatisch 
+// $arr['form'] = array('action' => "ajax/post.php", 'id' => 'form_strategy', 'class' => 'message');
+// $arr['ajax'] = array('success' => "after_post_ema(data)", 'dataType' => "html");
+// $arr['field']['strategy_value'] = array('type' => 'dropdown', 'label' => 'Manual/Auto', 'array' => $array_strategy, 'class' => 'fluid search selection', 'validate' => true, 'value' => 'manual');
+// $arr['button']['submit'] = array('value' => 'Strategy', 'icon' => 'robot', 'class' => 'orange');
+// $output = call_form($arr);
+// echo $output['html'] . $output['js'];

@@ -1,0 +1,43 @@
+body {
+	margin: 0 auto;
+	padding: 5px;
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+hr {
+	background-color: silver;
+	height: 1px;
+	border: 0px;
+}
+
+.button_bar {
+	background-color: #FAFAFA;
+	padding: 4px;
+	border-top: 1px solid silver;
+	border-bottom: 1px solid silver;
+}
+
+.no_data {
+	font-size: 20px;
+	color: gray;
+	text-align: center;
+	padding-top: 150px;
+	width:100%;
+	margin-top:20px;
+	padding-bottom: 150px;
+	border:1px dashed silver;
+	background-color: #EEE;
+	border-radius:3px;
+}
+
+.context-menu-icon {
+	padding: .6em 2em;
+}

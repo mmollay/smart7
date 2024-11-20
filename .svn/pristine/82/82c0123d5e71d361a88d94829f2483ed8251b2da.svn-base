@@ -1,0 +1,38 @@
+<?php
+
+// Alle Daten entfernen und neu einspielen
+$GLOBALS['mysqli']->query ( "DELETE FROM sections WHERE client_id = $client_id " ) or die ( mysqli_error ($GLOBALS['mysqli']) );
+$GLOBALS['mysqli']->query ( "DELETE FROM membership WHERE client_id = $client_id " ) or die ( mysqli_error ($GLOBALS['mysqli']) );
+
+// Save in Datenbank für OEGT - SEKTIONEN !!
+// mm@ssi.at am 13.Oktober 2011
+for($ii = 1; $ii <= $_POST ['set_section_count']; $ii ++) {
+	// Neu setzen
+	if ($_POST ["section$ii"]) {
+		$GLOBALS['mysqli']->query ( "REPLACE INTO sections SET
+		section_id = '{$_POST["section$ii"]}',
+		client_id = '$client_id',
+		date_sections_start = '{$_POST["date_sections_start$ii"]}',
+		date_sections_stop  = '{$_POST["date_sections_stop$ii"]}' " ) or die ( mysqli_error ($GLOBALS['mysqli']) );
+	}
+}
+
+// Save in DB MEMBERSHIP - Partnerschaft
+for($iii = 1; $iii <= $_POST ['set_membership_count']; $iii ++) {
+	// Neu setzen
+	if ($_POST ["membership$iii"]) {
+		$GLOBALS['mysqli']->query ( "REPLACE INTO membership SET
+		membership_id = '{$_POST["membership$iii"]}',
+		client_id = '$client_id',
+		date_membership_start = '{$_POST["date_membership_start$iii"]}',
+		date_membership_stop  = '{$_POST["date_membership_stop$iii"]}' " ) or die ( mysqli_error ($GLOBALS['mysqli']) );
+	}
+}
+
+// Zusammensetzen der sections fuer OEGT
+if ($_POST ['sections']) {
+	foreach ( $_POST ['sections'] as $wert ) {
+		$set_sections .= $wert . ",";
+	}
+}
+?>

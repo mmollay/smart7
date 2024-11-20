@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      background-color: #88B7D5;
+      font-family: Arial, sans-serif;
+      color: #333;
+      text-align: center;
+      padding: 50px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 2em;
+      color: #4F4F4F;
+    }
+
+    p {
+      font-size: 1.2em;
+      color: #666;
+    }
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background-color: #fff;
+      animation: move 10s linear infinite; /* Adjust the duration to match the length of your sound file */
+      opacity: 0;
+    }
+
+    @keyframes move {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100%); }
+    }
+  </style>
+</head>
+<body>
+
+<h1>Willkommen zur Meditation</h1>
+<p>Entspannen Sie sich und hören Sie auf den Klang des Gongs.</p>
+
+<p>"In diesem Kapitel geht es darum, dass wir lernen sollten, vor einer Handlung nachzudenken. Das zufällige Abspielen des Gongs soll uns im Alltag daran erinnern, immer wieder innezuhalten und uns mit dem gegenwärtigen Moment zu verbinden. Es ist eine Erinnerung, uns selbst und die Welt um uns herum mit einem offenen Herzen und einem offenen Geist zu begegnen."</p>
+
+<audio id="myAudio">
+  <source src="gong.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<script>
+// Set the number of times the sound should play
+var playCount = 10;
+
+// Set the duration of the timer in milliseconds (1 hour = 3600000 milliseconds)
+var duration = 3600000;
+
+// Calculate the minimum interval between each sound play
+var minInterval = duration / playCount;
+
+// Initialize the last play time to the current time
+var lastPlayTime = Date.now();
+
+// Function to play sound
+function playSound() {
+  var audio = document.getElementById("myAudio");
+  audio.play();
+  createCircle();
+}
+
+// Function to check if it's time to play the sound
+function checkPlayTime() {
+  var currentTime = Date.now();
+  if (currentTime - lastPlayTime >= minInterval) {
+    playSound();
+    lastPlayTime = currentTime;
+  }
+}
+
+// Function to create a circle
+function createCircle() {
+  var circle = document.createElement("div");
+  circle.classList.add("circle");
+  circle.style.width = Math.floor(Math.random() * 100) + "px";
+  circle.style.height = circle.style.width;
+  circle.style.left = Math.floor(Math.random() * window.innerWidth) + "px";
+  circle.style.animationDuration = "10s"; // Adjust the duration to match the length of your sound file
+  document.body.appendChild(circle);
+
+  // Remove the circle when the animation ends
+  circle.addEventListener("animationend", function() {
+    document.body.removeChild(circle);
+  });
+}
+
+// Play the sound immediately when the page loads
+playSound();
+
+// Set an interval to check if it's time to play the sound
+setInterval(checkPlayTime, minInterval);
+</script>
+
+</body>
+</html>

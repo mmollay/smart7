@@ -1,0 +1,146 @@
+<?php
+
+// Funktion für cURL-Requests
+function sendCurlRequest($url, $data = '')
+{
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    if (!empty($data)) {
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_POST, 1);
+    }
+
+    // Setze ein Timeout für die Verbindung und die Anfrage
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2); // Timeout in Sekunden für den Verbindungsaufbau
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5); // Gesamtes Timeout für die Anfrage
+
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+
+    $response = curl_exec($ch);
+
+    if (curl_errno($ch)) {
+        //echo '<div class="ui message error">' . curl_error($ch) . '</div>';
+        //exit;
+        $response = "connection_failed";
+    }
+
+    curl_close($ch);
+    return $response;
+}
+
+function getServerIdGetUrl($mysqli, $server_id)
+{
+
+    // Überprüfen, ob die übergebene server_id gültig ist
+    if (!is_numeric($server_id) || $server_id <= 0) {
+        return ["success" => false, "message" => "Ungültige 'server_id'"];
+    }
+
+    // Das SQL-Statement vorbereiten
+    $stmt = $mysqli->prepare("
+        SELECT url 
+        FROM ssi_trader.server 
+        WHERE server_id = ?
+        LIMIT 1
+    ");
+
+    if (!$stmt) {
+        // Fehler beim Vorbereiten des Statements
+        return ["success" => false, "message" => "Fehler beim Vorbereiten des Statements: " . $mysqli->error];
+    }
+
+    // Parameter binden und die Abfrage ausführen
+    $stmt->bind_param("i", $server_id);
+    $stmt->execute();
+
+    // Ergebnis abrufen
+    $result = $stmt->get_result();
+
+
+    if ($row = $result->fetch_assoc()) {
+
+        return ["success" => true, "url" => $row["url"]];
+    } else {
+        // Kein Ergebnis gefunden
+        return ["success" => false, "message" => "Keine IP-Adresse gefunden."];
+    }
+
+    // Ressourcen freigeben
+    $stmt->close();
+}
+
+
+function getSingleServerIpByUserId($mysqli, $user_id)
+{
+
+    // Überprüfen, ob die übergebene user_id gültig ist
+    if (!is_numeric($user_id) || $user_id <= 0) {
+        return "Ungültige 'user_id'";
+    }
+
+    // Das SQL-Statement vorbereiten
+    $stmt = $mysqli->prepare("
+        SELECT s.url 
+        FROM ssi_trader.setting st 
+        JOIN ssi_trader.broker b ON st.broker_id = b.broker_id 
+        JOIN ssi_trader.server s ON b.server_id = s.server_id 
+        WHERE st.user_id = ?
+        LIMIT 1
+    ");
+
+
+    if (!$stmt) {
+        // Fehler beim Vorbereiten des Statements
+        return "Fehler beim Vorbereiten des Statements: " . $mysqli->error;
+    }
+
+    // Parameter binden und die Abfrage ausführen
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+
+    // Ergebnis abrufen
+    $result = $stmt->get_result();
+    if ($row = $result->fetch_assoc()) {
+        $url = $row["url"];
+    } else {
+        // Kein Ergebnis gefunden
+        $url = "Keine IP-Adresse gefunden.";
+    }
+
+    // Ressourcen freigeben
+    $stmt->close();
+
+    // Die gefundene IP-Adresse oder Fehlermeldung zurückgeben
+    return $url;
+}
+
+
+function fetchStocksData($cfg_mysql)
+{
+    // Verbindung zur Datenbank herstellen
+    $connection = new mysqli($cfg_mysql['server'], $cfg_mysql['user'], $cfg_mysql['password'], $cfg_mysql['db']);
+    if ($connection->connect_error) {
+        return "Verbindung fehlgeschlagen: " . $connection->connect_error;
+    }
+
+    // SQL-Query vorbereiten
+    $query = "SELECT * FROM ssi_trader.stocks_data ORDER BY time DESC LIMIT 200";
+    $result = $connection->query($query);
+
+    if ($result) {
+        $smart_list = "<table class='ui very compact basic celled table'>";
+        $smart_list .= "<thead><tr><th>Buy</th><th>Sell</th><th>Time</th><th>Price</th></tr></thead><tbody>";
+
+        while ($row = $result->fetch_assoc()) {
+            $smart_list .= "<tr><td" . ($row['buy'] > $row['sell'] ? " class='positive'" : "") . ">" . htmlspecialchars($row['buy']) . "</td><td" . ($row['sell'] > $row['buy'] ? " class='positive'" : "") . ">" . htmlspecialchars($row['sell']) . "</td><td>" . htmlspecialchars($row['time']) . "</td><td>" . htmlspecialchars($row['price']) . "</td></tr>";
+        }
+
+        $smart_list .= "</tbody></table>";
+    } else {
+        $smart_list = "Fehler beim Abrufen der Daten aus der Datenbank.";
+    }
+
+    $connection->close();
+    return $smart_list;
+}

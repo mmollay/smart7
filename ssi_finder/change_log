@@ -1,0 +1,63 @@
+v3.1 (22.11.2020)
+-mod: cards in oneline
+
+v3.0 (06.09.2019)
+-add: Image Rotation
+-add: New version uploader
+-add: Smart-Design for better preview
+-add: show filesize with mouseover
+
+v2.1 (05.04.2019)
+-add: New serach - dropdown for sites
+//ALTER TABLE `smart_explorer` ADD `style` VARCHAR(255) NOT NULL AFTER `link_intern`, ADD `timestamp` TIMESTAMP NOT NULL AFTER `style`;
+
+ALTER TABLE `smart_explorer` ADD `finder_id` INT(11) NOT NULL FIRST;
+ALTER TABLE `smart_explorer` DROP PRIMARY KEY;
+SET @a = 0;
+UPDATE smart_explorer SET finder_id = (@a := @a +1);
+ALTER TABLE `smart_explorer` ADD PRIMARY KEY (`finder_id`);
+ALTER TABLE `smart_explorer` CHANGE `finder_id` `finder_id` INT(11) NOT NULL AUTO_INCREMENT;
+
+v2.0 (20.11.2017)
+-add: remember position from path
+-add: crop image and save new  Pic
+
+ v1.0 (10.07.2016)
+ -add: new "nodification-box" https://sciactive.com/pnotify/ 
+ -add: new "right click" https://swisnl.github.io/jQuery-contextMenu/
+ -add: folder now semantic-ui card
+ -add: new breadcrumb
+ -add: folder choose now with dblclick
+ -add: Image resize 
+ -add: Generate Thumbnail automaticaly
+ -fix: remove->Dir
+ 
+ v0.9.1 (20.04.2015)
+ - Add: Ckeditor
+
+v0.9 (06.04.2015)
+- Add: Change Name (images)
+- Mod: New trash
+
+v0.8 (01.03.2015)
+- Add: Title and Desription
+
+v0.7 (20.11.2014)
+- Fix: View the right image
+- Css update for easier upload
+
+v0.6(10.09.2014)
+- Auto-Uplaod
+- Update Uploader 9.7.1
+- Refresh-Button
+- Improved Design
+
+v0.5 (01.09.2014)
+- Kacheln 
+- New Uploader 9.7.0 (http://blueimp.github.io/jQuery-File-Upload/)
+
+
+v0.4 (28.08.2014)
+
+- Multiupload
+- Counter for files for the folders

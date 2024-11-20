@@ -1,0 +1,10 @@
+<?php
+include (__DIR__ . "/../check_permission.php");
+?>
+
+<div class="ui container">
+    <div class="ui raised very padded text segment">
+        <h1 class="ui teal header">Willkommen bei TradeMaster</h1>
+        <p>Lassen Sie Ihr Portfolio mit uns glänzen!</p>
+    </div>
+</div>

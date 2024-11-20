@@ -1,0 +1,34 @@
+v 2.4 (13.01.2020)
+add: call automatic other values like km, Start and End point, after set focus to date
+mod: new search function for text and location
+
+v 2.3 (07.02.2019)
+mod: some fixes and modifications
+
+Versiom 2.2 (26.02.2019)
+add: Newdesign for details
+add: Gb country "en gb"
+
+Version 2.1 (21.12.2017)
+add: Details -> more infos
+add: add country "ch"
+
+version 2.0 (18.02.2017)
+add: Redesign -> Formular -> Add New KM insert
+add: New functions autocomplete -> request end_point
+mod: API-Key for Google-Maps
+
+v1.2 (18.02.2017)
+add: Designupdate - semantic-ui
+
+v1.1 (25.02.2015)
+mod: Übersicht verbessert (semantic ui)
+mod: Quellcode gesäubert (Elemente von mobil-Version entfernt)
+
+v1.0 (01.03.2014)
+- Ajax load with select YEAR
+- Option for default values
+- Start - Stop function
+- Colorsetting for CAR-NR
+- Mobile-Version
+- Timer

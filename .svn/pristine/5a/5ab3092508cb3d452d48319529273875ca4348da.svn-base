@@ -1,0 +1,627 @@
+7.6.4 (22.10.2022)
+-mod: Redsigned Bill
+
+7.6.3 (28.02.2022)
+-fix: konto/kontogruppen anlegen und speichern
+-fix: page-> automator -> dropdown select das Year and remeber after reload oder change the page
+
+7.6.2 (04.05.2021)
+-fix: filter year
+-fix: show issues inner finance-view
+
+7.6.1 (7.04.2021)
+-add: save and close button now on the bottom of the modal
+-mod: list -viewings hover - effect
+
+
+7.6 (24.03.2021)
+-add: isuess -> set serial
+-add: new menu
+-add: elba_list -> connect with bill_nr
+-ALTER TABLE `bills` ADD `elba_id` INT(11) NOT NULL AFTER `no_endsummery`, ADD INDEX (`elba_id`); 
+-ALTER TABLE `issues` ADD INDEX(`elba_id`); 
+
+7.5 (07.10.2020)
+-add: client->list->show reg_date and firstname and seondnae
+-add: new  smart_form 
+-add: toast upgrade for insert issues with automator
+-add: multidelet for issues
+
+7.4 (03.10.2020)
+-add: importfunctions sortable templates 
+-add: ALTER TABLE `client` ADD `join_date` DATE NOT NULL AFTER `map_page_id`; 
+-add: ALTER TABLE `tree` ADD INDEX(`client_faktura_id`); 
+-mod: modified automator for bills 
+-mod: CLone bill -> get always actual data from client
+-fix: set default company for new bills
+
+ALTER TABLE `client` ADD `join_date` DATE NOT NULL AFTER `map_page_id`; 
+
+7.3
+ALTER TABLE `bills` CHANGE `date_create` `date_create` DATETIME NOT NULL, CHANGE `date_booking` `date_booking` DATETIME NOT NULL; 
+-add: bills -> set datetime for date_create (for sort-function)
+-add: set fefault actual year for bill-list 
+
+
+7.2. 
+ALTER TABLE `data_elba` ADD `automator_id` INT(11) NOT NULL AFTER `connect_id`; 
+-add: show connectet automator_id to elba
+-fix: select year for issues and earnings
+
+7.1
+-mod: jschart
+-mod: smaller menue for better view
+-fix: total for earnings
+
+
+7.0
+-add: Automator
+-add: Elba-List
+-mod: better view and more options for the issues-list
+ALTER TABLE `issues` ADD `elba_id` INT(11) NOT NULL AFTER `comment`; 
+
+
+6.2
+SET GLOBAL sql_mode=''
+
+6.1 
+-mod: remove storno, bookingdate and comment field inner edit - bill
+-fix: header for income-list -> finance
+
+
+6.0
+ALTER TABLE `logfile` ADD INDEX(`MessageID`);
+-add: New calendar-function
+-add: Delete - Button for CLients
+-mod: empty-field for date
+-mod: optimize loading progress with new Design
+-mod: security -> form -> booking
+-fix: date for booking and unbooking
+
+
+5.9 (10.04.2019)
+-change: company_id -> faktura_company_id
+
+5.8 (20.03.2019)
+-add: ALTER TABLE `company` ADD `content_footer` TEXT NOT NULL AFTER `ls_remind_time1`;
+-add: option -> new field -> zvr
+-add: Footer manuel designing is possible
+-mod: Redesigned Template for bills
+-fix: choose company_id after save bill
+
+5.7 (18.02.2019)
+-add: charts -> all the years and every year (finance)
+-add: issues -> clear after empty desc. field
+-add: issues -> now with comments "Todo"
+-add: issues -> search for better selet
+-fix: issues -> in and out
+-mod: finance -> Differenz - how much to pay for the finance-system
+
+5.6.1 (04.02.2019)
+-fix: Multisend Fakture-Bills
+
+5.6(30.10.2018)
+- ALTER TABLE `logfile` ADD `MessageID` BIGINT(25) NOT NULL AFTER `message`, ADD `status` VARCHAR(20) NOT NULL AFTER `MessageID`;
+-add: show status inner earninglist - user got mail (send,blocked,clicked,...)
+-add: show flag innner contact - list
+-fix: show "country" inner earning-form
+-fix: load art_text inner earning-form
+-UPDATE client SET delivery_country = LOWER(delivery_country);
+
+5.5 (06.09.2018)
+UPDATE client SET country = LOWER(country);
+UPDATE bills SET country = LOWER(country);
+-add: account/accountgroup with Filter and order function
+-add: article-group remove possilble
+-mod: clients with more listputput
+-fix: account netto / Brutto
+
+
+5.4.2 (01.08.2018)
+-mod: remove SetYear 
+-add: earning & issues -> filter -> year
+-add: finance -> dropdown -> year
+
+5.4.1 (31.07.2018)
+-add: earning -> search -> brutto
+-fix: round -> issues and earnings for search engine
+
+5.4 (27.05.2018)
+-add: Import for Clients
+
+5.3.3 (26.05.2018)
+-add: UID for Bill
+-fix: client -> summery excl. offert
+-fix: client -> !date 
+
+
+5.3.2
+-add: new checkbox for disable output summery inner offert
+ALTER TABLE `bills` ADD `no_endsummery` INT(1) NOT NULL AFTER `document`;
+
+5.3.1 (22.03.2018)
+-fix: Rabatt % und Darstellung in Rechnung 
+
+5.3 (02.02.2018)
+-mod/fix: add_article and mod_article
+-fix: add -> bill -> set bill_nr
+ALTER TABLE `bills` ADD `document` VARCHAR(2) NOT NULL AFTER `commend`, ADD INDEX `status` (`document`);
+ALTER TABLE `company` ADD `ag_headline` VARCHAR(100) NOT NULL AFTER `default_bill_number`, ADD `ag_subject` VARCHAR(150) NOT NULL AFTER `ag_headline`, ADD `ag_conditions` TEXT NOT NULL AFTER `ag_subject`, ADD `li_headline` VARCHAR(100) NOT NULL AFTER `ag_conditions`, ADD `li_subject` VARCHAR(150) NOT NULL AFTER `li_headline`, ADD `li_conditions` DATE NOT NULL AFTER `li_subject`;
+ALTER TABLE `company` CHANGE `ag_headline` `ang_headline` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `ag_subject` `ang_subject` VARCHAR(150) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `ag_conditions` `ang_conditions` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `company` ADD `ang_send_mail_subject` VARCHAR(200) NOT NULL AFTER `li_conditions`, ADD `ang_send_mail` TEXT NOT NULL AFTER `ang_send_mail_subject`, ADD `ang_remind_time1` INT(3) NOT NULL AFTER `ang_send_mail`, ADD `ls_send_mail_subject` VARCHAR(200) NOT NULL AFTER `ang_remind_time1`, ADD `ls_send_mail` TEXT NOT NULL AFTER `ls_send_mail_subject`, ADD `ls_remind_time1` INT(3) NOT NULL AFTER `ls_send_mail`;
+ALTER TABLE `company` CHANGE `send_mail` `nr_send_mail` MEDIUMTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `send_mail_subject` `nr_send_mail_subject` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `company` CHANGE `nr_send_mail` `rn_send_mail` MEDIUMTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `nr_send_mail_subject` `rn_send_mail_subject` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+
+5.2 (08.12.2017)
+-mod: save articles
+-mod: search - engine modified (faster now)
+-fix: multi-send bills
+
+5.1 (29.12.2017)
+-add: Startseite mit Mahnwerte überarbeitet und Mahnbutton eingebunden
+
+5.0 (10.12.2017)
+-add: Offered
+-add: Document sending now as well in CC
+-add: Redesigned and optimized Code for Issues and Bills 
+-mod: more filter fpr Issues and earnings
+-mod: Options 
+-fix: many bug fixes
+
+4.3 (23.11.207)
+-add: Bills -> new Filter -> accounts
+-add: Bills -> new Filter -> company 
+-add: finance -> earninglist -> new Detailbuttons for show Bills with accounts
+-mod: presentation -> buttons inner bill - list (Group)
+ 
+
+4.2.2 (20.11.2017)
+-add: list -> earning -> sort desc by brutto
+
+4.2.1 (18.09.2017)
+-mod: ALTER TABLE `client` ADD INDEX(`client_number`); -> faster loading client-list
+-fix: Update Client database
+
+
+4.2 (20.09.2017)
+-change: mysql -> mysqli
+-mod: some fixes and cleaning code
+
+
+4.1.1 (10.09.2017)
+-mod: Gesamtrabatt "%"
+
+4.1 (01.08.2017)
+-mod: remove old files (cleaning)
+-fix: some fixes
+
+
+4.0 (28.05.2017)
+-add: New Issues-List 
+-add: New Issue-Formular
+-mod: Cleaning structure
+-fix: edit Article inner Bill support now multiline for Textfields
+-fix: set manuall "Mahung" 
+
+3.2 (11.04.2017)
+-add: Neue Button in das Rechnungsformular eingebunden
+-mod: Übergabe der Artikelwerte überarbeitet
+
+3.1 (04.04.2017)
+-add: New Mailsender 
+-add: New Formular for send Mails with Attachment
+-add: New Booking and Unbooking - Modal / Formular
+
+2.4.6 (06.12.2016)
+-add: FormArticle -> new fields -> "toggle"->free & input->PDF 
+-mdd: reomove -> list_lookbook
+
+2.4.5 (05.11.2016)
+-add: Cookie -> company_id & user_id
+
+2.4.4. (31.10.2016)
+-add: Issues -> Search inner Company
+
+2.4.3 (10.08.2016)
+-add: Neue Ausgabeliste der Kontengruppen!
+
+2.4.2 (20.07.2016)
+-add: Neue Darstellung der Liste der Einstellungen und Bearbeitung der Einstellungen
+-mod: Ausgabe der PDFs wird nun .png unterstützt (v1.8.1)
+
+2.4.1 
+-mod: Genaralüberarbeitung und Testung der Ausgaben sowie Optimierung der Userbility
+
+2.4.0
+-mod: Nach erzuegen der Pre-Rechnungen, wird bestehenden Jahr, die forlaufende Nummer von aktuellen Jahr verwendet
+
+
+2.3.0
+-add: Neue Account-Liste und Maske
+-add: Neue Ausgaben-Liste und Maske
+-fix: Nach Inkasso bleibt der Status Inkasso erhalten und wird nicht mehr zurückgesetzt
+
+2.2.0
+-mod: Neue Darstellung der Finanzdaten
+-add: Button-Darstellung (Mahung,...) 
+-add: Heruntersetzen der Mahnungen
+
+2.1.1 
+- mod: pdf - Update (Address position for Kurver)
+
+2.1.0 
+- mod  Search for many paramter
+
+
+2.0.1:
+- mod: Bookingbutton got a new place, now more space in the sheet
+- add: Issues - Clonemodus 
+
+2.0.0 
+- new: Complete Redesign
+- new: New security
+- new: Faster and smarter
+- mod: Ausgabeliste vereinfacht
+- mod: Einnahmeliste vereinfacht 
+- fix: Datepicker autofocus and close after use 
+
+1.8.4
+-fix: ckeditor (font,color,...)
+-fix: search inner bills (Sonderzeichen �,�,...) 
+-add: search for numbers
+-fix: clean filter after search innner bill then search inner article
+
+
+1.8.3
+-mod: New Startsite
+-mod: Searchfilter fixed for search text < 3
+-mod: optimized list for bills
+
+1.8.2 (14.03.2014)
+-mod: menu-> Autoselct first company
+-mod: new select view
+
+1.8.0 (10.01.2014)
+-add: "global" select with MONTH 
+-add: Tel. Number of the client direct next to bill
+-add: Logbook, Manual insert into the logbook
+-add: Show logfiles inner Form
+
+
+1.7.3 (01.09.2013)
+-fix: Resize Dialog for "add" bill
+-fix: Filter for Mahnungen
+-mod: Bill-List without City
+
+
+1.7.2 (10.07.2013)
+- add: Issues -> Brutto and Netto choosable, Date clone effect, new field after save for faster work
+- add: Issues -> Company as new field for better find options
+- add: Issues -> Search automaticaly account after write the description oder company_1
+- fix: Issues -> List -> Filter works now
+
+1.7.1 (11.06.2013)
+- add: client -> Info (tel.)
+- add: 2 new Icons
+- fix: 0,00 
+
+1.7.0 (22.05.2013)
+- add: New Menu
+- add: Accounts now with Groups
+- add: Bill-list -> show booking price
+- fix: Filter -> Client -> Kdn and rest
+
+1.6.8 (10.05.2013)
+- add: Choose Comopany_id for account and change as well after setting 
+- add: issues -> select accounts filtered just existing issues
+- fix: Set new accounts during add new issues
+
+1.6.7 (05.05.2013)
+- add: Calculator for bill-generator
+- add: Info for Bills - BookingComments
+- add: Command for Clients
+
+1.6.6 (2.05.2013)
+- add: export (gender, title)
+- mod: ui,jquery
+
+
+1.6.5 (21.03.2013)
+- mod: modified Bill
+- add: Title for Bill now is changeable
+- add: Bill -> List, smarter for send Email & Bills 
+
+1.6.4 (12.03.2013)
+-add: smtp config
+-add: more filter
+-add: bill list -> send status
+-fix: filter -> bolean without INT 
+
+1.6.3 (09.03.2013)
+-fix: Remove Gost-Accounts
+-mod: Accounts order by title
+-mod: Better view for Issues inner Sachenkonten
+-mod: Issues form -> Date Example
+
+1.6.2 (28.02.2013)
+- add: bill -> Show taxes for 10,12,20 %
+- add: table with hightlighter Effect
+
+1.6.1 (10.12.2012)
+-fix: Del and Add Accounds 
+-fix: Filter for clients
+-fix: Filter inactiv User for OEGT
+
+
+1.6.0 (12.11.2012)
+-mod: Seachengine not case sensitive
+-fix: Storno bills excluded f�r UST
+-fix: Filter for open bills inner client-list
+-add: Home -Button in the menu
+
+1.5.1 (05.09.2012)
+-fix: Inkasso level  (main page)
+-fix: smaller Sendfield for "mahnung"
+
+1.5.0 (13.07.2012)
+- add: Directbutto for Add new Bills
+- add: Show open Bills
+- add: Todolist on the Start page
+- add: Homebutton
+- add: New Toolbar
+- mod: Bill->Form->focus for Client_ID
+
+1.4.2.2 (05.07.2012)
+- add: Accounts  -> afa>400  
+- mod: Ust-concept -> Accounts in one list for all companys
+- fix: Account (Button, Save, view)
+
+1.4.2.1 (28.06.2012)
+- add: Client -> change Company with select 
+
+1.4.2 (15.06.2012)
+- add: Set automaticaly the new Jear in the filterlift on the left side
+- mod: Show the ID from the Company if there more then one.
+- mod: Client-Setting "Status" is active (default)
+- fix: client-list "Filter" update for sections and memberships
+
+1.4.1.2 (13.06.2012)
+- fix: correct filter for clients with members and sections
+
+1.4.1 (11.06.2012)
+- mod: client export -> as well delivery 
+- fix: export -> numeric export in "german format"
+- fix: set back filter after relaod page 
+
+
+1.4.0 (28.05.2012)
+- add: hide Menu for more space
+- add: export -> same like the list with Filter
+
+1.3.0 (16.05.2012)
+- add: Filter -> "Year" and "All"
+- mod: secure for clients
+- mod: Client -> filter as well for zip
+- mod: companys -> kdo -> Varchar instead of INT (no 0000xxx is possible)
+- fix Bugfix for OEGT 
+
+1.2.2 (07.03.2012)
+-add: Storno for bills
+-mod: better List for bills
+
+1.2.1 (05.03.2012)
+-fix: Set "active" - Status right!
+-mod: Status now in a checkbox
+
+1.2.0 (04.03.2012)
+-add: Filter for Accounts for Issues
+-add: Filter "Year"
+-add: Call Bills and Issues direct from the "Sachkonten"
+-mod: Accounts with "Year"-Filter
+-mod: New Format for the header for the bills
+
+1.1.3 (01.03.2012)
+-add: Confirmation-check for "Generate bills"
+-mod: Clonefunction use always the address from the clientdb
+
+1.1.2 (15.02.2012)
+-fix: Generate bills just from one company
+-fix: "+" after generate a bills over clientsite stay in back after update the client
+-fix: Auto-Generator for oegt save correct "netto" and "brutto" without build a summery from all bills after gernerate
+
+1.1.1 (02.02.2012)
+-add: change the year after if is cloning a bill
+-add: "Betreff" - Save vor other bills
+
+1.1 (13.01.2012)
+-add: ust-konzept -choose the year
+-add: client -> "Lieferadresse"
+-add: "Labels for Articles
+-add: Groupfiltering for Articles
+
+version 1.0-rc2 (8.01.2012)
+-mod: Add Bill search as well first and secondname
+-mod: Add Bill -> no required now for company_name
+-fix: Mysql -> faster now because of "LEFT JOIN" -> "INNER JOIN"
+
+Version 1.0-rc (20.12.2011)
+-add: Booked Bills, Back-Booking is possible 
+-mod: Search-engine with Enterbutton
+-mod: More Countries for Clients
+
+Version 1.0-beta (16.11.2011)
+-mod: Bill -> Discount, Tax, Netto and Brutto
+-add: Galley for the articles
+
+Version 0.15 (15.11.2011)
+-add: Set Image for the bill
+
+Version 0.14 (09.11.2011)
+-add: Password-gernator
+-mod: Disable - Addbutton for the clients except for User 94 
+
+Version 0.13 (07.11.2011)
+- add: Editor for Articles for the Webpage
+
+Version 0.12 (04.11.2011)
+- add: Postprint PDF - Pulk-Sender
+- add: Pulk- via EMail 
+- add: Filter -> Select: Not jet sendet bills
+
+Version 0.11 (23.10.2011)
+- add: Export -> Clients-data (.csv)
+- mod: Button inner list in a better style
+
+Version 0.10 (05.10.2011)
+- add: Config -> userconfig -> invisible menu items for some users
+- mod: better look an feel
+
+04.10.2011 v0.9.10
+ -add: add "Konto" inner "add Article"
+ -add: addone for oegt - Client
+ -add: Inner Article-list shows the Account
+
+05.09.2011 v0.9.9
+ -mod: improved filter faster reload from the list (bills)
+ -add: Article is seperate editable
+ -add: Progress during send-action for bills
+
+29.08.2011 v0.9.8.1
+ -fix: remove CLients form the client-list
+
+01.08.2011 v0.9.8
+ -add: Bill-Cloning
+
+01.07.2011 v0.9.7
+ -add: Booking from Bills for Honorarnoten and co
+
+20.05.2011 v0.9.6
+ -add: New place for the version-number
+ -add: New Page "Ust-konzep"
+ -fix: Delete from empty accounts are possible
+ 
+11.04.2011 v0.9.5.3
+ -mod: Neues Land hinzugefuegt "hu"
+
+31.03.2011 v0.9.5.2
+ -fix: split changed to preg_split
+
+24.03.2011 v0.9.5.1
+ -fix: Loeschen von erstellen Ausgaben möglich
+ -mod: Anzeige des Inkasso Statos nach 3ter Mahnung
+
+20.03.2011 v0.9.5
+ -add: Filtern nach offenen, verbuchten, zu mahnenden und zu mahnenden Kunden
+ -add: Eingabe mit Postvesand (Automatisches hinzufügen von Postgebühren 
+ -add: Vorname und Nachname filtern
+ -mod: Liste -> Versendedatum ausgeblendet
+ -fix: Absenden von Mahntexten (Versendebutton wieder sichtbar)
+  
+03.03.2011 v0.9.4
+ -add: Auflistung aller Kunden
+ -add: Anzeigen der Aussenstände in der Kundenliste
+ -add: Mahnwesen -> Setzen von Mahntexten, Absenden von Mahnungen ueber die Einnahmen-Liste
+ -add: Logfile -> Speichern von Arbeitsschritten des Users (Versenden von Emails)
+ -add: Wenn User leer gemacht wird automatisch neue Kundenummer erzeugen und ausgeben
+ -fix: Rechnung schreiben -> mind 2 Buchstaben bei Usersuche sind nötig 
+ -fix: Pruefen ob Clientnummer bereits vergeben ist
+ -fix: Nach anlegen von Client Button ändern auf (üBerschreiben)
+ -fix: Nutzung gleicher Firmennamen überprüfen
+
+03.03.2011 v0.9.3.1
+ - fix: Kontenplan -> korekte Anzeigen der Vorsteuer bei Angabe der Rechnungen ohne Mwst.
+ - fix: Ladestatzus bei "Suchen" in der Datenbank wird angezeigt
+ 
+28.02.2011 v0.9.3 
+ -add: Umsatzanzeige in der Kontenübersicht
+ -add: Anzeige Konten bei der Ausgabenliste
+ -mod: Verwendete Konten können nicht gelöscht werden
+ -mod: Ausgabe erstellen -> Fenster nicht nach "anlegen" schließen
+ -mod: Datenbankfelder und im Code "amount" durch "netto" ersetzt
+ -fix: Rechnung schließen nach Rechnung erstellen
+ -fix: Rechnung erstellen-> Fenster wird nicht geschlossen vor
+ -fix: Ausgabe erstellen -> Nach anlegen Datum löschen fuer Neueintrag
+ -fix: Verbuchung mit richtiger Kommastelle
+ -fix: Rechnung erstellen -> bei Update werden die aktuellen Daten geladen
+
+26.02.2011 v0.9.2
+ -add: Ausgaben -> Anzeigen der Bruttobeträge in der Liste
+ -add: Sachkonsten -> Show als Accounts form In- Outcomings
+ -add: Ausgaben -> Show "Mwst"
+ -fix: Ausgabe erstellen -> AutoCompliter shows similar Inserts
+ -fix: Ausgabe erstellen (Update) Merkt sich Nummer bei Update einer Ausgabe
+
+16.02.2011 v0.9.1
+ -add: Kopfzeile hochladen 
+ -mod: Quellcode optiomiert
+ -mod: Rechnung erstellen -> "Betreff" direkt bei der Artikelerstellung editierbar
+ -mod: Formatierung einheitlich mit Kommastelle
+ -mod: Listendarstellung verbessert (Update: jquery.ssi_list v.0.5)
+ -mod: Auswahl der Kunden ohne "Laden"-Button (Schnellere Nutzung)
+
+15.02.2011 v0.9
+ -add: Schnell Kundensuche bei "Rechnung erstellen" durch jquery  Suchmaske
+ -add: Automatisches Auswaehlen der Stadt nach Eingabe der PLZ
+ -add: Summenbildung bei Übersicht (brutto, netto, offen, verbucht)
+ -mod: Schnellere Ladezeiten durch einmaliges Laden der JS-Lib (in den Unterfenstern wird nicht mehr neu geladen)
+ -fix: Wenn User nachträglich geaddet werden soll (nach Rechnungserstellung)
+
+12.02.2011 v0.8.3
+ -mod: Ausgabeliste nach Rechnungsnummer sortiert "abseigend"
+ -mod: Content der Buchungsmaske "Einnahmen" wird im Hintergrund geladen danach vollständig angezeigt
+
+11.02.2011 v0.8.2
+ -add: Buchungsmaske -> anzeigen der Rechnungsnummer zur Kontrolle
+ -mod: Automatisches Auswählen von der Firma wenn nur eine vorhanden ist (Schnellerer Zugriff)
+ -mod: Aufsteigende Sortierung der Rechnungsnummern
+ -mod: Rechnung erstellen  -> Buttons etwas kleiner, und Artikeleingabe umgedreht (Vorschau ist nun unten)
+ -fix: Rechnungsnummer in Buchungsmaske dargestellt
+ -fix: Bearbeiten und Löschenbutton nach verbuchen nicht mehr anzeigen
+
+10.02.2011 v0.8.1
+- add: Rechnung erstellen -> Neu erzeugte Formate (Datum,..) werden direkt aus der Artikeldatenbank gelesen und angeboten
+- add: Rechnung erstellen -> Autocomplite bei Städte beim Anlegen von Kunden
+- mod: Eingangsliste optimiert in der Breite
+- mod: Mail versandt -> Anrede ohne Namen durch "Sehr geehrte Damen und Herren" ersetzt
+- mod: Rechnung erstellen -> Artikel nummer sortiert (bessere Übersicht), Kunde sortiert nach ABC
+- fix: Button fuer Artikel anlegen und bearbeiten 
+- fix: PDF - alle Sonderzeichen ersetzt
+- fix: PDF - Wenn kein Name vorhanden wird z.H. nicht mehr angezeigt
+- fix: Mail -> Sonderzeichen werden bei Versandt richtig angezeigt
+- fix: Rechnung erstellen -> Autocomplite für Einheiten
+- fix: Rechnung erstellen -> Speichern von neuen Artikeln
+- fix: Rechnung erstellen -> Bei Wiederaufruf einer Rechung bei gewählten Kunden, kann der CLient aktualisiert werden
+- fix: Rechnung erstellen -> Persönliche Anrede verbessert
+
+
+06.02.2011 v0.8
+- add: Kontenplan eingebaut mit Anzeige der monatlichen Einnahmen und der Vorsteuer im Quartal
+- add: Kontenübersicht -> Buttons mit Icon und "Bearbeiten"-button + anlegen  hinzugefügt
+- add: Maskotchen eingeführt :)
+- mod: Breite der Ein-/Ausgaben angepasst
+- mod: issues -> VerbuchenButton eingebaut
+- mod: Bei Kontoerstellung den "code" aus der Schnellerstellemaske entfernt
+- fix: Breite des Selectfeldes zur Auswahl der Firmen angepasst
+- fix: Autocomplite bei "Ausgabe erstellen" erzeugt keinen Error mehr
+
+04.02.2011 v 0.7
+- Icons mit Symbolen versehen
+- Icons mit Tooltip zur Erklärung
+- "Verbuchen" - Button für das verbuchen nach erfolgter Zahlung
+- Auswahl der eigenen Firma in dem Menfeld
+- Fenster werden schneller geladen
+
+03.02.2011 v 0.6
+- Versendemaske zum automatischen Versand der Rechnungen
+
+02.02.2011 v.0.5
+- Vollständiges Erstellen und Updaten von Rechnungen möglich 
+- Erzeugen eines PDFs zum ausdrucken und versenden
+
+30.01.2011 v.0.3
+- Eintrag der eigenen Firmendaten möglich
+- Firmendaten sind jederzeit änderbar 
+
+20.01.2011
+- Einnahmen (Rechnung) erstellen - Maske

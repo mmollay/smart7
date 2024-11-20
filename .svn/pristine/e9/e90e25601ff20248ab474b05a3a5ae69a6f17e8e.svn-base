@@ -1,0 +1,141 @@
+<?php
+include (__DIR__ . '/../config.inc.php');
+include (__DIR__ . '/../../trader_client/functions.php');
+
+$connection = new mysqli($cfg_mysql['server'], $cfg_mysql['user'], $cfg_mysql['password'], $cfg_mysql['db']);
+
+if ($connection->connect_error) {
+    die("Connection failed: " . $connection->connect_error);
+}
+
+// Funktion zur Abfrage der Daten für alle Accounts
+function fetchDataForAllAccounts($connection, $timeFrame, $accountType = null)
+{
+    $accountsData = [];
+    if ($accountType === '1') {
+        $accountFilter = " AND real_account = 1"; // Real Server
+    } elseif ($accountType === '2') {
+        $accountFilter = " AND real_account = 0"; // Demo Server
+    } else {
+        $accountFilter = ""; // Alle Server
+    }
+
+    // Hole alle Account-IDs und Titel mit dem neuen Filter
+    $accounts = $connection->query("SELECT DISTINCT user, title FROM ssi_trader.broker WHERE 1=1 $accountFilter");
+
+    while ($account = $accounts->fetch_assoc()) {
+        $accountId = $account['user'];
+        $title = $account['title'];
+
+        switch ($timeFrame) {
+            case 'hours':
+                $sql = getSqlForHoursByAccount($accountId, $accountFilter);
+                break;
+            case 'days':
+                $sql = getSqlForDaysByAccount($accountId, $accountFilter);
+                break;
+            case 'weeks':
+                $sql = getSqlForWeeksByAccount($accountId, $accountFilter);
+                break;
+            case 'months':
+                $sql = getSqlForMonthsByAccount($accountId, $accountFilter);
+                break;
+        }
+
+        $result = $connection->query($sql);
+        $chartData = [];
+        while ($row = $result->fetch_assoc()) {
+            $chartData[] = $row;
+        }
+
+        $accountsData[] = [
+            'accountId' => $accountId,
+            'title' => $accountId . " (" . $title . ")",
+            'data' => $chartData
+        ];
+    }
+    return $accountsData;
+}
+
+if (isset($_POST['timeFrame'])) {
+    $timeFrame = $_POST['timeFrame'];
+    $accountType = isset($_POST['accountType']) ? $_POST['accountType'] : null;
+    $accountsData = fetchDataForAllAccounts($connection, $timeFrame, $accountType);
+    echo json_encode($accountsData);
+    exit;
+}
+
+function getSqlForHoursByAccount($accountId, $accountFilter = "")
+{
+    return "SELECT hour AS label, 
+SUM(hourly_profit) AS profit 
+FROM (
+    SELECT HOUR(FROM_UNIXTIME(o.time)) AS hour, o.profit AS hourly_profit 
+    FROM ssi_trader.orders AS o 
+    LEFT JOIN ssi_trader.broker AS b ON o.broker_id = b.broker_id 
+    WHERE o.account = $accountId AND o.time >= UNIX_TIMESTAMP(CURDATE() - INTERVAL 1 DAY) 
+    $accountFilter 
+    UNION ALL 
+    SELECT a.a AS hour, 0 AS hourly_profit 
+    FROM (
+        SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL 
+        SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL 
+        SELECT 8 UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL 
+        SELECT 12 UNION ALL SELECT 13 UNION ALL SELECT 14 UNION ALL SELECT 15 UNION ALL 
+        SELECT 16 UNION ALL SELECT 17 UNION ALL SELECT 18 UNION ALL SELECT 19 UNION ALL 
+        SELECT 20 UNION ALL SELECT 21 UNION ALL SELECT 22 UNION ALL SELECT 23
+    ) AS a
+) AS combined 
+GROUP BY hour 
+ORDER BY hour ASC";
+}
+
+
+function getSqlForDaysByAccount($accountId, $accountFilter = "")
+{
+    return "SELECT day AS label,
+SUM(daily_profit) AS profit
+FROM (
+SELECT DATE(FROM_UNIXTIME(o.time)) AS day, o.profit AS daily_profit
+FROM orders AS o
+LEFT JOIN ssi_trader.broker AS b ON o.broker_id = b.broker_id
+WHERE o.account = $accountId AND o.time >= UNIX_TIMESTAMP(CURDATE() - INTERVAL 7 DAY)
+$accountFilter
+UNION ALL
+SELECT DATE(DATE_SUB(NOW(), INTERVAL a.a DAY)) AS day, 0 AS daily_profit
+FROM (
+SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL
+SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6
+) AS a
+) AS combined
+GROUP BY day
+ORDER BY day ASC";
+}
+
+function getSqlForWeeksByAccount($accountId, $accountFilter = "")
+{
+    return "SELECT CONCAT('KW ', WEEK(day), '/', YEAR(day)) AS label,
+SUM(profit) AS profit
+FROM (
+SELECT DATE(FROM_UNIXTIME(o.time)) AS day, o.profit
+FROM orders AS o
+LEFT JOIN ssi_trader.broker AS b ON o.broker_id = b.broker_id
+WHERE o.account = $accountId AND o.time >= UNIX_TIMESTAMP(CURDATE() - INTERVAL 4 WEEK)
+$accountFilter
+) AS weekly_data
+ORDER BY MIN(day) ASC";
+}
+
+function getSqlForMonthsByAccount($accountId, $accountFilter = "")
+{
+    return "SELECT CONCAT(MONTHNAME(day), ' ', YEAR(day)) AS label,
+SUM(profit) AS profit
+FROM (
+SELECT DATE(FROM_UNIXTIME(o.time)) AS day, o.profit
+FROM orders AS o
+LEFT JOIN ssi_trader.broker AS b ON o.broker_id = b.broker_id
+WHERE o.account = $accountId AND o.time >= UNIX_TIMESTAMP(CURDATE() - INTERVAL 6 MONTH)
+$accountFilter
+) AS monthly_data
+ORDER BY MIN(day) ASC";
+}

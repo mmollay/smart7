@@ -1,0 +1,192 @@
+<?
+include(__DIR__ . "/../config.inc.php");
+include('../../ssi_smart/smart_form/include_form.php');
+
+$field_killall = '';
+$real_account = 0;
+
+//Strategies for dropdown
+$arrayStrategies = getStrategyNames($ServerPrime, $_SESSION['token']['4']);
+
+$serverIps = getAllServerIps($mysqli);
+foreach ($serverIps as $serverInfo) {
+    $serverIp = $serverInfo['url'];
+    $server_id = $serverInfo['server_id'];
+    $server_name = $serverInfo['name'];
+    $strategy_default = $serverInfo['strategy_default'];
+    $daily_profit = $serverInfo['daily_profit'];
+
+    $lotsize_default = $serverInfo['lotsize'];
+    $real_account = $serverInfo['real_account'];
+    $token = $_SESSION['token'][$server_id]; //Token wird in "generate_token.php" gespeichert
+
+    //Infoabfrage ob MT5-server bereits läuft
+    $json_string = sendCurlRequest($serverIp . "/getMT5Status", '', $token);
+    $array = json_decode($json_string, true);
+    //echo "<br>" . print_r($array);
+
+    if ($array['process']['active'] == 1) {
+        $array['activeMT5'] = true;
+    } else {
+        $array['activeMT5'] = false;
+    }
+
+    // Bestimmt den Button-Text und die Farbe basierend auf dem Status von 'activeMT5'
+    // Festlegen des Button-Textes, der Aktion, der Farbe und des Icons basierend auf dem Zustand von 'activeMT5'
+    $buttonAction = $array['activeMT5'] ? 'stopMT5' : 'startMT5';
+    $buttonValue = $array['activeMT5'] ? "Stop MT5" : "Start MT5";
+    $colorClass = $array['activeMT5'] ? "red" : "green";
+    $icon = $array['activeMT5'] ? "stop" : "play";
+
+    // Gemeinsame Eigenschaften für den Button setzen
+    $arr['form'] = array();
+    $arr['field'][] = ['type' => 'button', 'value' => $buttonValue, 'onclick' => "post_ema('$buttonAction','','$server_id')", 'class' => "{$colorClass}", 'icon' => $icon];
+    $output = call_form($arr);
+    $ContentButtonMT5 = $output['html'];
+    //$array['activeMT5'] = true;
+    //Nur anzeigen wenn MT5 aktiv ist
+    if ($array['activeMT5'] == true) {
+
+        //Infoabfrage ob Strategie bereits läuft
+        $json_string = sendCurlRequest($serverIp . "/getActiveStrategies", '', $token);
+        $array = json_decode($json_string, true);
+        $activeStrategy = $array['activeStrategy'];
+
+        $pause = $array['pause'];
+        $lotsize = $array['size'];
+
+        $errorMsg = '';
+        // Prüft, ob eine Verbindungsfehlermeldung vorliegt
+        if ($jsonString == 'connection_failed') {
+            $errorMsg = "Connection failed to server: $serverIp ($serverInfo[name])";
+        }
+        // Prüft, ob ein spezifischer Fehler im Antwortarray vorhanden ist
+        elseif (isset($array['error'])) {
+            $errorMsg = $array['error'] . " for the server: $serverIp ($serverInfo[name])";
+        }
+        // Gibt die Fehlermeldung aus, wenn eine vorliegt
+        if (!empty($errorMsg)) {
+            echo "<div class=\"ui message error\">$errorMsg $serverIp</div>";
+            continue;
+        }
+
+        //$arrayStrategies = array('Josef' => 'Josef', 'Martin' => 'Martin', 'Peter' => 'Peter');
+        if ($server_id == 4) {
+            $activeStrategy = 'Martin';
+            $lotsize = 0.1;
+        }
+
+        if ($activeStrategy) {
+            // Determine button properties based on $pause state
+            $buttonText = $pause == 0 ? 'Pause ' : 'Resume ';
+            $buttonColor = $pause == 0 ? 'orange' : 'green';
+            $buttonIcon = $pause == 0 ? 'pause' : 'play';
+            $action = $pause == 0 ? 'pauseStrategy' : 'pauseStrategy';
+
+            $arr['form'] = array();
+            $arr['field'][] = array('type' => 'div', 'class' => 'equal stackable fields');
+            $arr['field'][] = ['type' => 'button', 'value' => "Stop", 'onclick' => "post_ema('stopStrategy','$activeStrategy','$server_id')", 'class' => "red fluid", 'icon' => 'stop'];
+            $arr['field'][] = ['type' => 'button', 'value' => $buttonText, 'onclick' => "post_ema('$action','$activeStrategy','$server_id')", 'class' => "$buttonColor fluid", 'icon' => $buttonIcon];
+            $arr['field'][] = ['type' => 'button', 'value' => "Close", 'onclick' => "post_ema('closeAll','$activeStrategy','$server_id')", 'class' => "blue fluid", 'icon' => 'hand holding usd'];
+            $arr['field'][] = array('type' => 'div_close');
+            $output = call_form($arr);
+            $ContentStopPause = $output['html'];
+
+            //Cancel placed orders
+            // $arr['form'] = array('action' => "ajax/post.php", 'id' => 'cancel_allserver_id' . $server_id);
+            // $arr['ajax'] = array('success' => "after_post_request(data)", 'dataType' => "html", "confirmation" => true);
+            // $arr['ajax']['confirmation'] = array('text' => array('content' => 'Are you sure to cancel placed orders?" '));
+            // $arr['hidden']['cancel_close_all'] = 'cancelAll';
+            // $arr['hidden']['server_id'] = $server_id;
+            // $arr['field']['button'] = array('type' => 'submit', 'value' => 'Cancel placed Orders', 'icon' => 'blue ban', 'class' => 'large fluid');
+            // $output = call_form($arr);
+            // $content_strategy .= $output['html'] . $output['js'];
+
+            //Cancel and Close
+            $arr['form'] = array('action' => "ajax/post.php", 'id' => 'close_all' . $server_id, 'class' => '');
+            $arr['ajax'] = array('success' => "after_post_ema(data)", 'dataType' => "html", "confirmation" => true);
+            $arr['ajax']['confirmation'] = array('text' => array('content' => 'Are you sure to cancel and close all orders?" '));
+            $arr['hidden']['cancel_close_all'] = 'closeAll';
+            $arr['hidden']['server_id'] = $server_id;
+            $arr['field']['button'] = array('type' => 'submit', 'value' => 'Close', 'icon' => 'hand holding usd icon green', 'class' => '');
+            $output = call_form($arr);
+            //$ContentClose = $output['html'] . $output['js'];
+
+        } else {
+            //print_r($arrayStrategies);
+            $arr['form'] = array('action' => "ajax/post.php", 'id' => "form_start$server_id");
+            $arr['ajax'] = array('success' => "after_start_strategy(data)", 'dataType' => "html");
+            $arr['field'][] = array('type' => 'div', 'class' => 'equal stackable fields');
+            $arr['field']['size'] = array('type' => 'input', 'value' => $lotsize_default, 'validate' => true, 'wide' => 'four', 'placholder' => 'Lot');
+            $arr['field']['strategy'] = array('type' => 'dropdown', 'array' => $arrayStrategies, 'class' => 'fluid search selection', 'validate' => true, 'value' => $strategy_default, 'placeholder' => 'Select Strategy', 'wide' => 'ten', );
+            $arr['field'][] = ['type' => 'submit', 'value' => "Start", 'class' => "fluid green", 'icon' => 'play', 'wide' => 'four'];
+            $arr['field'][] = array('type' => 'div_close');
+            $arr['hidden']['server_id'] = $server_id;
+            $arr['hidden']['strategy_value'] = 'startStrategy';
+            //$arr['button']['submit'] = array('value' => 'Start Stragegy', 'icon' => 'play', 'class' => 'red', );
+            $output = call_form($arr);
+            $ContentStartStrategy = $output['html'] . $output['js'];
+        }
+
+        //KILL ALL (SERVER and Trading )
+        $arr['form'] = array('action' => "ajax/post.php", 'id' => 'kill_all');
+        $arr['ajax'] = array('success' => "after_post_request(data)", 'dataType' => "html", "confirmation" => true);
+        $arr['ajax']['confirmation'] = array('text' => array('content' => 'Are you sure to Stop the Server: ' . $serverInfo['name'] . '? '));
+        $arr['hidden']['kill_all'] = '1';
+        $arr['hidden']['server_id'] = $server_id;
+        $arr['field']['button'] = array('type' => 'submit', 'value' => "", 'icon' => 'skull crossbones', 'class' => 'brown');
+        $output = call_form($arr);
+        //float left
+        $contenKillAll = "<div class='four wide column'>" . $output['html'] . $output['js'] . "</div>";
+    }
+
+    if ($real_account == 1) {
+        $label_strategy = "<div class='ui mini label red'>Real</div>";
+        $account_content = 'real';
+    } else {
+        $label_strategy = "<div class='ui mini label orange'>Demo</div>";
+        $account_content = 'demo';
+    }
+
+    // echo "
+    // $ContentButtonMT5
+    // $ContentStopPause
+    // $ContentClose
+    // $ContentStartStrategy";
+
+    $tr .= "<tr>";
+    $tr .= "<td>
+    $label_strategy<b>" . $serverInfo['name'] . "</b><br>
+    $serverIp</td>";
+    $tr .= "<td>$ContentButtonMT5</td>";
+    if ($activeStrategy) {
+        $tr .= "<td>$lotsize</td>";
+        $tr .= "<td>$activeStrategy</td>";
+        $colspan = 0;
+    } else
+        $colspan = 3;
+    $tr .= "<td colspan=$colspan>$ContentStartStrategy $ContentStopPause$ContentClose</td>";
+    $tr .= "<td><div id='server-profit-$server_id'>" . $daily_profit . "</div></td>";
+    $tr .= "<td><div align='center'>$contenKillAll</div></td>";
+    $tr .= "</tr>";
+
+    $contenKillAllBulk .= $contenKillAll;
+    $ContentButtonMT5 = '';
+    $ContentStopPause = '';
+    $ContentClose = '';
+    $ContentStartStrategy = '';
+    $contenKillAll = '';
+
+}
+
+echo "<table class='ui compact celled striped single line table' style='max-width:900px'>";
+echo "<thead><tr>
+<th class='wide four'></th>
+<th class=''>MT5 Server</th>
+<th>Lots</th>
+<th colspan = 2>Strategy</th>
+<th class=''>Daily<br>Profit</th>
+<th></th>
+</thead>";
+echo "$tr";
+echo "</table>";

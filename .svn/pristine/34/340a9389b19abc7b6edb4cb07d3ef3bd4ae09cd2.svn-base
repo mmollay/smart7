@@ -1,0 +1,30 @@
+<?php
+// FREE ICONS
+// http://www.flaticon.com/categories/business/
+include_once(__DIR__ . "/../login/config_main.inc.php");
+include(__DIR__ . "/functions.php");
+include(__DIR__ . "/config_db.php");
+// Prüft, ob der Token gesetzt und nicht abgelaufen ist (alle 12 Stunden Erneuerung)
+if (!isset($_SESSION['token_last_updated']) || time() - $_SESSION['token_last_updated'] > 12 * 3600) {
+    // Aktualisiert den Zeitpunkt der letzten Token-Erneuerung
+    $_SESSION['token_last_updated'] = time();
+
+    $serverIps = getAllServerIps($mysqli);
+
+    foreach ($serverIps as $serverInfo) {
+        $serverIp = $serverInfo['url'];
+        $server_id = $serverInfo['server_id'];
+
+        // Holt einen neuen Token für jeden Server
+        $newToken = getToken($serverIp, $username, $password);
+
+        // Speichert den neuen Token in der Session
+        $_SESSION['token'][$server_id] = $newToken;
+    }
+}
+
+$module['ID'] = 'trader';
+$module['version'] = '0.6';
+$module['title'] = 'Trader';
+$ServerPrime = "http://85.215.176.20:8080";
+

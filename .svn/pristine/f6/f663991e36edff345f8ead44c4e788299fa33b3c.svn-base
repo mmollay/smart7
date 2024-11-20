@@ -1,0 +1,135 @@
+<?php
+
+include(__DIR__ . '/../config.inc.php');
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    // Konvertiere 'qty' zu einem Float, falls es gesetzt ist
+    if (isset($_POST['qty'])) {
+        $_POST['qty'] = floatval($_POST['qty']);
+    }
+
+    if (isset($_POST['price'])) {
+        $_POST['price'] = floatval($_POST['price']);
+    }
+
+    // Setze 'qty' auf 0.1, falls der Wert kleiner als 0 ist
+    if ($_POST['qty'] < 0) {
+        $_POST['qty'] = 0.1;
+    }
+
+    // Die Url wird aus der Db gelesen
+    $url = getSingleServerIpByUserId($mysqli, $_SESSION['user_id']);
+    $url = 'http://85.215.176.20:8080';
+
+    // Funktion, um das data Array zu erstellen
+    function erstelleDataArray($qty, $price = null)
+    {
+        if ($price === null) {
+            return json_encode(array('qty' => $qty));
+        } else {
+            return json_encode(array('qty' => $qty, 'price' => $price));
+        }
+    }
+
+    // Überprüfung, welche Aktion ausgeführt werden soll
+    switch (true) {
+        case ($_POST['ema_print'] == 'emaPrint'):
+            $url .= '/emaPrint';
+            break;
+        case ($_POST['strategy_value'] == 'startEmaHedge'):
+            $url .= '/startEmaHedge';
+            break;
+        case ($_POST['strategy_value'] == 'stopEmaHedge'):
+            $url .= '/stopEmaHedge';
+            break;
+        case ($_POST['strategy_value'] == 'startReverseEmaHedge'):
+            $url .= '/startReverseEmaHedge';
+            break;
+        case ($_POST['strategy_value'] == 'stopReverseEmaHedge'):
+            $url .= '/stopReverseEmaHedge';
+            break;
+        case ($_POST['strategy_value'] == 'startManualHedge'):
+            $url .= '/startManualHedge';
+            break;
+        case ($_POST['strategy_value'] == 'stopManualHedge'):
+            $url .= '/stopManualHedge';
+            break;
+        case ($_POST['strategy_value'] == 'startManualHedgeReverse'):
+            $url .= '/startManualHedgeReverse';
+            break;
+        case ($_POST['strategy_value'] == 'stopManualHedgeReverse'):
+            $url .= '/stopManualHedgeReverse';
+            break;
+
+        case ($_POST['buy_sell'] == 'sell'):
+            $url .= '/sellMarket';
+            $data = erstelleDataArray($_POST['qty']);
+            break;
+        case ($_POST['buy_sell'] == 'buy'):
+            $url .= '/buyMarket';
+            $data = erstelleDataArray($_POST['qty']);
+            break;
+
+        case ($_POST['buy_sell_stop'] == 'buyStop'):
+            $url .= '/buyStop';
+            $data = erstelleDataArray($_POST['qty'], $_POST['price']);
+            break;
+        case ($_POST['buy_sell_stop'] == 'sellStop'):
+            $url .= '/sellStop';
+            $data = erstelleDataArray($_POST['qty'], $_POST['price']);
+            break;
+
+        case ($_POST['buy_sell_limit'] == 'buyLimit'):
+            $url .= '/buyLimit';
+            $data = erstelleDataArray($_POST['qty'], $_POST['price']);
+            break;
+        case ($_POST['buy_sell_limit'] == 'sellLimit'):
+            $url .= '/sellLimit';
+            $data = erstelleDataArray($_POST['qty'], $_POST['price']);
+            break;
+
+        case ($_POST['cancel_close_all'] == 'cancelAll'):
+            $url .= '/cancelAll';
+            break;
+        case ($_POST['cancel_close_all'] == 'closeAll'):
+            $url .= '/closeAll';
+            $data = '';
+            break;
+
+        case ($_POST['kill_all'] == 1):
+            $url .= '/panic';
+            break;
+    }
+
+    // Sende den ersten Request
+    $jsonString = sendCurlRequest($url, $data);
+
+    // Konvertiere den JSON-String in ein PHP-Array
+    $array = json_decode($jsonString, true);
+
+    // Füge den neuen Schlüssel-Wert-Paar hinzu
+    $array['buy_sell'] = $_POST['buy_sell'];
+
+    // Konvertiere das Array zurück in einen JSON-String
+    $jsonStringMitNeuemWert = json_encode($array);
+
+    // Ausgabe des neuen JSON-Strings
+    echo $jsonStringMitNeuemWert;
+}
+
+// r.GET("/startEmaHedge", controller.StartEmaHedge)
+// 	r.GET("/stopEmaHedge", controller.StopEmaHedge)
+// 	r.GET("/startReverseEmaHedge", controller.StartReverseEmaHedge)
+// 	r.GET("/stopReverseEmaHedge", controller.StopReverseEmaHedge)
+// 	r.GET("/startManualHedge", controller.StartManualHedge)
+// 	r.GET("/stopManualHedge", controller.StopManualHedge)
+// 	r.GET("/startManualHedgeReverse", controller.StartManualHedgeReverse)
+// 	r.GET("/stopManualHedgeReverse", controller.StopManualHedgeReverse)
+// 	r.GET("/panic", controller.Panic)
+// 	r.POST("/marketBuy", controller.MarketBuy)
+// 	r.POST("/marketSell", controller.MarketSell)
+// 	r.POST("/limitBuy", controller.LimitBuy)
+// 	r.POST("/limitSell", controller.LimitSell)
+// 	r.POST("/stopBuy", controller.BuyStopLoss)
+// 	r.POST("/stopSell", controller.SellStopLoss)

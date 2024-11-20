@@ -1,0 +1,204 @@
+<?
+//http://deineDomain.de/.../fetch_orders.php?token=52a36a36e2e6da849685b71f466dde56
+//http://localhost/smart7/ssi_trader/exec/fetch_orders.php?token=52a36a36e2e6da849685b71f466dde56
+
+// für cronjob  
+//* * * * * php /var/www/ssi/smart7/ssi_trader/exec/fetch_mt5.php 52a36a36e2e6da849685b71f466dde56
+//$apiUrl = 'orders.txt';
+
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+define('SECRET_TOKEN', '52a36a36e2e6da849685b71f466dde56');
+
+function jsonResponse($response)
+{
+    header('Content-Type: application/json');
+    echo json_encode($response);
+    exit;
+}
+
+function validateToken($token)
+{
+    return $token === SECRET_TOKEN;
+}
+
+$token = php_sapi_name() === 'cli' ? ($argc > 1 ? $argv[1] : null) : ($_GET['token'] ?? null);
+
+$response = ['success' => true, 'data' => [], 'errors' => []];
+
+if (!validateToken($token)) {
+    $response['success'] = false;
+    $response['errors'][] = ['message' => "Unauthorized access! Incorrect or missing token.", 'type' => 'error'];
+    jsonResponse($response);
+}
+
+require_once(__DIR__ . "/../functions.php");
+require_once(__DIR__ . "/../config_db.php");
+
+$conn = new mysqli($cfg_mysql['server'], $cfg_mysql['user'], $cfg_mysql['password'], $cfg_mysql['db']);
+if ($conn->connect_error) {
+    $response['success'] = false;
+    $response['errors'][] = ['message' => "Connection failed: " . $conn->connect_error, 'type' => 'error'];
+    jsonResponse($response);
+}
+
+//order db leeren
+//$deleteOrders = "DELETE FROM ssi_trader.orders";
+//  In$conn->query($deleteOrders);
+
+$serverQuery = "SELECT url, server_id, broker_id FROM ssi_trader.servers WHERE active = 1";
+$result = $conn->query($serverQuery);
+
+if ($result && $result->num_rows > 0) {
+
+    while ($row = $result->fetch_assoc()) {
+        $apiUrl = $row['url'] . "/history";
+        //$apiUrl = $row['url'] . "/openPositions";
+        //$apiUrl = 'orders.txt'; // Testzwecke
+        $server_id = $row['server_id'];
+        $broker_id = $row['broker_id'];
+        $serverIp = $row['url'];
+
+        //Token wird in "generate_token.php" gespeichert
+        $token = $_SESSION['token'][$server_id];
+
+        if (!$token) {
+            // Fehlerbehandlung, z.B. Hinzufügen eines Fehlers zu $response['errors'] und Abbruch
+            $response['errors'][] = [
+                'message' => "Fehler beim Abrufen des Tokens.",
+                'type' => 'error'
+            ];
+            header('Content-Type: application/json');
+            echo json_encode($response);
+            exit;
+        }
+
+        // Überprüfung, ob server_id und broker_id gesetzt sind
+        if (empty($server_id) || empty($broker_id)) {
+            $response['errors'][] = [
+                'message' => "Fehler: server_id oder broker_id fehlt für die URL $apiUrl, Server_id $server_id. ",
+                'type' => 'error'
+            ];
+            continue;
+        }
+
+        // Abrufen der Orders
+        $jsonString = sendCurlRequest($apiUrl, '', $token);
+        $array_orders = json_decode($jsonString, true);
+
+        if (is_array($array_orders) && isset($array_orders['history'])) {
+            $orders = $array_orders['history'];
+        } else {
+            $response['errors'][] = [
+                'message' => "Fehler: Kein gültiges JSON-Array empfangen von API $apiUrl, Server_id $server_id. ",
+                'type' => 'error'
+            ];
+            header('Content-Type: application/json');
+            echo json_encode($response);
+            continue;
+        }
+
+        if (isset($array_orders['error'])) {
+            $response['errors'][] = [
+                'message' => "Error from Trader-Server: " . $array_orders['error'],
+                'type' => 'error'
+            ];
+            header('Content-Type: application/json');
+            echo json_encode($response);
+            continue;
+        }
+
+        // Zähler initialisieren
+        $insertedCount = 0;
+        $alreadyInsertedCount = 0;
+        $lotgroup_id = 0;
+        $oldtime = '';
+
+        if (!empty($orders)) {
+
+            foreach ($orders as $order) {
+                // Check if the symbol already exists and retrieve the symbol_id
+                $symbolQuery = $conn->prepare("SELECT symbol_id FROM ssi_trader.symbols WHERE symbol = ?");
+                $symbolQuery->bind_param("s", $order[15]); // Annahme: Das Symbol befindet sich an der 16. Position im Array
+                $symbolQuery->execute();
+                $resultSymbol = $symbolQuery->get_result();
+
+                if ($resultSymbol->num_rows > 0) {
+                    $rowSymbol = $resultSymbol->fetch_assoc();
+                    $symbol_id = $rowSymbol['symbol_id'];
+                } else {
+                    $insertSymbol = $conn->prepare("INSERT INTO ssi_trader.symbols (symbol) VALUES (?)");
+                    $insertSymbol->bind_param("s", $order[15]);
+                    $insertSymbol->execute();
+                    $symbol_id = $conn->insert_id;
+                }
+
+                if ($order[2] != $oldtime and $order[5] == 1) {
+                    //if ($order[9] == "1" and $order[5] == 0) {
+                    //$order[9] volume
+                    //$order[5] entry 0.1
+                    $lotgroup_id = $order[1];
+                }
+
+                $trash = '';
+                $stmt = $conn->prepare("INSERT INTO ssi_trader.orders (ticket, order_id, time, time_msc, type, entry, magic, position_id, reason, volume, price, commission, swap, profit, fee, symbol_id, comment, external_id, server_id, broker_id, lotgroup_id, trash) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE ticket = VALUES(ticket)");
+                $stmt->bind_param("iiiiiiiiiddddddissiiii", $order[0], $order[1], $order[2], $order[3], $order[4], $order[5], $order[6], $order[7], $order[8], $order[9], $order[10], $order[11], $order[12], $order[13], $order[14], $symbol_id, $order[16], $order[17], $server_id, $broker_id, $lotgroup_id, $trash);
+                $oldtime = $order[2];
+                try {
+                    $stmt->execute();
+
+                    $affectedRows = $stmt->affected_rows;
+
+                    if ($affectedRows == 1) {
+                        $insertedCount++;
+                    } elseif ($affectedRows == 0) {
+                        $alreadyInsertedCount++;
+                    }
+                } catch (mysqli_sql_exception $e) {
+                    $response['errors'][] = [
+                        'message' => "An error occurred while inserting order with ticket {$order[0]}: " . $e->getMessage(),
+                        'type' => 'error'
+                    ];
+                }
+            }
+
+            if ($insertedCount == 0 && $alreadyInsertedCount > 0) {
+                $response['data'][] = [
+                    'message' => "No new orders inserted. $alreadyInsertedCount duplicate orders were skipped.",
+                    'type' => 'info'
+                ];
+            }
+
+            if ($insertedCount > 0) {
+                $response['data'][] = [
+                    'message' => "$insertedCount new orders successfully inserted.",
+                    'type' => 'success'
+                ];
+            }
+
+            // if ($alreadyInsertedCount > 0) {
+            //     $response['data'][] = [
+            //         'message' => "$alreadyInsertedCount orders were already inserted.",
+            //         'type' => 'info'
+            //     ];
+            // }
+        } else {
+            $response['data'][] = [
+                'message' => "No data received from API $apiUrl.",
+                'type' => 'info'
+            ];
+        }
+    }
+} else {
+    $response['success'] = false;
+    $response['errors'][] = [
+        'message' => "No server URLs found.",
+        'type' => 'error'
+    ];
+}
+
+header('Content-Type: application/json');
+echo json_encode($response);
+$conn->close();

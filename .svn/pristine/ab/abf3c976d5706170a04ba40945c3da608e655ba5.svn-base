@@ -1,0 +1,74 @@
+<?php
+/*
+ * Auslesen aktueller Positionen
+ */
+require ("../mysql.inc");
+
+// Check ob Eintrag bereits vorhanden ist
+// Art_NR UND Art_Title
+
+// $check_client_number = mysql_singleoutput("SELECT * FROM client WHERE company_id = '{$_SESSION['faktura_company_id']}' AND client_number = '{$_POST['client_number']}' ","client_number");
+// $check_company_1 = mysql_singleoutput("SELECT * FROM client WHERE company_id = '{$_SESSION['faktura_company_id']}' AND company_1 = '{$_POST['company_1']}' ","company_1");
+
+$smtp_server = $GLOBALS['mysqli']->real_escape_string ( $_POST ['smtp_server'] );
+$smtp_user = $GLOBALS['mysqli']->real_escape_string ( $_POST ['smtp_user'] );
+$smtp_password = $GLOBALS['mysqli']->real_escape_string ( $_POST ['smtp_password'] );
+$smtp_secure = $GLOBALS['mysqli']->real_escape_string ( $_POST ['smtp_secure'] );
+$smtp_port = $GLOBALS['mysqli']->real_escape_string ( $_POST ['smtp_port'] );
+$smtp_title = $GLOBALS['mysqli']->real_escape_string ( $_POST ['smtp_title'] );
+$smtp_email = $GLOBALS['mysqli']->real_escape_string ( $_POST ['smtp_email'] );
+$smtp_return = $GLOBALS['mysqli']->real_escape_string ( $_POST ['smtp_return'] );
+$of_jurisdiction = $GLOBALS['mysqli']->real_escape_string ( $_POST ['of_jurisdiction'] );
+$headline = $GLOBALS['mysqli']->real_escape_string ( $_POST ['headline'] );
+
+// Template anlegen
+$GLOBALS['mysqli']->query ( "REPLACE INTO company SET
+company_id = '{$_POST['company_id']}',
+user_id   = '{$_SESSION['user_id']}',
+company_1 = '{$_POST['company_1']}',
+company_2 = '{$_POST['company_2']}',
+title = '{$_POST['title']}',
+firstname = '{$_POST['firstname']}',
+secondname = '{$_POST['secondname']}',
+street = '{$_POST['street']}',
+city = '{$_POST['city']}',
+zip = '{$_POST['zip']}',
+country = '{$_POST['country']}',
+tel = '{$_POST['tel']}',
+email = '{$_POST['email']}',
+web = '{$_POST['web']}',
+uid = '{$_POST['uid']}',
+company_number  = '{$_POST['company_number']}',
+blz = '{$_POST['blz']}',
+kdo = '{$_POST['kdo']}',
+of_jurisdiction = '$of_jurisdiction',
+bank_name = '{$_POST['bank_name']}',
+iban = '{$_POST['iban']}',
+bic = '{$_POST['bic']}',
+conditions = '{$_POST['conditions']}',
+send_mail =  '{$_POST['send_mail']}',
+send_mail_subject = '{$_POST['send_mail_subject']}',
+remind_mail1 =  '{$_POST['remind_mail1']}',
+remind_mail_subject1 = '{$_POST['remind_mail_subject1']}',
+remind_mail2 =  '{$_POST['remind_mail2']}',
+remind_mail_subject2 = '{$_POST['remind_mail_subject2']}',
+remind_mail3 =  '{$_POST['remind_mail3']}',
+remind_mail_subject3 = '{$_POST['remind_mail_subject3']}',
+remind_time1 = '{$_POST['remind_time1']}',
+remind_time2 = '{$_POST['remind_time2']}',
+remind_time3 = '{$_POST['remind_time3']}',
+remind_time4 = '{$_POST['remind_time4']}',
+subject           = '{$_POST['subject']}',
+grafic_head       = '{$_POST['grafic_head']}',
+smtp_title   = '$smtp_title',
+smtp_server  = '$smtp_server',
+smtp_user    = '$smtp_user',
+smtp_password= '$smtp_password',
+smtp_port    = '$smtp_port',
+smtp_secure  = '$smtp_secure',
+smtp_email    = '$smtp_email',
+smtp_return = '$smtp_return',
+headline = '$headline'
+" ) or die ( mysqli_error ($GLOBALS['mysqli']) );
+echo mysqli_insert_id ($GLOBALS['mysqli']);
+?>

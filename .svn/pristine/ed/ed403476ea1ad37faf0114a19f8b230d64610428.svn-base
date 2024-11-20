@@ -1,0 +1,153 @@
+<?php
+include (__DIR__ . '/../config.php');
+include (__DIR__ . '/../functions.php');
+
+$clientId = $_SESSION['client_id'];
+$array = getBrokerUserByClientId($db, $clientId);
+$accountId = $array['account'];
+
+?>
+
+<select id="timeFrameSelect" class="ui dropdown">
+    <option value="hours" selected>24 Stunden</option>
+    <option value="days">7 Tage</option>
+    <option value="weeks">4 Wochen</option>
+    <option value="months">6 Monate</option>
+</select>
+
+<select id="chartTypeSelect" class="ui dropdown">
+    <option value="line">Liniendiagramm</option>
+    <option value="bar" selected>Balkendiagramm</option>
+</select>
+
+<canvas id="chartCanvas"></canvas>
+
+<script>
+    $(document).ready(function () {
+        // Definiere currentChart auf einer höheren Ebene, um es im gesamten Skript verfügbar zu machen
+        var currentChart;
+
+        // Versuche, gespeicherte Einstellungen zu laden oder verwende Standardwerte
+        var savedTimeFrame = localStorage.getItem('timeFrame') || 'days';
+        var savedChartType = localStorage.getItem('chartType') || 'bar';
+
+        // Setze die Dropdown-Werte auf die geladenen oder Standardwerte
+        $('#timeFrameSelect').val(savedTimeFrame);
+        $('#chartTypeSelect').val(savedChartType);
+
+        // Funktion zur Ermittlung des Labels basierend auf dem gewählten Zeitrahmen
+        function getTimeFrameLabel(timeFrame) {
+            switch (timeFrame) {
+                case 'hours':
+                    return '24 Stunden';
+                case 'days':
+                    return '7 Tage';
+                case 'weeks':
+                    return '4 Wochen';
+                case 'months':
+                    return '6 Monate';
+                default:
+                    return ''; // Standardwert oder Fehlerbehandlung
+            }
+        }
+
+        // Hauptfunktion zur Aktualisierung des Charts
+        function updateChartData(timeFrame, chartType) {
+            $.ajax({
+                url: 'pages/chart_data.php',
+                type: 'POST',
+                data: {
+                    timeFrame: timeFrame,
+                    accountId: '<?= $accountId; ?>'
+                },
+                success: function (data) {
+                    const parsedData = JSON.parse(data);
+                    const labels = parsedData.map(item => item.label);
+                    const profits = parsedData.map(item => item.profit);
+                    drawChart(labels, profits, chartType, timeFrame); // Übergebe timeFrame an drawChart
+                }
+            });
+        }
+
+        // Funktion zum Zeichnen des Charts
+        function drawChart(labels, data, chartType, timeFrame) {
+            const ctx = $('#chartCanvas')[0].getContext('2d');
+            const timeFrameLabel = getTimeFrameLabel(timeFrame); // Verwende timeFrame zur Bestimmung des Labels
+
+            if (currentChart) {
+                currentChart.destroy(); // Zerstöre das vorhandene Chart
+            }
+
+            currentChart = new Chart(ctx, {
+                type: chartType,
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Gewinn',
+                        data: data,
+                        backgroundColor: data.map(value => value >= 0 ? 'rgba(54, 162, 235, 0.2)' : 'rgba(255, 99, 132, 0.2)'),
+                        borderColor: data.map(value => value >= 0 ? 'rgba(54, 162, 235, 1)' : 'rgba(255, 99, 132, 1)'),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                drawBorder: true,
+                                color: function (context) {
+                                    if (context.tick.value === 0) {
+                                        return 'black';
+                                    }
+                                    return 'rgba(0, 0, 0, 0.1)'; // Farbe der anderen Gitterlinien
+                                },
+                                lineWidth: function (context) {
+                                    if (context.tick.value === 0) {
+                                        return 2;
+                                    }
+                                    return 1; // Dicke der anderen Gitterlinien
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Umsatzentwicklung ' + timeFrameLabel
+                        },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'top',
+                            formatter: (value, context) => {
+                                // Überprüfe, ob der Wert ungleich 0 ist und basiere die Anzeige auch auf der Anzahl der Labels
+                                if (value !== 0 && context.chart.data.labels.length < 30) {
+                                    return Number(value).toFixed(2) + '€';
+                                } else {
+                                    return null; // Kein Label anzeigen
+                                }
+                            },
+                            color: '#444',
+                            font: {
+                                weight: 'bold'
+                            }
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels]
+            });
+        }
+
+        // Event-Listener für Dropdown-Änderungen
+        $('#timeFrameSelect, #chartTypeSelect').change(function () {
+            var timeFrame = $('#timeFrameSelect').val();
+            var chartType = $('#chartTypeSelect').val();
+            updateChartData(timeFrame, chartType); // Aktualisiere das Chart mit den neuen Werten
+            localStorage.setItem('timeFrame', timeFrame); // Speichere die neuen Werte im Local Storage
+            localStorage.setItem('chartType', chartType);
+        });
+
+        // Initialisiere das Chart mit den geladenen oder Standardwerten
+        updateChartData(savedTimeFrame, savedChartType);
+    });
+</script>

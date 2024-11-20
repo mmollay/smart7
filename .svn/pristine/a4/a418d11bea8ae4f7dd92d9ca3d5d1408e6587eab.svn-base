@@ -1,0 +1,133 @@
+<?php
+include (__DIR__ . '/../config.inc.php');
+include (__DIR__ . '/../../trader_client/functions.php');
+
+$connection = new mysqli($cfg_mysql['server'], $cfg_mysql['user'], $cfg_mysql['password'], $cfg_mysql['db']);
+
+if ($connection->connect_error) {
+    die ("Connection failed: " . $connection->connect_error);
+}
+
+// Funktion zur Abfrage der Daten für alle Accounts
+function fetchDataForAllAccounts($connection, $timeFrame)
+{
+    $accountsData = [];
+    // Hole alle Account-IDs und Titel
+    $accounts = $connection->query("SELECT DISTINCT user, title FROM broker");
+
+    while ($account = $accounts->fetch_assoc()) {
+        $accountId = $account['user'];
+        $title = $account['title'];
+        // Basierend auf dem Zeitrahmen die entsprechende Funktion aufrufen
+        switch ($timeFrame) {
+            case 'hours':
+                $sql = getSqlForHoursByAccount($accountId, 1, 1);
+                break;
+            case 'days':
+                $sql = getSqlForDaysByAccount($accountId, 1, 1);
+                break;
+            case 'weeks':
+                $sql = getSqlForWeeksByAccount($accountId, 1, 1);
+                break;
+            case 'months':
+                $sql = getSqlForMonthsByAccount($accountId, 1, 1);
+                break;
+        }
+        $result = $connection->query($sql);
+        $chartData = [];
+        while ($row = $result->fetch_assoc()) {
+            $chartData[] = $row;
+        }
+        $accountsData[] = [
+            'accountId' => $accountId,
+            'title' => $accountId . "(" . $title . ")",
+            'data' => $chartData
+        ];
+    }
+    return $accountsData;
+}
+
+if (isset ($_POST['timeFrame'])) {
+    $timeFrame = $_POST['timeFrame'];
+    $accountsData = fetchDataForAllAccounts($connection, $timeFrame);
+    echo json_encode($accountsData);
+    exit;
+}
+
+
+function getSqlForHoursByAccount($accountId, $positiveMultiplier, $negativeMultiplier)
+{
+    return "SELECT hour AS label,
+CASE
+WHEN SUM(hourly_profit) > 0 THEN SUM(hourly_profit) * $positiveMultiplier
+ELSE SUM(hourly_profit) * $negativeMultiplier
+END AS profit
+FROM (
+SELECT HOUR(FROM_UNIXTIME(o.time)) AS hour, o.profit AS hourly_profit
+FROM orders AS o
+WHERE o.account = $accountId AND o.time >= UNIX_TIMESTAMP(CURDATE() - INTERVAL 1 DAY)
+UNION ALL
+SELECT a.a AS hour, 0 AS hourly_profit
+FROM (
+SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL
+SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL
+SELECT 10 UNION ALL SELECT 11
+) AS a
+) AS combined
+GROUP BY hour
+ORDER BY hour ASC";
+}
+
+function getSqlForDaysByAccount($accountId, $positiveMultiplier, $negativeMultiplier)
+{
+    return "SELECT day AS label,
+CASE
+WHEN SUM(daily_profit) > 0 THEN SUM(daily_profit) * $positiveMultiplier
+ELSE SUM(daily_profit) * $negativeMultiplier
+END AS profit
+FROM (
+SELECT DATE(FROM_UNIXTIME(o.time)) AS day, o.profit AS daily_profit
+FROM orders AS o
+WHERE o.account = $accountId AND o.time >= UNIX_TIMESTAMP(CURDATE() - INTERVAL 7 DAY)
+UNION ALL
+SELECT DATE(DATE_SUB(NOW(), INTERVAL a.a DAY)) AS day, 0 AS daily_profit
+FROM (
+SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL
+SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6
+) AS a
+) AS combined
+GROUP BY day
+ORDER BY day ASC";
+}
+
+function getSqlForWeeksByAccount($accountId, $positiveMultiplier, $negativeMultiplier)
+{
+    return "SELECT CONCAT('KW ', WEEK(day), '/', YEAR(day)) AS label,
+CASE
+WHEN SUM(profit) > 0 THEN SUM(profit) * $positiveMultiplier
+ELSE SUM(profit) * $negativeMultiplier
+END AS profit
+FROM (
+SELECT DATE(FROM_UNIXTIME(o.time)) AS day, o.profit
+FROM orders AS o
+WHERE o.account = $accountId AND o.time >= UNIX_TIMESTAMP(CURDATE() - INTERVAL 4 WEEK)
+) AS weekly_data
+GROUP BY WEEK(day), YEAR(day)
+ORDER BY MIN(day) ASC";
+}
+
+function getSqlForMonthsByAccount($accountId, $positiveMultiplier, $negativeMultiplier)
+{
+    return "SELECT CONCAT(MONTHNAME(day), ' ', YEAR(day)) AS label,
+CASE
+WHEN SUM(profit) > 0 THEN SUM(profit) * $positiveMultiplier
+ELSE SUM(profit) * $negativeMultiplier
+END AS profit
+FROM (
+SELECT DATE(FROM_UNIXTIME(o.time)) AS day, o.profit
+FROM orders AS o
+WHERE o.account = $accountId AND o.time >= UNIX_TIMESTAMP(CURDATE() - INTERVAL 6 MONTH)
+) AS monthly_data
+GROUP BY MONTH(day), YEAR(day)
+ORDER BY MIN(day) ASC";
+}

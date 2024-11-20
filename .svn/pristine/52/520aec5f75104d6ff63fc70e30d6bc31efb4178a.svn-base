@@ -1,0 +1,7 @@
+<?php
+session_start ();
+require ("../mysql.inc");
+
+echo mysql_singleoutput ( "SELECT MAX(client_number) as client_number FROM client", "client_number" ) + 1;
+
+?>

@@ -1,0 +1,132 @@
+<?php return array (
+  'root' => 
+  array (
+    'pretty_version' => '1.0.0+no-version-set',
+    'version' => '1.0.0.0',
+    'aliases' => 
+    array (
+    ),
+    'reference' => NULL,
+    'name' => 'root/smart',
+  ),
+  'versions' => 
+  array (
+    'components/jquery' => 
+    array (
+      'pretty_version' => '3.5.1',
+      'version' => '3.5.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'b33e8f0f9a1cb2ae390cf05d766a900b53d2125b',
+    ),
+    'layershifter/tld-database' => 
+    array (
+      'pretty_version' => '1.0.69',
+      'version' => '1.0.69.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '7423c7acdc5147268fb856f532a5d8875f6fe41e',
+    ),
+    'layershifter/tld-extract' => 
+    array (
+      'pretty_version' => '2.0.1',
+      'version' => '2.0.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'b49cb89a4ed59a9474a47589054e56ce57787348',
+    ),
+    'layershifter/tld-support' => 
+    array (
+      'pretty_version' => '1.1.1',
+      'version' => '1.1.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '9b9eb2350db82239289f4e6eb250a2fe4865b0db',
+    ),
+    'masterexploder/phpthumb' => 
+    array (
+      'pretty_version' => '2.1',
+      'version' => '2.1.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '01f6aa65aa3d136e175f67da2b4ea3e316770d02',
+    ),
+    'matthiasmullie/minify' => 
+    array (
+      'pretty_version' => '1.3.66',
+      'version' => '1.3.66.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '45fd3b0f1dfa2c965857c6d4a470bea52adc31a6',
+    ),
+    'matthiasmullie/path-converter' => 
+    array (
+      'pretty_version' => '1.1.3',
+      'version' => '1.1.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'e7d13b2c7e2f2268e1424aaed02085518afa02d9',
+    ),
+    'root/smart' => 
+    array (
+      'pretty_version' => '1.0.0+no-version-set',
+      'version' => '1.0.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => NULL,
+    ),
+    'symfony/polyfill-intl-idn' => 
+    array (
+      'pretty_version' => 'v1.22.1',
+      'version' => '1.22.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '2d63434d922daf7da8dd863e7907e67ee3031483',
+    ),
+    'symfony/polyfill-intl-normalizer' => 
+    array (
+      'pretty_version' => 'v1.22.1',
+      'version' => '1.22.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '43a0283138253ed1d48d352ab6d0bdb3f809f248',
+    ),
+    'symfony/polyfill-mbstring' => 
+    array (
+      'pretty_version' => 'v1.22.1',
+      'version' => '1.22.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '5232de97ee3b75b0360528dae24e73db49566ab1',
+    ),
+    'symfony/polyfill-php72' => 
+    array (
+      'pretty_version' => 'v1.22.1',
+      'version' => '1.22.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'cc6e6f9b39fe8075b3dabfbaf5b5f645ae1340c9',
+    ),
+    'vakata/jstree' => 
+    array (
+      'pretty_version' => '3.3.11',
+      'version' => '3.3.11.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '4a77e59a3f67b0beb1b576cc211cb7e7a76a9879',
+    ),
+  ),
+);

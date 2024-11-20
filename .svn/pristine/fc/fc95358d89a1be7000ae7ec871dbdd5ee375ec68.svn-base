@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CKEditor 5 - Inline editor</title>
+<script
+	src="https://cdn.ckeditor.com/ckeditor5/15.0.0/inline/ckeditor.js"></script>
+</head>
+<body>
+	<h1>Inline editor1 </h1>
+	<div id="editor">
+		<p>This is some sample content.</p>
+	</div>
+	<script>
+    
+        InlineEditor
+            .create( document.querySelector( '#editor' ),
+            	{
+            	toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
+            	autosave: {
+                    save( editor ) {
+                    	alert('test');
+                        // The saveData() function must return a promise
+                        // which should be resolved when the data is successfully saved.
+                        return saveData( editor.getData() );
+                    }
+                }
+            	}
+            		)
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<?php
+$clone = $_GET['clone'];
+
+
+$arr['ajax'] = array('success' => "after_form_hedging(data)", 'dataType' => "html");
+// $arr['tab'] = array('tabs' => array(1 => 'Default', 2 => 'More'), 'active' => '1');
+
+$arr['field']['title'] = array('tab' => '1', 'type' => 'input', 'label' => 'Title', 'focus' => true);
+$arr['field']['text'] = array('tab' => '1', 'type' => 'textarea', 'label' => 'Description');
+
+if (!$clone) {
+	$arr['sql'] = array('query' => "SELECT * from ssi_trader.hedging_group WHERE group_id  = '{$_POST['update_id']}' ");
+} else
+	$arr['sql'] = array('query' => "SELECT group_id,CONCAT(title,'_clone') title ,text from ssi_trader.hedging_group WHERE group_id  = '{$_POST['update_id']}'");
+
+$stmt = $GLOBALS['mysqli']->prepare("SELECT lots, entrypoint, takeprofit, info FROM ssi_trader.hedging WHERE group_id = ? AND level = ?");
+$update_id = $_POST['update_id'];
+
+for ($i = 1; $i <= 14; $i++) {
+	$stmt->bind_param("ii", $update_id, $i);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$lotsValue = ''; // Default value if no entry is found
+	$infoValue = '';
+	$entrypointValue = '';
+	$takeprofitValue = '';
+
+	if ($row = $result->fetch_assoc()) {
+		$lotsValue = $row['lots']; // Value from the database
+		$infoValue = $row['info'];
+		$entrypointValue = $row['entrypoint'];
+		$takeprofitValue = $row['takeprofit'];
+	}
+	$arr['field'][] = array('type' => 'div', 'class' => 'fields width');
+	$arr['field']["title$i"] = array('type' => 'content', 'text' => "<div style='position:relative; top:6px'><b>Level $i</b></div>", 'wide' => 'two');
+	$arr['field']["lots$i"] = array('type' => 'input', 'value' => $lotsValue, 'label_left' => "Lotsize", 'wide' => 'five');
+	$arr['field']["entrypoint$i"] = array('type' => 'input', 'value' => $entrypointValue, 'label_left' => 'Entrypoint', 'wide' => 'five');
+	$arr['field']["takeprofit$i"] = array('type' => 'input', 'value' => $takeprofitValue, 'label_left' => 'Takeprofit', 'wide' => 'five');
+	//$arr ['field'] ["info$i"] = array ('type' => 'input','label' => "",'placeholder' => 'Comment','value' => $infoValue );
+	$arr['field'][] = array('type' => 'div_close');
+
+	// $arr['field']["lots$i"] = array('grid' => '1', 'type' => 'input', 'value' => $lotsValue, 'label_left' => "$i Lots");
+	// $arr['field']["entrypoint$i"] = array('grid' => '2', 'type' => 'input', 'value' => $entrypointValue, 'label_left' => 'Entrypoint');
+	// $arr['field']["takeprofit$i"] = array('grid' => '3', 'type' => 'input', 'value' => $takeprofitValue, 'label_left' => 'Takeprofit');
+	// //$arr ['field'] ["info$i"] = array ('type' => 'input','label' => "",'placeholder' => 'Comment','value' => $infoValue );
+
+	// $arr['field']["grid$i"] = array('type' => 'grid', 'class' => '', 'column' => ["1" => '3', "2" => "3", "3" => "2"]);
+}
+
+if ($clone) {
+	$arr['field']['clone'] = array('type' => 'hidden', 'value' => '1');
+}
+
+$stmt->close();
+
+$add_js .= "<script type=\"text/javascript\" src=\"js/form_strategy.js\"></script>";

@@ -1,0 +1,18 @@
+<?
+echo '
+<br>
+<div align=center>
+<div style="max-width:800px">
+	<div class="message large ui">
+	<label class="ui label right corner green"><i class="icon refresh"></i></label>				
+		<div class="header ui green">Trader 0.0.8 <div class="label basic ui">08.01.2024</div></div>
+  		<ul class="list">
+            <li>New page "version" for the display of the current version</li>
+			<li>Cloning of Hagdinglists possible</li>
+            <li>Display of the current DAX value</li>
+		</ul>
+	</div>
+<br>
+</div>
+</div>
+</div>';

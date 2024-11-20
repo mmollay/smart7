@@ -1,0 +1,58 @@
+<?php
+include ('../../config.php');
+include_once ('../mysql_days21.inc.php');
+include ('../../../smart_form/include_form.php');
+
+$update_id = $_POST['update_id'];
+
+//Muss noch aufgebaut werden
+//Ziel: Ein Modal - Dialog mit Buttons über die Tage wo nicht abgehandelt wurde 
+// - nach jeder Bestätigung soll ein Kommentar möglich sein - vielleicht nur mit POPUP 
+
+$query1 = $GLOBALS['mysqli']->query ( "SELECT Count(*) from $db_smart.21_sessions WHERE group_id = '{$_POST['update_id']}' AND action = 'success' " ) or die ( mysqli_error ($GLOBALS['mysqli']) );
+$array = mysqli_fetch_array ( $query1 );
+$success_count = $array[0];
+
+$query1 = $GLOBALS['mysqli']->query ( "SELECT Count(*) from $db_smart.21_sessions WHERE group_id = '{$_POST['update_id']}' AND action = 'fail' " ) or die ( mysqli_error ($GLOBALS['mysqli']) );
+$array = mysqli_fetch_array ( $query1 );
+$fail_count = $array[0];
+
+// Aufruf Anzahl der Felder bis zu fail
+$query1 = $GLOBALS['mysqli']->query ( "SELECT DATEDIFF(failed_date,start_date) count from $db_smart.21_groups WHERE challenge_id = '{$_POST['update_id']}' " ) or die ( mysqli_error ($GLOBALS['mysqli']) );
+$array = mysqli_fetch_array ( $query1 );
+$count = $array['count'];
+
+if (! $count) {
+	$query1 = $GLOBALS['mysqli']->query ( "SELECT DATEDIFF(NOW(),start_date) count from $db_smart.21_groups WHERE challenge_id = '{$_POST['update_id']}' " ) or die ( mysqli_error ($GLOBALS['mysqli']) );
+	$array = mysqli_fetch_array ( $query1 );
+	$count = $array['count'] + 1;
+}
+
+$array_action = array ( 'success' => 'Geschafft' , 'fail' => 'Nicht geschafft' );
+
+$query = $GLOBALS['mysqli']->query ( "SELECT nr,action,action_date from $db_smart.21_sessions WHERE group_id = '$update_id' AND action_date < NOW() order by nr desc " ) or die ( mysqli_error ($GLOBALS['mysqli']) );
+while ( $array = mysqli_fetch_array ( $query ) ) {
+	if ($array['action'] == 'success') {
+		$arr['field'][] = array ( 'tab' => 'second' , 'id' => "text$ii" , 'type' => 'text' , 'value' => "<b>Tag {$array['nr']}</b> Geschafft ({$array['action_date']})" );
+		// $form->setField ( "text$ii", array ( group => 2 ,  'text' => "Tag $ii" , text2 => $array_action[$array['action']] . " ({$array['action_date']})" ) );
+	} else if ($array['action'] == 'fail') {
+		$arr['field'][] = array ( 'tab' => 'second' , 'id' => "text$ii" , 'type' => 'text' , 'value' => "<b>Tag {$array['nr']}</b> Nicht geschafft" );
+		break;
+	} elseif (! $fail_count) {
+		
+		$edit_button = "
+			<div class='ui small buttons'>
+			<div class='ui icon green button tooltip' title='$title_success' onclick='call_form_challenge($challenge_id)'><i class='thumbs up icon'></i></div>
+			<div class='ui icon red button tooltip' title='Nicht geschafft?' onclick='cancel_challenge($challenge_id)'><i class='thumbs down icon'></i></div>
+			</div><b>Tag {$array['nr']}</b> ({$array['action_date']})
+			";
+		
+		$arr['field'][] = array ( 'tab' => 'second' , 'id' => "text$ii" , 'type' => 'text' , 'value' => "$edit_button" );
+		// $arr['field'][] = array ( 'tab' => 'second' , 'id' => "action_day$ii" , 'label' => "Tag {$array['nr']}" , 'type' => 'dropdown' , 'array' => $array_action ,  'focus' => $focus );
+	}
+}
+
+$output = call_form ( $arr );
+echo $output['html'];
+echo $output['js'];
+?>

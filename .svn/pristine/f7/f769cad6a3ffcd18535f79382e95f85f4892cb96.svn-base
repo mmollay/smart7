@@ -1,0 +1,32 @@
+<?php
+// Starte die Session und setze den Content-Type für die Antwort
+session_start();
+header('Content-Type: application/json');
+
+include(__DIR__ . "/../config.inc.php");
+
+// Versuche, die Token zu erzeugen und speichere sie in der Session
+try {
+    $serverIps = getAllServerIps($mysqli);
+    $tokensGenerated = false; // Flag, um den Erfolg der Operation zu verfolgen
+
+    foreach ($serverIps as $serverInfo) {
+        $serverIp = $serverInfo['url'];
+        $server_id = $serverInfo['server_id'];
+        $get_token[$server_id] = getToken($serverIp, $username, $password);
+
+        if ($get_token[$server_id]) {
+            $_SESSION['token'][$server_id] = $get_token[$server_id];
+            $tokensGenerated = true; // Mindestens ein Token wurde erfolgreich generiert
+        }
+    }
+
+    if ($tokensGenerated) {
+        echo json_encode(['success' => true, 'message' => 'Token generated successfully.']);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Failed to generate any tokens.']);
+    }
+} catch (Exception $e) {
+    // Im Falle eines Fehlers, sende eine Fehlermeldung
+    echo json_encode(['success' => false, 'message' => 'An error occurred: ' . $e->getMessage()]);
+}

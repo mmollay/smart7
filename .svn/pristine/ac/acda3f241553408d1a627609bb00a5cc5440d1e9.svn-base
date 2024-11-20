@@ -1,0 +1,31 @@
+<?php
+include (__DIR__ . "/../check_permission.php");
+?>
+
+<div class="ui segment">
+    <canvas id="myChart"></canvas>
+</div>
+
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line', // Der Typ des Charts, z.B. 'line' für Liniendiagramm
+        data: {
+            labels: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni'],
+            datasets: [{
+                label: 'Kapitalentwicklung',
+                data: [1200, 1900, 1700, 2000, 2200, 2500], // Beispieldaten
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

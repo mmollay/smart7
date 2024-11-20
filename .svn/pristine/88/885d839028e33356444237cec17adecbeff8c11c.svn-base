@@ -1,0 +1,80 @@
+<?
+include(__DIR__ . "/../config.inc.php");
+include('../../ssi_smart/smart_form/include_form.php');
+
+//Check status of the strategy
+$url = getSingleServerIpByUserId($mysqli, $_SESSION['user_id']);
+$url .= "/getActiveStrategies";
+
+$jsonString = sendCurlRequest($url, $data);
+$array = json_decode($jsonString, true);
+
+if ($array['error']) {
+    echo $array['error'];
+    exit;
+}
+
+// Initialisierung der Variablen für das Formular
+$arr = ['form' => [], 'class' => 'equal width'];
+
+if (!$array['activeStrategy'])
+    $arr['field'][] = array('type' => 'div', 'class' => 'fields');
+
+// Standardmäßig alle Buttons auf 'disabled' setzen
+$buttonsState = [
+    'startEmaHedge' => 'disabled',
+    'stopEmaHedge' => 'disabled',
+    'startManualHedge' => 'disabled',
+    'stopManualHedge' => 'disabled'
+];
+
+// Überprüfung, ob eine aktive Strategie vorhanden ist
+if (isset($array['activeStrategy'])) {
+    // Alle Buttons entfernen und nur den relevanten Stop-Button anzeigen
+    $buttonsState = [
+        'startEmaHedge' => false,
+        'stopEmaHedge' => false,
+        'startManualHedge' => false,
+        'stopManualHedge' => false
+    ];
+
+    // Den entsprechenden Stop-Button aktivieren
+    $buttonsState['stop' . $array['activeStrategy']] = true;
+} else {
+    // Wenn keine Strategie aktiv ist, alle Start-Buttons anzeigen und Stop-Buttons entfernen
+    $buttonsState = [
+        'startEmaHedge' => true,
+        'stopEmaHedge' => false, // Stop wird nicht angezeigt
+        'startManualHedge' => true,
+        'stopManualHedge' => false // Stop wird nicht angezeigt
+    ];
+}
+
+// Generieren des HTML-Formulars basierend auf dem Zustand der Buttons
+foreach ($buttonsState as $button => $show) {
+
+    $icon = strpos($button, 'start') !== false ? 'play' : 'stop';
+    $colorClass = strpos($button, 'start') !== false ? 'green' : 'red';
+
+    if ($show) {
+        // Button anzeigen
+        $buttonText = str_replace(['start', 'stop'], ['Start ', 'Stop '], $button); // Ersetzt 'start'/'stop' durch 'Start'/'Stop' im Button-Text
+        $arr['field'][$button] = [
+            'type' => 'button',
+            'value' => $buttonText,
+            'onclick' => "post_ema('$button')",
+            'class' => "large $colorClass fluid",
+            'icon' => $icon
+        ];
+    } else {
+        // Button nicht ins Array aufnehmen, um ihn nicht anzuzeigen
+        unset($arr['field'][$button]);
+    }
+}
+
+// Aufruf der Funktion, um das Formular zu erstellen und auszugeben
+if (!$array['activeStrategy'])
+    $arr['field'][] = array('type' => 'div_close');
+
+$output = call_form($arr);
+echo $output['html'];

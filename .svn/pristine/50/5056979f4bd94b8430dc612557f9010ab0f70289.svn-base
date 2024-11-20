@@ -1,0 +1,264 @@
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined variable $mysql_filter in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/data_mysql.php on line 76
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined variable $mysql_having in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/data_mysql.php on line 210
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "order" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/data_mysql.php on line 215
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/data_mysql.php on line 215
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "filter" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/data_mysql.php on line 219
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/data_mysql.php on line 219
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/data_mysql.php on line 219
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "th_top" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/header.php on line 28
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "checkbox" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 678
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "serial" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 692
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "th_bottom" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/header.php on line 34
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "checkbox" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 156
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "search" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 172
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 172
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "search" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 178
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 178
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined variable $total_tr in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 200
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "loading_time" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 210
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "flyout" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 222
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "close_hide" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 14
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "content" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 16
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "zindex" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 17
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "button" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 38
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "close_hide" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 14
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "content" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 16
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "zindex" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 17
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "button" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 38
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "close_hide" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 14
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "content" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 16
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "zindex" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 17
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "button" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 38
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined variable $output_table in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 234
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "content" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 235
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 235
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined variable $dropdown_order in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 238
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "auto_reload" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 242
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined variable $fields_filter in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 246
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined variable $dropdown_order in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 246
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "template" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 262
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "hide" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 267
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined variable $output_order in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 272
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "footer" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 278
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined variable $txt_count_filter in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 281
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined variable $txt_limitbar in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 281
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined variable $loading_time in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 281
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "content" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 286
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 286
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "db" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 288
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "export" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 291
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "table_reload" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 294
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined variable $jquery in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 303
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "js" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 318
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "checkbox" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 327
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined variable $add_checkbox_js in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 335
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined variable $add_js_text in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 342
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined variable $js in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 342
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined variable $add_js_src in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 344
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "hover" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 345
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined variable $output_array in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 351
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "html" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 351
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined variable $onchange in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 361
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "match" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 365
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "style" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 12
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "buttons" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 15
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 15
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "id" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 23
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "href" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 25
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "target" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 26
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "flyout" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 30
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 30
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 30
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Deprecated:  preg_replace(): Passing null to parameter #2 ($replacement) of type array|string is deprecated in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 38
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "focus" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 39
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "onclick" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 54
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "filter" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 60
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "single" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 66
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "popup" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 68
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined variable $button in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 87
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "buttons" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 97
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 97
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined variable $button_separat in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 100
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined variable $head_button in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 370
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "buttons" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 372
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 372
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined variable $button_export in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 404
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined array key "flyout" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 409
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined variable $modul_flyout in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 409
+[22-Oct-2023 07:28:38 Europe/Vienna] PHP Warning:  Undefined variable $js_list in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 411
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined variable $mysql_filter in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/data_mysql.php on line 76
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined variable $mysql_having in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/data_mysql.php on line 210
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "order" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/data_mysql.php on line 215
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/data_mysql.php on line 215
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "filter" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/data_mysql.php on line 219
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/data_mysql.php on line 219
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/data_mysql.php on line 219
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "th_top" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/header.php on line 28
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "checkbox" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 678
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "serial" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 692
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "th_bottom" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/header.php on line 34
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "checkbox" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 156
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "search" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 172
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 172
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "search" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 178
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 178
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined variable $total_tr in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 200
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "loading_time" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 210
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "flyout" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 222
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "close_hide" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 14
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "content" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 16
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "zindex" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 17
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "button" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 38
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "close_hide" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 14
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "content" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 16
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "zindex" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 17
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "button" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 38
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "close_hide" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 14
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "content" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 16
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "zindex" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 17
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "button" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 38
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined variable $output_table in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 234
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "content" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 235
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 235
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined variable $dropdown_order in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 238
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "auto_reload" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 242
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined variable $fields_filter in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 246
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined variable $dropdown_order in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 246
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "template" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 262
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "hide" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 267
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined variable $output_order in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 272
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "footer" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 278
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined variable $txt_count_filter in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 281
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined variable $txt_limitbar in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 281
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined variable $loading_time in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 281
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "content" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 286
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 286
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "db" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 288
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "export" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 291
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "table_reload" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 294
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined variable $jquery in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 303
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "js" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 318
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "checkbox" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 327
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined variable $add_checkbox_js in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 335
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined variable $add_js_text in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 342
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined variable $js in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 342
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined variable $add_js_src in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 344
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "hover" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 345
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined variable $output_array in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 351
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "html" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 351
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined variable $onchange in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 361
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "match" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 365
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "style" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 12
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "buttons" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 15
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 15
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "id" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 23
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "href" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 25
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "target" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 26
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "flyout" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 30
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 30
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 30
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Deprecated:  preg_replace(): Passing null to parameter #2 ($replacement) of type array|string is deprecated in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 38
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "focus" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 39
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "onclick" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 54
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "filter" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 60
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "single" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 66
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "popup" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 68
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined variable $button in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 87
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "buttons" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 97
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 97
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined variable $button_separat in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 100
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined variable $head_button in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 370
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "buttons" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 372
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 372
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined variable $button_export in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 404
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined array key "flyout" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 409
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined variable $modul_flyout in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 409
+[22-Oct-2023 07:28:40 Europe/Vienna] PHP Warning:  Undefined variable $js_list in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 411
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined variable $mysql_filter in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/data_mysql.php on line 76
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined variable $mysql_having in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/data_mysql.php on line 210
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "order" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/data_mysql.php on line 215
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/data_mysql.php on line 215
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "filter" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/data_mysql.php on line 219
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/data_mysql.php on line 219
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/data_mysql.php on line 219
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "th_top" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/header.php on line 28
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "checkbox" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 678
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "serial" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 692
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "th_bottom" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/header.php on line 34
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "checkbox" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 156
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "search" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 172
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 172
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "search" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 178
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 178
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined variable $total_tr in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 200
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "loading_time" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 210
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "flyout" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 222
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "close_hide" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 14
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "content" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 16
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "zindex" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 17
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "button" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 38
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "close_hide" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 14
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "content" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 16
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "zindex" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 17
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "button" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 38
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "close_hide" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 14
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "content" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 16
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "zindex" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 17
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "button" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/smart_functions.php on line 38
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined variable $output_table in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 234
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "content" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 235
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 235
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined variable $dropdown_order in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 238
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "auto_reload" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 242
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined variable $fields_filter in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 246
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined variable $dropdown_order in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 246
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "template" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 262
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "hide" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 267
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined variable $output_order in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 272
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "footer" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 278
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined variable $txt_count_filter in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 281
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined variable $txt_limitbar in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 281
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined variable $loading_time in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 281
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "content" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 286
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 286
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "db" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 288
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "export" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 291
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "table_reload" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 294
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined variable $jquery in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 303
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "js" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 318
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "checkbox" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 327
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined variable $add_checkbox_js in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 335
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined variable $add_js_text in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 342
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined variable $js in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 342
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined variable $add_js_src in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 344
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "hover" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 345
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined variable $output_array in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 351
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "html" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 351
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined variable $onchange in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 361
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "match" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 365
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "style" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 12
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "buttons" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 15
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 15
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "id" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 23
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "href" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 25
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "target" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 26
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "flyout" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 30
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 30
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 30
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Deprecated:  preg_replace(): Passing null to parameter #2 ($replacement) of type array|string is deprecated in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 38
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "focus" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 39
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "onclick" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 54
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "filter" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 60
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "single" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 66
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "popup" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 68
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined variable $button in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 87
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "buttons" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 97
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 97
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined variable $button_separat in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include/list/functions.php on line 100
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined variable $head_button in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 370
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "buttons" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 372
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Trying to access array offset on value of type null in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 372
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined variable $button_export in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 404
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined array key "flyout" in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 409
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined variable $modul_flyout in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 409
+[22-Oct-2023 07:29:24 Europe/Vienna] PHP Warning:  Undefined variable $js_list in /Applications/XAMPP/xamppfiles/htdocs/smart/smart7/ssi_smart/smart_form/include_list.php on line 411

@@ -1,0 +1,371 @@
+<?php
+include('../config_db.php');
+error_reporting(E_ERROR | E_PARSE);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+$connection = new mysqli($cfg_mysql['server'], $cfg_mysql['user'], $cfg_mysql['password'], $cfg_mysql['db']);
+
+if ($connection->connect_error) {
+    die("Verbindung fehlgeschlagen: " . $connection->connect_error);
+}
+
+//chart: https://www.chartjs.org/
+
+function fetchChartDataByServerId($connection)
+{
+    $results = [];
+
+    // Abruf der verfügbaren server_ids
+    $serversSql = "SELECT DISTINCT o.server_id, s.name AS server_name 
+                   FROM ssi_trader.orders AS o 
+                   JOIN ssi_trader.servers AS s ON o.server_id = s.server_id";
+    $serversResult = $connection->query($serversSql);
+
+    if ($serversResult && $serversResult->num_rows > 0) {
+        while ($server = $serversResult->fetch_assoc()) {
+            $serverId = $server['server_id'];
+            $serverName = $server['server_name'];
+
+            // Tage, Wochen, Monate Datenabfragen
+            $sqlHours = getSqlForHours($serverId);
+            $sqlDays = getSqlForDays($serverId);
+            $sqlWeeks = getSqlForWeeks($serverId);
+            $sqlMonths = getSqlForMonths($serverId);
+
+            // Ausführen der Abfragen und Speichern der Ergebnisse
+            $results[$serverId] = [
+                'server_name' => $serverName,
+                'hours' => fetchResults($connection, $sqlHours),
+                'days' => fetchResults($connection, $sqlDays),
+                'weeks' => fetchResults($connection, $sqlWeeks),
+                'months' => fetchResults($connection, $sqlMonths)
+            ];
+        }
+    }
+    return $results;
+}
+
+function fetchResults($connection, $sql)
+{
+    $result = $connection->query($sql);
+    $data = [];
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $data[] = ['label' => $row['label'], 'data' => $row['profit']];
+        }
+    }
+    return $data;
+}
+
+function getSqlForHours($serverId)
+{
+    return "SELECT hour AS label, IFNULL(SUM(hourly_profit), 0) AS profit
+            FROM (
+                SELECT HOUR(FROM_UNIXTIME(o.time)) AS hour, o.profit AS hourly_profit
+                FROM ssi_trader.orders AS o
+                WHERE o.server_id = $serverId AND o.time >= UNIX_TIMESTAMP(CURDATE() - INTERVAL 2 DAY)
+                UNION ALL
+                SELECT a.a AS hour, 0 AS hourly_profit
+                FROM (
+                    SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11
+                ) AS a
+            ) AS combined
+            GROUP BY hour
+            ORDER BY hour ASC";
+}
+
+function getSqlForDays($serverId)
+{
+    return "SELECT day AS label, IFNULL(SUM(daily_profit), 0) AS profit
+            FROM (
+                SELECT DATE(FROM_UNIXTIME(o.time)) AS day, o.profit AS daily_profit
+                FROM ssi_trader.orders AS o
+                WHERE o.server_id = $serverId AND o.time >= UNIX_TIMESTAMP(CURDATE() - INTERVAL 30 DAY)
+                UNION ALL
+                SELECT a.Date AS day, 0 AS daily_profit
+                FROM (
+                    SELECT CURDATE() - INTERVAL c.a DAY AS Date
+                    FROM (
+                        SELECT a.a + b.a * 10 AS a FROM 
+                        (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS a,
+                        (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3) AS b
+                    ) AS c
+                    WHERE c.a < 30
+                ) AS a
+                WHERE a.Date >= CURDATE() - INTERVAL 30 DAY
+            ) AS combined
+            GROUP BY day
+            ORDER BY day ASC";
+}
+
+function getSqlForWeeks($serverId)
+{
+    return "SELECT yearweek AS label, IFNULL(SUM(weekly_profit), 0) AS profit
+            FROM (
+                SELECT YEARWEEK(FROM_UNIXTIME(o.time)) AS yearweek, SUM(o.profit) AS weekly_profit
+                FROM ssi_trader.orders AS o
+                WHERE o.server_id = $serverId AND o.time >= UNIX_TIMESTAMP(CURDATE() - INTERVAL 4 WEEK)
+                GROUP BY yearweek
+                UNION ALL
+                SELECT YEARWEEK(a.Date) AS yearweek, 0 AS weekly_profit
+                FROM (
+                    SELECT CURDATE() - INTERVAL b.a * 7 DAY AS Date
+                    FROM (
+                        SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3
+                    ) AS b
+                ) AS a
+                WHERE a.Date >= CURDATE() - INTERVAL 4 WEEK
+            ) AS combined
+            GROUP BY yearweek
+            ORDER BY yearweek ASC";
+}
+
+function getSqlForMonths($serverId)
+{
+    return "SELECT yearmonth AS label, IFNULL(SUM(monthly_profit), 0) AS profit
+              FROM (
+                  SELECT DATE_FORMAT(FROM_UNIXTIME(o.time), '%Y-%m') AS yearmonth, SUM(o.profit) AS monthly_profit
+                  FROM ssi_trader.orders AS o
+                  WHERE o.server_id = $serverId AND o.time >= UNIX_TIMESTAMP(CURDATE() - INTERVAL 12 MONTH)
+                  GROUP BY yearmonth
+                  UNION ALL
+                  SELECT DATE_FORMAT(a.Date, '%Y-%m') AS yearmonth, 0 AS monthly_profit
+                  FROM (
+                      SELECT CURDATE() - INTERVAL b.a MONTH AS Date
+                      FROM (
+                          SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 
+                          UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11
+                      ) AS b
+                  ) AS a
+                  WHERE a.Date >= CURDATE() - INTERVAL 12 MONTH
+              ) AS combined
+              GROUP BY yearmonth
+              ORDER BY yearmonth ASC";
+}
+
+
+function fetchResultsWithDates($connection, $sql, $labelKey, $dataKey, $daysBack)
+{
+    $result = $connection->query($sql);
+    $data = [];
+    $datePointer = new DateTime(); // Heutiges Datum
+    $datePointer->modify('-' . ($daysBack - 1) . ' days'); // Startdatum setzen
+
+    if ($result) {
+        $rows = [];
+        while ($row = $result->fetch_assoc()) {
+            $rows[$row[$labelKey]] = $row[$dataKey];
+        }
+
+        for ($i = 0; $i < $daysBack; $i++) {
+            $dateStr = $datePointer->format('Y-m-d');
+            $data[] = ['label' => $dateStr, 'data' => isset($rows[$dateStr]) ? $rows[$dateStr] : 0];
+            $datePointer->modify('+1 day'); // Zum nächsten Tag gehen
+        }
+    }
+
+    return $data;
+}
+
+
+$chartDataByServerId = fetchChartDataByServerId($connection);
+
+// Farben und Server-IDs für JavaScript verfügbar machen
+$json_serverColors = json_encode($serverColors);
+
+// Farben für bis zu 20 Server vordefinieren
+$serverColors = [
+    "#1f77b4",
+    "#ff7f0e",
+    "#9467bd",
+    "#8c564b",
+    "#e377c2",
+    "#7f7f7f",
+    "#bcbd22",
+    "#17becf",
+    "#1a55FF",
+    "#FF5733",
+    "#33FF57",
+    "#8E44AD",
+    "#3498DB",
+    "#F1C40F",
+    "#E67E22",
+    "#E74C3C",
+    "#2ECC71",
+    "#16A085"
+];
+
+// Farben und Server-IDs für JavaScript verfügbar machen
+$json_serverColors = json_encode($serverColors);
+
+?>
+
+<select id="timeFrameSelect" class="ui dropdown">
+    <option value="hours">48 Stunden</option>
+    <option value="days" selected>Tage</option>
+    <option value="weeks">Wochen</option>
+    <option value="months">Monate</option>
+</select>
+
+<select id="chartTypeSelect" class="ui dropdown">
+    <option value="line">Liniendiagramm</option>
+    <option value="bar">Balkendiagramm</option>
+</select>
+
+
+<canvas id="lineChartCanvas"></canvas>
+<canvas id="barChartCanvas" style="display:none;"></canvas>
+
+<script>
+    $(document).ready(function () {
+
+        $('.ui.dropdown').dropdown();
+
+        const chartDataByServerId = <?= json_encode($chartDataByServerId); ?>;
+        const serverColors = <?= $json_serverColors; ?>;
+        let currentChart = null;
+
+        function getCurrentTimeFrameLabel(timeFrame) {
+            const now = new Date();
+            const options = { month: 'long', year: 'numeric', week: 'numeric' };
+
+            switch (timeFrame) {
+                case 'hours':
+                    const yesterday = new Date(now.getTime());
+                    yesterday.setDate(now.getDate() - 1);
+                    return 'Letzten 48 Stunden (' + yesterday.toLocaleDateString('de-DE') + ' - ' + now.toLocaleDateString('de-DE') + ')';
+                case 'days':
+                    return now.toLocaleDateString('de-DE', { month: 'long' }) + ' ' + now.getFullYear();
+                case 'weeks':
+                    // Beachten, dass 'week' nicht direkt von toLocaleDateString() unterstützt wird
+                    const oneJan = new Date(now.getFullYear(), 0, 1);
+                    const numberOfDays = Math.floor((now - oneJan) / (24 * 60 * 60 * 1000));
+                    const result = Math.ceil((now.getDay() + 1 + numberOfDays) / 7);
+                    return 'KW ' + result + ' ' + now.getFullYear();
+                case 'months':
+                    return now.getFullYear();
+                default:
+                    return '';
+            }
+        }
+
+        function applyBackgroundGradient(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+
+            // Erstelle den Farbverlauf
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, 'lightgreen'); // Oben
+            gradient.addColorStop(1, 'red'); // Unten
+
+            // Wende den Farbverlauf als Hintergrund an
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+
+        function updateChart(timeFrame, chartType) {
+            const datasets = [];
+            let labels = [];
+            const timeFrameLabel = getCurrentTimeFrameLabel(timeFrame);
+
+            // Bestimme, welches Canvas-Element genutzt werden soll
+            const canvasId = chartType === 'line' ? '#lineChartCanvas' : '#barChartCanvas';
+            const otherCanvasId = chartType === 'line' ? '#barChartCanvas' : '#lineChartCanvas';
+            $(otherCanvasId).hide();
+            $(canvasId).show();
+
+            // Bereite die Datasets vor
+            Object.keys(chartDataByServerId).forEach((serverId, index) => {
+                const serverInfo = chartDataByServerId[serverId];
+                const dataPoints = serverInfo[timeFrame];
+                const data = dataPoints.map(point => point.data);
+                if (labels.length === 0 && timeFrame !== 'weeks') {
+                    labels = dataPoints.map(point => point.label);
+                } else if (timeFrame === 'weeks' && labels.length === 0) {
+                    labels = dataPoints.map(point => {
+                        const year = point.label.substring(0, 4);
+                        const week = point.label.substring(4, 6);
+                        return `KW ${week}, ${year}`;
+                    });
+                }
+
+                const color = serverColors[index % serverColors.length];
+
+                datasets.push({
+                    label: serverInfo['server_name'] + ' (' + timeFrameLabel + ')',
+                    data: data,
+                    fill: false,
+                    borderColor: color,
+                    backgroundColor: color,
+                    tension: 0.4
+                });
+            });
+
+
+            // Zerstöre das aktuelle Chart, falls vorhanden
+            if (currentChart) currentChart.destroy();
+
+            const chartBackgroundPlugin = {
+                id: 'chartBackgroundPlugin',
+                beforeDraw: (chart, args, options) => {
+                    const ctx = chart.ctx;
+                    const chartArea = chart.chartArea;
+                    // Angepasste Farben für den oberen und unteren Bereich
+                    const topSideColor = options.topSideColor || '#E8F5E9'; // Zartes Grün für den oberen Bereich
+                    const bottomSideColor = options.bottomSideColor || '#FFEBEE'; // Zartes Rot für den unteren Bereich
+
+                    // Teile den vertikalen Raum in zwei Hälften
+                    const verticalMidPoint = (chartArea.bottom - chartArea.top) / 2 + chartArea.top;
+
+                    // Färbe oberen Bereich
+                    ctx.fillStyle = topSideColor;
+                    ctx.fillRect(chartArea.left, chartArea.top, chartArea.right - chartArea.left, verticalMidPoint - chartArea.top);
+
+                    // Färbe unteren Bereich
+                    ctx.fillStyle = bottomSideColor;
+                    ctx.fillRect(chartArea.left, verticalMidPoint, chartArea.right - chartArea.left, chartArea.bottom - verticalMidPoint);
+                }
+            };
+
+            // Beispiel für die Implementierung des Plugins in einem neuen Chart
+            currentChart = new Chart($(canvasId), {
+                type: chartType,
+                data: { labels: labels, datasets: datasets },
+                options: {
+                    scales: { y: { beginAtZero: true } },
+                    title: { display: true, text: 'Umsatzentwicklung ' + timeFrame + ' ' + timeFrameLabel },
+                    elements: {
+                        bar: {
+                            borderRadius: 20,
+                            borderWidth: 2,
+                        }
+                    },
+                    plugins: {
+                        chartBackgroundPlugin: {
+                            topSideColor: '#E8F5E9', // Zartes Grün für den oberen Bereich
+                            bottomSideColor: '#FFEBEE'  // Zartes Rot für den unteren Bereich
+                        }
+                    }
+                },
+                plugins: [chartBackgroundPlugin] // Registriere das Plugin
+            });
+
+
+        }
+
+
+        $('#timeFrameSelect').change(function () {
+            const chartType = $('#chartTypeSelect').val();
+            updateChart($(this).val(), chartType);
+        });
+
+        $('#chartTypeSelect').change(function () {
+            const timeFrame = $('#timeFrameSelect').val();
+            updateChart(timeFrame, $(this).val());
+        });
+
+        // Initialisiere das Chart mit Tagesansicht und Liniendiagramm
+        updateChart('days', 'line');
+    });
+</script>

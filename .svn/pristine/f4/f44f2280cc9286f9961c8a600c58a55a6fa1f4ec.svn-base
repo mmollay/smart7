@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket Filtered Demo</title>
+    <style>
+        #messages {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+            height: 200px;
+            overflow: auto;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            var socket = new WebSocket('ws://85.215.176.20:6969/ws'); // Update to the correct address
+            var messages = document.getElementById('messages');
+
+            function logMessage(message) {
+                const msgElement = document.createElement("div");
+                msgElement.textContent = message;
+                msgElement.style.color = "blue";
+                messages.appendChild(msgElement);
+
+                // Scroll to the bottom every time a new message is added
+                messages.scrollTop = messages.scrollHeight;
+            }
+
+            socket.onopen = function(event) {
+                logMessage('WebSocket connection established.');
+            };
+
+            socket.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                // Check if the message contains "GER30" symbol
+                if (data.SYMBOL === "GER30") {
+                    logMessage('Message from server: ' + event.data);
+                }
+            };
+
+            socket.onclose = function(event) {
+                logMessage('WebSocket connection closed.');
+            };
+
+            socket.onerror = function(error) {
+                logMessage('WebSocket error: ' + error);
+            };
+
+            document.getElementById('sendMessage').addEventListener('click', function() {
+                var message = document.getElementById('message').value;
+                socket.send(message);
+                logMessage('Sent to server: ' + message);
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2>WebSocket Filtered Demo</h2>
+    <div id="messages"></div>
+    <input type="text" id="message" placeholder="Type a message...">
+    <button id="sendMessage">Send Message</button>
+</body>
+</html>

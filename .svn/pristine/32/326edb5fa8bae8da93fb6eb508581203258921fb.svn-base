@@ -1,0 +1,103 @@
+<?php
+include (__DIR__ . '/../config.php');
+?>
+
+<div class="ui container">
+    <div class="ui raised very padded text segment">
+        <h1 class="ui teal header">Willkommen bei TradeMaster</h1>
+        <p>Lassen Sie Ihr Portfolio mit uns glänzen!</p>
+    </div>
+</div>
+
+
+<?php
+// include (__DIR__ . "/../smartform/include_list.php");
+// $array = call_list('../list/investment_array.php', '../config.php');
+// echo $array['html'] . $array['js'];
+
+
+// Überprüfen, ob die Client-ID gesetzt ist
+if (isset($_SESSION['client_id'])) {
+    $financials = getDepositAndOrderAmountByClientId($db, $_SESSION['client_id']);
+
+    if (is_null($financials)) {
+        $output = "<div class='ui message red'>Es gab einen Fehler bei der Abfrage Ihrer finanziellen Daten. Bitte versuchen Sie es später erneut.</div>";
+    } else {
+        $output = "
+            <div class='ui segments'>
+                <div class='ui segment'>
+                    <h3 class='ui header'>Finanzielle Übersicht</h3>
+                </div>
+                <div class='ui segment'>
+                    <table class='ui very basic collapsing celled table'>
+                        <tbody>
+                            <tr>
+                                <td><strong>Total Deposits:</strong></td>
+                                <td>€" . number_format($financials['total_deposit'], 2) . "</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Order Profit:</strong></td>
+                                <td><b>€" . number_format($financials['total_order_profit'], 2) . "</b></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Total:</strong></td>
+                                <td>€" . number_format($financials['total_deposit'] + $financials['adjusted_order_profit'], 2) . "</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>";
+    }
+} else {
+    $output = "<div class='ui message red'>Client ID ist nicht gesetzt. Bitte melden Sie sich an.</div>";
+}
+
+
+// Ausgabe auf der Webseite
+echo $output;
+
+function getDepositAndOrderAmountByClientId($mysqli, $clientId)
+{
+    // Sicherstellen, dass die clientId ordnungsgemäß für die SQL-Abfrage bereinigt wird
+    $clientId = $mysqli->real_escape_string($clientId);
+
+    // SQL-Abfrage erstellen, die sowohl deposits als auch orders betrachtet
+    $query = "
+        SELECT 
+            SUM(DISTINCT d.amount) AS total_deposit,
+            SUM(DISTINCT o.profit) AS total_order_profit,
+            CASE
+                WHEN SUM(DISTINCT o.profit) > 0 THEN SUM(DISTINCT o.profit) * c.positive_multiplier
+                ELSE SUM(DISTINCT o.profit) * c.negative_multiplier
+            END AS adjusted_order_profit
+        FROM ssi_trader.clients AS c
+        LEFT JOIN ssi_trader.deposits AS d ON c.client_id = d.client_id
+        LEFT JOIN ssi_trader.orders AS o ON c.account = o.account
+        WHERE c.client_id = '{$clientId}'
+        GROUP BY c.client_id
+    ";
+
+    // Abfrage ausführen
+    $result = $mysqli->query($query);
+
+    // Überprüfen, ob die Abfrage erfolgreich war
+    if ($result) {
+        // Ergebnis holen
+        $row = $result->fetch_assoc();
+        $result->free(); // Ressourcen freigeben
+        // Überprüfen, ob ein Ergebnis vorhanden ist und einen Wert zurückgeben
+        if ($row) {
+            return [
+                'total_deposit' => $row['total_deposit'] ? $row['total_deposit'] : 0,
+                'total_order_profit' => $row['total_order_profit'] ? $row['total_order_profit'] : 0,
+                'adjusted_order_profit' => $row['adjusted_order_profit'] ? $row['adjusted_order_profit'] : 0
+            ];
+        } else {
+            return ['total_deposit' => 0, 'total_order_profit' => 0, 'adjusted_order_profit' => 0]; // Keine Daten gefunden
+        }
+    } else {
+        // Fehlerbehandlung
+        error_log("SQL error in getDepositAndOrderAmountByClientId function: " . $mysqli->error);
+        return null; // Bei einem Fehler null zurückgeben
+    }
+}

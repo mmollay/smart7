@@ -1,0 +1,1270 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost
+-- Erstellungszeit: 18. Mrz 2024 um 11:00
+-- Server-Version: 10.4.28-MariaDB
+-- PHP-Version: 8.2.4
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+--
+-- Datenbank: `ssi_newsletter2`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `amazon_order`
+--
+
+CREATE TABLE `amazon_order` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `order_id` varchar(40) NOT NULL,
+  `amazon_promotion_id` varchar(255) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `merchant_order_id` varchar(40) DEFAULT NULL,
+  `shipment_id` varchar(40) DEFAULT NULL,
+  `shipment_item_id` varchar(40) DEFAULT NULL,
+  `amazon_order_item_id` varchar(40) DEFAULT NULL,
+  `merchant_order_item_id` varchar(40) DEFAULT NULL,
+  `purchase_date` datetime DEFAULT NULL,
+  `payments_date` datetime DEFAULT NULL,
+  `shipment_date` datetime DEFAULT NULL,
+  `reporting_date` datetime DEFAULT NULL,
+  `buyer_email` varchar(40) DEFAULT NULL,
+  `buyer_name` varchar(40) DEFAULT NULL,
+  `buyer_phone_number` varchar(40) DEFAULT NULL,
+  `sku` varchar(40) DEFAULT NULL,
+  `product_name` varchar(40) DEFAULT NULL,
+  `quantity_shipped` int(11) DEFAULT NULL,
+  `currency` varchar(10) DEFAULT NULL,
+  `item_price` decimal(10,2) DEFAULT NULL,
+  `item_tax` decimal(10,2) DEFAULT NULL,
+  `shipping_price` decimal(10,2) DEFAULT NULL,
+  `shipping_tax` decimal(10,2) DEFAULT NULL,
+  `gift_wrap_price` decimal(10,2) DEFAULT NULL,
+  `gift_wrap_tax` decimal(10,2) DEFAULT NULL,
+  `ship_service_level` varchar(40) DEFAULT NULL,
+  `recipient_name` varchar(40) DEFAULT NULL,
+  `ship_address_1` varchar(100) DEFAULT NULL,
+  `ship_address_2` varchar(100) DEFAULT NULL,
+  `ship_address_3` varchar(100) DEFAULT NULL,
+  `ship_city` varchar(40) DEFAULT NULL,
+  `ship_state` varchar(40) DEFAULT NULL,
+  `ship_postal_code` varchar(10) DEFAULT NULL,
+  `ship_country` varchar(10) DEFAULT NULL,
+  `ship_phone_number` varchar(40) DEFAULT NULL,
+  `bill_address_1` varchar(100) DEFAULT NULL,
+  `bill_address_2` varchar(100) DEFAULT NULL,
+  `bill_address_3` varchar(100) DEFAULT NULL,
+  `bill_city` varchar(40) DEFAULT NULL,
+  `bill_state` varchar(40) DEFAULT NULL,
+  `bill_postal_code` varchar(10) DEFAULT NULL,
+  `bill_country` varchar(10) DEFAULT NULL,
+  `item_promotion_discount` decimal(10,2) DEFAULT NULL,
+  `ship_promotion_discount` decimal(10,2) DEFAULT NULL,
+  `carrier` decimal(10,2) DEFAULT NULL,
+  `tracking_number` varchar(40) DEFAULT NULL,
+  `estimated_arrival_date` datetime DEFAULT NULL,
+  `fulfillment_center_id` varchar(40) DEFAULT NULL,
+  `fulfillment_channel` varchar(40) DEFAULT NULL,
+  `sales_channel` varchar(40) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `amazon_report`
+--
+
+CREATE TABLE `amazon_report` (
+  `report_id` varchar(40) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `blacklist`
+--
+
+CREATE TABLE `blacklist` (
+  `black_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `comment` varchar(200) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `client_logfile`
+--
+
+CREATE TABLE `client_logfile` (
+  `id` int(11) NOT NULL,
+  `ip` varchar(50) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `email` varchar(100) NOT NULL,
+  `contact_id` int(11) NOT NULL,
+  `domain` varchar(100) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Logfile for the User-registration';
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `code`
+--
+
+CREATE TABLE `code` (
+  `code_id` int(11) NOT NULL,
+  `promotion_id` int(11) NOT NULL,
+  `contact_id` int(11) NOT NULL,
+  `code` varchar(100) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `contact`
+--
+
+CREATE TABLE `contact` (
+  `contact_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL DEFAULT 0,
+  `matchcode` varchar(50) NOT NULL DEFAULT '',
+  `email` varchar(80) NOT NULL DEFAULT '',
+  `title` varchar(20) NOT NULL,
+  `sex` varchar(1) NOT NULL DEFAULT '0',
+  `grad` varchar(60) NOT NULL DEFAULT '',
+  `firstname` varchar(50) NOT NULL DEFAULT '',
+  `secondname` varchar(50) NOT NULL DEFAULT '',
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `commend` text NOT NULL,
+  `commend2` text NOT NULL,
+  `activate` tinyint(1) NOT NULL DEFAULT 1,
+  `second_field` varchar(150) NOT NULL DEFAULT '',
+  `return_error` tinyint(1) NOT NULL COMMENT 'wenn Email nicht zugestellt werden kann',
+  `verify_key` varchar(80) DEFAULT NULL COMMENT 'Freischaltecode um Email-frei zuschalten',
+  `birth` date DEFAULT current_timestamp(),
+  `company_1` varchar(100) NOT NULL,
+  `company_2` varchar(100) NOT NULL,
+  `street` varchar(100) NOT NULL,
+  `city` varchar(50) NOT NULL,
+  `zip` int(6) NOT NULL,
+  `country` varchar(50) NOT NULL,
+  `reg_ip` varchar(100) NOT NULL,
+  `reg_date` datetime NOT NULL,
+  `reg_domain` varchar(150) NOT NULL,
+  `telefon` varchar(30) NOT NULL,
+  `client_number` int(11) NOT NULL,
+  `web` varchar(250) NOT NULL,
+  `placeholder1` varchar(255) NOT NULL,
+  `placeholder2` varchar(255) NOT NULL,
+  `placeholder3` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `contact2tag`
+--
+
+CREATE TABLE `contact2tag` (
+  `tag_id` int(10) NOT NULL DEFAULT 0,
+  `contact_id` int(10) NOT NULL DEFAULT 0,
+  `activate` tinyint(1) NOT NULL,
+  `verify_key` varchar(70) NOT NULL,
+  `reg_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `set_listbuilding` int(11) NOT NULL COMMENT 'Insert for listbuilding without NL set'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `contact_id2landingpage_id`
+--
+
+CREATE TABLE `contact_id2landingpage_id` (
+  `id` int(11) NOT NULL,
+  `landingpage_id` int(11) NOT NULL,
+  `contact_id` int(11) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `contact_test`
+--
+
+CREATE TABLE `contact_test` (
+  `contact_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL DEFAULT 0,
+  `matchcode` varchar(50) NOT NULL DEFAULT '',
+  `email` varchar(80) NOT NULL DEFAULT '',
+  `title` varchar(20) NOT NULL,
+  `sex` varchar(1) NOT NULL DEFAULT '0',
+  `grad` varchar(60) NOT NULL DEFAULT '',
+  `firstname` varchar(50) NOT NULL DEFAULT '',
+  `secondname` varchar(50) NOT NULL DEFAULT '',
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `commend` text NOT NULL,
+  `commend2` text NOT NULL,
+  `activate` tinyint(1) NOT NULL DEFAULT 1,
+  `second_field` varchar(150) NOT NULL DEFAULT '',
+  `return_error` tinyint(1) NOT NULL COMMENT 'wenn Email nicht zugestellt werden kann',
+  `verify_key` varchar(80) DEFAULT NULL COMMENT 'Freischaltecode um Email-frei zuschalten',
+  `birth` date DEFAULT current_timestamp(),
+  `company_1` varchar(100) NOT NULL,
+  `company_2` varchar(100) NOT NULL,
+  `street` varchar(100) NOT NULL,
+  `city` varchar(50) NOT NULL,
+  `zip` int(6) NOT NULL,
+  `country` varchar(50) NOT NULL,
+  `reg_ip` varchar(100) NOT NULL,
+  `reg_date` datetime NOT NULL,
+  `reg_domain` varchar(150) NOT NULL,
+  `telefon` varchar(30) NOT NULL,
+  `client_number` int(11) NOT NULL,
+  `web` varchar(250) NOT NULL,
+  `tel` varchar(100) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `followup`
+--
+
+CREATE TABLE `followup` (
+  `followup_id` int(11) NOT NULL,
+  `pool_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `sorted` int(4) NOT NULL,
+  `matchcode` varchar(50) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `description` mediumtext NOT NULL,
+  `trigger_modus` varchar(40) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `followup_mail`
+--
+
+CREATE TABLE `followup_mail` (
+  `mail_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `from_id` int(11) NOT NULL,
+  `matchcode` varchar(50) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `text` mediumtext NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `followup_mail_logfile`
+--
+
+CREATE TABLE `followup_mail_logfile` (
+  `id` int(11) NOT NULL,
+  `session_id` int(11) NOT NULL,
+  `email` varchar(200) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `traffic` int(11) NOT NULL,
+  `sendtime` datetime NOT NULL,
+  `sendet` int(1) NOT NULL,
+  `mail_info` varchar(100) NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `verify_key` varchar(50) NOT NULL,
+  `MessageID` varchar(25) NOT NULL,
+  `status` varchar(20) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `followup_pool`
+--
+
+CREATE TABLE `followup_pool` (
+  `pool_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `start_followup_id` int(11) NOT NULL,
+  `matchcode` varchar(200) NOT NULL,
+  `description` mediumtext NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `followup_send`
+--
+
+CREATE TABLE `followup_send` (
+  `send_id` int(11) NOT NULL,
+  `mail_id` int(11) NOT NULL,
+  `contact_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `email` varchar(200) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `traffic` int(11) NOT NULL,
+  `verify_key` varchar(50) NOT NULL,
+  `MessageID` varchar(25) NOT NULL,
+  `status` varchar(20) NOT NULL,
+  `mail_info` varchar(50) NOT NULL,
+  `send_time` datetime NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `formular`
+--
+
+CREATE TABLE `formular` (
+  `form_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `camp_key` varchar(60) NOT NULL,
+  `from_id` int(11) NOT NULL,
+  `promotion_id` int(11) NOT NULL,
+  `matchcode` varchar(100) NOT NULL,
+  `description` varchar(250) NOT NULL,
+  `tag_id` varchar(20) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `emailtitle_reg` varchar(120) NOT NULL,
+  `emailtext_reg` mediumtext NOT NULL,
+  `emailtitle_reg_success` varchar(120) NOT NULL,
+  `emailtext_reg_success` mediumtext NOT NULL,
+  `text_reg` mediumtext NOT NULL,
+  `link_reg` varchar(200) NOT NULL,
+  `text_reg_success` mediumtext NOT NULL,
+  `link_reg_success` varchar(200) NOT NULL,
+  `text_user_exists_inactive` varchar(255) NOT NULL,
+  `text_user_exists_active` varchar(255) NOT NULL,
+  `text_user_exists_set_inactive` varchar(255) NOT NULL,
+  `text_promotion_codes_used_up` varchar(255) NOT NULL,
+  `followup_mail_id` int(11) NOT NULL,
+  `alert` int(6) NOT NULL,
+  `alert_email` int(11) NOT NULL,
+  `add_contact_faktura` int(1) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `formular2tag`
+--
+
+CREATE TABLE `formular2tag` (
+  `form_id` int(11) NOT NULL,
+  `tag_id` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `formular_design`
+--
+
+CREATE TABLE `formular_design` (
+  `formdesign_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `comp_id` int(11) NOT NULL,
+  `camp_key` varchar(100) NOT NULL,
+  `matchcode` varchar(50) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `setting_array` mediumtext NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `f_action2followup`
+--
+
+CREATE TABLE `f_action2followup` (
+  `followup_id` int(11) NOT NULL,
+  `mail_id` int(11) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `f_action2tag`
+--
+
+CREATE TABLE `f_action2tag` (
+  `followup_id` int(11) NOT NULL,
+  `tag_id` int(11) NOT NULL,
+  `no` tinyint(1) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `f_mail2followup`
+--
+
+CREATE TABLE `f_mail2followup` (
+  `mail_id` int(11) NOT NULL,
+  `followup_id` int(11) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `f_trigger2followup`
+--
+
+CREATE TABLE `f_trigger2followup` (
+  `followup_id` int(11) NOT NULL,
+  `step_id` int(11) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `f_trigger2listbuilding`
+--
+
+CREATE TABLE `f_trigger2listbuilding` (
+  `followup_id` int(11) NOT NULL,
+  `listbuilding_id` int(11) NOT NULL,
+  `no` tinyint(1) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `new` tinyint(1) NOT NULL,
+  `open` int(1) NOT NULL,
+  `click` int(1) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `f_trigger2mail`
+--
+
+CREATE TABLE `f_trigger2mail` (
+  `followup_id` int(11) NOT NULL,
+  `mail_id` int(11) NOT NULL,
+  `no` tinyint(1) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `new` tinyint(1) NOT NULL,
+  `open` int(1) NOT NULL,
+  `click` int(1) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `f_trigger2tag`
+--
+
+CREATE TABLE `f_trigger2tag` (
+  `followup_id` int(11) NOT NULL,
+  `tag_id` int(11) NOT NULL,
+  `no` tinyint(1) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `new` tinyint(1) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `f_trigger2time`
+--
+
+CREATE TABLE `f_trigger2time` (
+  `time_id` int(11) NOT NULL,
+  `mode` varchar(10) NOT NULL,
+  `followup_id` int(11) NOT NULL,
+  `send_time` datetime NOT NULL,
+  `day` int(4) NOT NULL,
+  `hour` int(4) NOT NULL,
+  `min` int(5) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `landingpage`
+--
+
+CREATE TABLE `landingpage` (
+  `landingpage_id` int(11) NOT NULL,
+  `session_id` int(11) NOT NULL,
+  `link` varchar(200) NOT NULL,
+  `key` varchar(50) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `link`
+--
+
+CREATE TABLE `link` (
+  `link_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `token` varchar(70) NOT NULL,
+  `link` varchar(150) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `link2tag`
+--
+
+CREATE TABLE `link2tag` (
+  `link_id` int(11) NOT NULL,
+  `tag_id` int(11) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `logfile`
+--
+
+CREATE TABLE `logfile` (
+  `id` int(11) NOT NULL,
+  `session_id` int(11) NOT NULL,
+  `email` varchar(200) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `traffic` int(11) NOT NULL,
+  `sendtime` datetime NOT NULL,
+  `sendet` int(1) NOT NULL,
+  `mail_info` varchar(100) NOT NULL,
+  `error` tinyint(1) NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `firstname` varchar(100) NOT NULL,
+  `secondname` varchar(100) NOT NULL,
+  `sex` varchar(1) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `company_1` varchar(100) NOT NULL,
+  `company_2` varchar(100) NOT NULL,
+  `street` varchar(100) NOT NULL,
+  `city` varchar(50) NOT NULL,
+  `zip` int(6) NOT NULL,
+  `country` varchar(50) NOT NULL,
+  `birth` date NOT NULL,
+  `verify_key` varchar(80) NOT NULL,
+  `modul` varchar(40) NOT NULL,
+  `no_unsubscribe` int(1) NOT NULL,
+  `without_footline` int(1) NOT NULL,
+  `allow_email_duplicate` int(1) NOT NULL,
+  `error_counter` int(1) NOT NULL,
+  `MessageID` bigint(25) NOT NULL,
+  `status` varchar(20) NOT NULL,
+  `followup_id` int(11) NOT NULL,
+  `client_number` int(11) NOT NULL,
+  `placeholder1` varchar(250) NOT NULL,
+  `placeholder2` varchar(250) NOT NULL,
+  `placeholder3` varchar(250) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `promotion`
+--
+
+CREATE TABLE `promotion` (
+  `promotion_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `amazon_promotion_id` varchar(255) NOT NULL,
+  `amazon_matchcode` varchar(200) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `desc` varchar(250) NOT NULL,
+  `type` set('basic','amazon','','') NOT NULL,
+  `date_start` datetime NOT NULL,
+  `date_end` datetime NOT NULL,
+  `basic_offer` decimal(13,3) NOT NULL,
+  `special_offer` decimal(13,3) NOT NULL,
+  `count_used` int(10) NOT NULL,
+  `alert_empty_code` int(5) NOT NULL,
+  `max_codes_per_day` int(4) NOT NULL,
+  `codes_distribution_start_time` time NOT NULL,
+  `discount_amount` decimal(13,3) NOT NULL,
+  `amazon_asin` varchar(20) NOT NULL,
+  `amazon_product_url` varchar(200) NOT NULL,
+  `code_start_time` time NOT NULL,
+  `code_formular_threshold` int(3) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `sender`
+--
+
+CREATE TABLE `sender` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `from_name` varchar(200) NOT NULL,
+  `from_email` varchar(40) NOT NULL,
+  `replay_email` varchar(120) NOT NULL,
+  `replay_name` varchar(150) NOT NULL,
+  `smtp_server` varchar(40) NOT NULL,
+  `smtp_user` varchar(40) NOT NULL,
+  `smtp_password` varchar(40) NOT NULL,
+  `smtp_secure` varchar(10) NOT NULL,
+  `smtp_port` int(6) NOT NULL,
+  `test_email` varchar(50) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `session`
+--
+
+CREATE TABLE `session` (
+  `session_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `label_id` int(11) NOT NULL,
+  `counter` int(11) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `text` mediumtext NOT NULL,
+  `datetime_start` timestamp NOT NULL DEFAULT current_timestamp(),
+  `datetime_end` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `modus` varchar(10) NOT NULL,
+  `from_name` varchar(100) NOT NULL,
+  `from_email` varchar(100) NOT NULL,
+  `replay_email` varchar(200) NOT NULL,
+  `replay_name` varchar(200) NOT NULL,
+  `error_email` varchar(100) NOT NULL,
+  `report_email` varchar(100) NOT NULL,
+  `size` int(11) NOT NULL,
+  `release` tinyint(1) NOT NULL,
+  `smtp_server` varchar(40) NOT NULL,
+  `smtp_user` varchar(40) NOT NULL,
+  `smtp_password` varchar(40) NOT NULL,
+  `smtp_secure` varchar(40) NOT NULL,
+  `smtp_port` int(6) NOT NULL,
+  `test_email` varchar(50) NOT NULL,
+  `sender_id` int(11) NOT NULL,
+  `tag_id` varchar(100) NOT NULL,
+  `tag_id_minus` varchar(200) NOT NULL,
+  `from_id` int(11) NOT NULL,
+  `all_user` int(1) NOT NULL,
+  `allow_email_duplicate` int(1) NOT NULL,
+  `status` int(1) NOT NULL,
+  `without_footline` int(1) NOT NULL,
+  `send_date` datetime NOT NULL,
+  `send_auto` int(1) NOT NULL,
+  `delivery_system` varchar(15) NOT NULL,
+  `remove_nl` int(1) NOT NULL COMMENT 'Papierkorpfunktion - 1 ist in Papierkorb',
+  `array_contact_id` text NOT NULL,
+  `array_contact_id_minus` text NOT NULL,
+  `followup_id` int(11) NOT NULL COMMENT 'diese Aussendung wurde ueber followup sequemz generiert'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `session_logfile`
+--
+
+CREATE TABLE `session_logfile` (
+  `log_id` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `session_id` int(11) NOT NULL,
+  `text` varchar(200) NOT NULL,
+  `type` varchar(10) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `setting`
+--
+
+CREATE TABLE `setting` (
+  `user_id` int(11) NOT NULL,
+  `default_from_id` int(11) NOT NULL,
+  `delivery_system` varchar(20) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `mws_merchant_id_eu` varchar(40) NOT NULL,
+  `mws_auth_token_eu` varchar(40) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `status_log`
+--
+
+CREATE TABLE `status_log` (
+  `status_id` int(11) NOT NULL,
+  `message_id` bigint(20) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `event` varchar(11) NOT NULL,
+  `email` varchar(200) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='status von Maijet';
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `tag`
+--
+
+CREATE TABLE `tag` (
+  `tag_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL DEFAULT 0,
+  `title` varchar(100) NOT NULL DEFAULT '',
+  `reg_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `description` varchar(200) NOT NULL,
+  `session_id` int(11) NOT NULL,
+  `event` varchar(10) NOT NULL,
+  `alert` int(6) NOT NULL,
+  `alert_email` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `tag2tag`
+--
+
+CREATE TABLE `tag2tag` (
+  `tag_id` int(11) NOT NULL,
+  `to_tag_id` int(11) NOT NULL,
+  `mode` set('add','remove') NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `templates`
+--
+
+CREATE TABLE `templates` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `matchcode` varchar(100) NOT NULL,
+  `title` varchar(120) NOT NULL,
+  `text` mediumtext NOT NULL,
+  `format` int(1) NOT NULL,
+  `label_id` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `test`
+--
+
+CREATE TABLE `test` (
+  `id` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `user_logfile`
+--
+
+CREATE TABLE `user_logfile` (
+  `log_id` int(11) NOT NULL,
+  `session_id` int(11) NOT NULL,
+  `contact_id` int(11) NOT NULL,
+  `log_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `remote_ip` varchar(50) NOT NULL,
+  `msg` varchar(50) NOT NULL,
+  `status_id` int(3) NOT NULL,
+  `modul` varchar(10) NOT NULL,
+  `system` varchar(10) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `verification`
+--
+
+CREATE TABLE `verification` (
+  `verify_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `email` varchar(70) NOT NULL,
+  `verify_key` varchar(70) NOT NULL,
+  `checked` int(1) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `ip` varchar(50) NOT NULL,
+  `check_date` datetime NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Indizes der exportierten Tabellen
+--
+
+--
+-- Indizes für die Tabelle `amazon_order`
+--
+ALTER TABLE `amazon_order`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `order_id` (`order_id`);
+
+--
+-- Indizes für die Tabelle `amazon_report`
+--
+ALTER TABLE `amazon_report`
+  ADD PRIMARY KEY (`report_id`);
+
+--
+-- Indizes für die Tabelle `blacklist`
+--
+ALTER TABLE `blacklist`
+  ADD PRIMARY KEY (`black_id`);
+
+--
+-- Indizes für die Tabelle `client_logfile`
+--
+ALTER TABLE `client_logfile`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `contact_id` (`contact_id`);
+
+--
+-- Indizes für die Tabelle `code`
+--
+ALTER TABLE `code`
+  ADD PRIMARY KEY (`code_id`),
+  ADD UNIQUE KEY `code` (`code`);
+
+--
+-- Indizes für die Tabelle `contact`
+--
+ALTER TABLE `contact`
+  ADD PRIMARY KEY (`contact_id`),
+  ADD KEY `email_2` (`email`),
+  ADD KEY `user_id` (`user_id`);
+ALTER TABLE `contact` ADD FULLTEXT KEY `email` (`email`,`firstname`,`secondname`);
+
+--
+-- Indizes für die Tabelle `contact2tag`
+--
+ALTER TABLE `contact2tag`
+  ADD PRIMARY KEY (`tag_id`,`contact_id`),
+  ADD KEY `contact_id` (`contact_id`),
+  ADD KEY `reg_date` (`reg_date`);
+
+--
+-- Indizes für die Tabelle `contact_id2landingpage_id`
+--
+ALTER TABLE `contact_id2landingpage_id`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `landingpage_id` (`landingpage_id`,`contact_id`);
+
+--
+-- Indizes für die Tabelle `contact_test`
+--
+ALTER TABLE `contact_test`
+  ADD PRIMARY KEY (`contact_id`),
+  ADD KEY `email_2` (`email`),
+  ADD KEY `user_id` (`user_id`);
+ALTER TABLE `contact_test` ADD FULLTEXT KEY `email` (`email`,`firstname`,`secondname`);
+
+--
+-- Indizes für die Tabelle `followup`
+--
+ALTER TABLE `followup`
+  ADD PRIMARY KEY (`followup_id`),
+  ADD KEY `pool_id` (`pool_id`);
+
+--
+-- Indizes für die Tabelle `followup_mail`
+--
+ALTER TABLE `followup_mail`
+  ADD PRIMARY KEY (`mail_id`);
+
+--
+-- Indizes für die Tabelle `followup_mail_logfile`
+--
+ALTER TABLE `followup_mail_logfile`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `session_id` (`session_id`,`sendet`);
+
+--
+-- Indizes für die Tabelle `followup_pool`
+--
+ALTER TABLE `followup_pool`
+  ADD PRIMARY KEY (`pool_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indizes für die Tabelle `followup_send`
+--
+ALTER TABLE `followup_send`
+  ADD PRIMARY KEY (`send_id`),
+  ADD KEY `session_id` (`mail_id`);
+
+--
+-- Indizes für die Tabelle `formular`
+--
+ALTER TABLE `formular`
+  ADD PRIMARY KEY (`form_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indizes für die Tabelle `formular2tag`
+--
+ALTER TABLE `formular2tag`
+  ADD PRIMARY KEY (`form_id`,`tag_id`);
+
+--
+-- Indizes für die Tabelle `formular_design`
+--
+ALTER TABLE `formular_design`
+  ADD PRIMARY KEY (`formdesign_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `comp_id` (`comp_id`),
+  ADD KEY `camp_key` (`camp_key`);
+
+--
+-- Indizes für die Tabelle `f_action2followup`
+--
+ALTER TABLE `f_action2followup`
+  ADD PRIMARY KEY (`followup_id`,`mail_id`);
+
+--
+-- Indizes für die Tabelle `f_action2tag`
+--
+ALTER TABLE `f_action2tag`
+  ADD PRIMARY KEY (`followup_id`,`tag_id`,`no`);
+
+--
+-- Indizes für die Tabelle `f_mail2followup`
+--
+ALTER TABLE `f_mail2followup`
+  ADD PRIMARY KEY (`mail_id`,`followup_id`);
+
+--
+-- Indizes für die Tabelle `f_trigger2followup`
+--
+ALTER TABLE `f_trigger2followup`
+  ADD PRIMARY KEY (`followup_id`,`step_id`);
+
+--
+-- Indizes für die Tabelle `f_trigger2listbuilding`
+--
+ALTER TABLE `f_trigger2listbuilding`
+  ADD PRIMARY KEY (`followup_id`,`listbuilding_id`,`no`,`new`);
+
+--
+-- Indizes für die Tabelle `f_trigger2mail`
+--
+ALTER TABLE `f_trigger2mail`
+  ADD PRIMARY KEY (`followup_id`,`mail_id`,`no`,`new`);
+
+--
+-- Indizes für die Tabelle `f_trigger2tag`
+--
+ALTER TABLE `f_trigger2tag`
+  ADD PRIMARY KEY (`followup_id`,`tag_id`,`no`,`new`);
+
+--
+-- Indizes für die Tabelle `f_trigger2time`
+--
+ALTER TABLE `f_trigger2time`
+  ADD PRIMARY KEY (`time_id`);
+
+--
+-- Indizes für die Tabelle `landingpage`
+--
+ALTER TABLE `landingpage`
+  ADD PRIMARY KEY (`landingpage_id`),
+  ADD KEY `newsletter_id` (`session_id`);
+
+--
+-- Indizes für die Tabelle `link`
+--
+ALTER TABLE `link`
+  ADD PRIMARY KEY (`link_id`);
+
+--
+-- Indizes für die Tabelle `link2tag`
+--
+ALTER TABLE `link2tag`
+  ADD PRIMARY KEY (`link_id`,`tag_id`);
+
+--
+-- Indizes für die Tabelle `logfile`
+--
+ALTER TABLE `logfile`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `session_id` (`session_id`,`client_id`,`status`);
+
+--
+-- Indizes für die Tabelle `promotion`
+--
+ALTER TABLE `promotion`
+  ADD PRIMARY KEY (`promotion_id`);
+
+--
+-- Indizes für die Tabelle `sender`
+--
+ALTER TABLE `sender`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indizes für die Tabelle `session`
+--
+ALTER TABLE `session`
+  ADD PRIMARY KEY (`session_id`),
+  ADD KEY `option_id` (`sender_id`),
+  ADD KEY `label_id` (`label_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `from_email` (`from_email`),
+  ADD KEY `followup_id` (`followup_id`),
+  ADD KEY `tag_id` (`tag_id`);
+
+--
+-- Indizes für die Tabelle `session_logfile`
+--
+ALTER TABLE `session_logfile`
+  ADD PRIMARY KEY (`log_id`);
+
+--
+-- Indizes für die Tabelle `setting`
+--
+ALTER TABLE `setting`
+  ADD PRIMARY KEY (`user_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indizes für die Tabelle `status_log`
+--
+ALTER TABLE `status_log`
+  ADD PRIMARY KEY (`status_id`),
+  ADD KEY `message_id` (`message_id`),
+  ADD KEY `event` (`event`);
+
+--
+-- Indizes für die Tabelle `tag`
+--
+ALTER TABLE `tag`
+  ADD PRIMARY KEY (`tag_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `session_id` (`session_id`);
+
+--
+-- Indizes für die Tabelle `tag2tag`
+--
+ALTER TABLE `tag2tag`
+  ADD PRIMARY KEY (`tag_id`,`to_tag_id`);
+
+--
+-- Indizes für die Tabelle `templates`
+--
+ALTER TABLE `templates`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indizes für die Tabelle `user_logfile`
+--
+ALTER TABLE `user_logfile`
+  ADD PRIMARY KEY (`log_id`),
+  ADD KEY `status_id` (`status_id`),
+  ADD KEY `contact_id` (`contact_id`),
+  ADD KEY `session_id` (`session_id`,`remote_ip`);
+
+--
+-- Indizes für die Tabelle `verification`
+--
+ALTER TABLE `verification`
+  ADD PRIMARY KEY (`verify_id`),
+  ADD KEY `email` (`email`);
+
+--
+-- AUTO_INCREMENT für exportierte Tabellen
+--
+
+--
+-- AUTO_INCREMENT für Tabelle `amazon_order`
+--
+ALTER TABLE `amazon_order`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `blacklist`
+--
+ALTER TABLE `blacklist`
+  MODIFY `black_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `client_logfile`
+--
+ALTER TABLE `client_logfile`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `code`
+--
+ALTER TABLE `code`
+  MODIFY `code_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `contact`
+--
+ALTER TABLE `contact`
+  MODIFY `contact_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `contact_id2landingpage_id`
+--
+ALTER TABLE `contact_id2landingpage_id`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `contact_test`
+--
+ALTER TABLE `contact_test`
+  MODIFY `contact_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `followup`
+--
+ALTER TABLE `followup`
+  MODIFY `followup_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `followup_mail`
+--
+ALTER TABLE `followup_mail`
+  MODIFY `mail_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `followup_mail_logfile`
+--
+ALTER TABLE `followup_mail_logfile`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `followup_pool`
+--
+ALTER TABLE `followup_pool`
+  MODIFY `pool_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `followup_send`
+--
+ALTER TABLE `followup_send`
+  MODIFY `send_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `formular`
+--
+ALTER TABLE `formular`
+  MODIFY `form_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `formular_design`
+--
+ALTER TABLE `formular_design`
+  MODIFY `formdesign_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `f_trigger2followup`
+--
+ALTER TABLE `f_trigger2followup`
+  MODIFY `followup_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `f_trigger2time`
+--
+ALTER TABLE `f_trigger2time`
+  MODIFY `time_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `landingpage`
+--
+ALTER TABLE `landingpage`
+  MODIFY `landingpage_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `link`
+--
+ALTER TABLE `link`
+  MODIFY `link_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `logfile`
+--
+ALTER TABLE `logfile`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `promotion`
+--
+ALTER TABLE `promotion`
+  MODIFY `promotion_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `sender`
+--
+ALTER TABLE `sender`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `session`
+--
+ALTER TABLE `session`
+  MODIFY `session_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `session_logfile`
+--
+ALTER TABLE `session_logfile`
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `status_log`
+--
+ALTER TABLE `status_log`
+  MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `tag`
+--
+ALTER TABLE `tag`
+  MODIFY `tag_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `templates`
+--
+ALTER TABLE `templates`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `user_logfile`
+--
+ALTER TABLE `user_logfile`
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `verification`
+--
+ALTER TABLE `verification`
+  MODIFY `verify_id` int(11) NOT NULL AUTO_INCREMENT;
+COMMIT;

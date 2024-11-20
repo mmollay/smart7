@@ -1,0 +1,19 @@
+<?
+include(__DIR__ . "/../config.inc.php");
+
+//Hier werden die Token erzeugt und in der Session gespeichert
+
+$serverIps = getAllServerIps($mysqli);
+
+foreach ($serverIps as $serverInfo) {
+    $serverIp = $serverInfo['url'];
+    $server_id = $serverInfo['server_id'];
+    $get_token[$server_id] = getToken($serverIp, $username, $password);
+    $token = $_SESSION['token'][$server_id] = $get_token[$server_id];
+    echo "Token for server " . $serverInfo['name'] . " is: " . $_SESSION['token'][$server_id] . "<br>";
+
+    //Startet den MT5 mit den Brokerdaten
+    //print_r(startMT5WithBrokerData($mysqli, $server_id, $token));
+
+}
+

@@ -1,0 +1,150 @@
+<?
+include (__DIR__ . "/../login/config_main.inc.php");
+  
+include_once ('functions.inc');
+
+// if (!$_SESSION['SetYear'] != 'all' or $_SESSION['SetYear'] <= 2011)
+// $_SESSION['SetYear'] = date ( "Y" );
+
+if ($_COOKIE ["user_id"] && ! $_SESSION ['user_id']) {
+	$_SESSION ['user_id'] = $_COOKIE ["user_id"];
+}
+
+// echo "<p>Dauer: " . session_cache_expire() . "</p>\n";
+if (! isset ( $_SESSION ['user_id'] )) {
+	echo "<p>Dauer: " . session_cache_expire () . "</p>\n";
+	echo "Session ist abgelaufen, bitte erneut anmelden";
+	echo '<script language="javascript">window.top.location.href = "../ssi_dashboard/index.php?session_timeout=true";</script>';
+	exit ();
+}
+
+// Aktuelles Jahr
+$year = date ( 'Y' );
+
+if ($_SESSION ['user_id'] == '40') {
+//	$db_faktura = "ssi_faktura";
+	$db_faktura = $cfg_mysql ['db_faktura'];
+} else
+	$db_faktura = "ssi_faktura" . $_SESSION ['user_id'];
+
+$cfg_mysql ['db_faktura'] = 'ssi_faktura1287'; // Faktura
+
+// OEGT - Modus
+if ($_SESSION ['user_id'] == '94' and $_SESSION ['faktura_company_id'] == '30') {
+	$oegt_modus = true;
+}
+
+$GLOBALS ['mysqli']->select_db ( $db_faktura ) or die ( 'Could not select database ' . $db_faktura );
+
+// HACK - soll nur bei Server1 laufen
+if ($_SESSION ['user_id'] == '94' and $_SESSION ['faktura_company_id'] == '30') {
+	$GLOBALS ['mysqli']->set_charset ( 'utf8' );
+}
+
+if ($_SERVER ['SERVER_NAME'] == 'server1.ssi.at') {
+	$GLOBALS ['mysqli']->set_charset ( 'utf8' );
+}
+
+// Wenn noch keine Firma gewählt wurde die Defaultmässig eine gewählt
+if (! $_SESSION ['faktura_company_id']) {
+	$sql_company = $GLOBALS ['mysqli']->query ( "SELECT company_id, company_1 FROM company where user_id = '{$_SESSION['user_id']}'" ) or die ( mysqli_error ( $GLOBALS ['mysqli'] ) );
+	$array = mysqli_fetch_array ( $sql_company );
+	$_SESSION ['faktura_company_id'] = $array ['company_id'];
+}
+
+/**
+ * ARRAY - COMPANIES
+ */
+$sql_company = $GLOBALS ['mysqli']->query ( "SELECT company_id, company_1, grafic_head FROM company where user_id = '{$_SESSION['user_id']}'" ) or die ( mysqli_error ( $GLOBALS ['mysqli'] ) );
+while ( $sql_array = mysqli_fetch_array ( $sql_company ) ) {
+	$grafic_head = $sql_array ['grafic_head'];
+	$company_array [$sql_array ['company_id']] = $sql_array ['company_1']; // <img src='$grafic_head' class='ui mini image'>";
+}
+
+/**
+ * ARRAY - FORMAT
+ */
+$sql_query2 = $GLOBALS ['mysqli']->query ( "SELECT format FROM article_temp GROUP by format" ) or die ( mysqli_error ( $GLOBALS ['mysqli'] ) );
+while ( $sql_array2 = mysqli_fetch_array ( $sql_query2 ) ) {
+	$format_array [] = $sql_array2 ['format'];
+}
+
+/**
+ * ARRAY - ACCOUNTS
+ */
+$sql_query = $GLOBALS ['mysqli']->query ( "SELECT account_id, title, tax, company_id,
+	(SELECT company_1 FROM company where company.company_id = accounts.company_id ) company
+	FROM accounts WHERE `option` = 'in' order by accounts.company_id " ) or die ( mysqli_error ( $GLOBALS ['mysqli'] ) ); // and company_id = '{$_SESSION['faktura_company_id']}'
+while ( $sql_array = mysqli_fetch_array ( $sql_query ) ) {
+	// $account_array[$sql_array['account_id']] = "<div class='ui label mini'>" . $sql_array['company'] . "</div> " . $sql_array['title'] . "(" . $sql_array['tax'] . "%)";
+	$account_array [$sql_array ['account_id']] = $sql_array ['title'] . " (" . $sql_array ['tax'] . "%)";
+}
+
+/**
+ * Article - Group
+ */
+$query = $GLOBALS ['mysqli']->query ( "
+	SELECT article_group.group_id group_id,
+		(SELECT COUNT(article2group.group_id) FROM article2group WHERE article_group.group_id = article2group.group_id) count , title FROM 
+		article_group
+
+	" ) or die ( mysqli_error ( $GLOBALS ['mysqli'] ) );
+while ( $array = mysqli_fetch_array ( $query ) ) {
+	$group_array [$array ['group_id']] = $array ['title'] . " (" . $array ['count'] . ")";
+}
+
+/**
+ * ARRAY - YEAR
+ */
+// $array_year['DATE_FORMAT(date_create,"%Y") = "2017"'] = 'Alle Jahre';
+for($ii = date ( "Y", strtotime ( '+1 year' ) ); $ii > 2011; $ii --) {
+	$array_year ['DATE_FORMAT(date_create,"%Y") = "' . $ii . '"'] = $ii;
+}
+
+/**
+ * ARRAY - MONTH
+ */
+$array_filter_month = array ('DATE_FORMAT(date_create,"%m") = "01"' => 'Jänner','DATE_FORMAT(date_create,"%m") = "02"' => 'Februar','DATE_FORMAT(date_create,"%m") = "03"' => 'März','DATE_FORMAT(date_create,"%m") = "04"' => 'April','DATE_FORMAT(date_create,"%m") = "05"' => 'Mai',
+		'DATE_FORMAT(date_create,"%m") = "06"' => 'Juni','DATE_FORMAT(date_create,"%m") = "07"' => 'Juli','DATE_FORMAT(date_create,"%m") = "08"' => 'Ausgust','DATE_FORMAT(date_create,"%m") = "09"' => 'September','DATE_FORMAT(date_create,"%m") = "10"' => 'Oktober',
+		'DATE_FORMAT(date_create,"%m") = "11"' => 'November','DATE_FORMAT(date_create,"%m") = "12"' => 'Dezember' );
+
+/**
+ * ARRAY - Document-Status
+ */
+$document_array = array ('ang' => 'Angebot',
+		// 'ls' => 'Lieferschein' ,
+		'rn' => 'Rechnung' );
+
+$array_mwst = array ('0' => '0% Mwst.','10' => '10% Mwst.','20' => '20% Mwst.' );
+
+// JAHRES ZAHL - MYSQL - ADD
+if ($_SESSION ['SetYear'] == 'all' or ! $_SESSION ['SetYear'])
+	$add_mysql_filter_year = '';
+else
+	$add_mysql_filter_year = " AND DATE_FORMAT(date_create,'%Y') = '{$_SESSION['SetYear']}'";
+
+// CLIENT
+// NOCH einbauen and date_storno != '0000-00-00'
+// echo $mysql_list_filter;
+// $array_client = array (table => "client
+//                 LEFT JOIN bills ON client.client_id = bills.client_id
+//                 LEFT JOIN membership ON client.client_id = membership.client_id
+//                 LEFT JOIN sections ON client.client_id = sections.client_id",
+// 		table_main => 'client',
+// 		where => "client.company_id = '{$_SESSION['company_id']}' $mysql_list_filter",group => 'client.client_id',indexColumn => 'client.client_id',indexFieldId => 'client_id',
+
+// 		fields => "
+//                 client.client_number client_number,
+//                 abo, client.company_1 company_1,client.firstname firstname,client.secondname secondname,
+//                 IF ((SELECT COUNT(*) FROM membership WHERE DATE_FORMAT(date_membership_start,'%Y') <= $year AND (DATE_FORMAT(date_membership_stop,'%Y-%m-%d') >= NOW()  OR $
+//                 client.email email, newsletter,
+//                 client.zip zip, client.city city, client.birth birth, send_date, client.post post,
+//                 if (delivery_city != '', CONCAT (client.city,' <div class=set_tooltip title=\'',delivery_company1,'<br>',delivery_zip,' ',delivery_city,'\'>[Liefer]</div>'$
+//                 client.company_1, client.client_id, client.company_id,
+//                 ROUND((SELECT SUM(brutto) FROM bills WHERE bills.client_id = client.client_id AND date_storno = '0000-00-00'),2) brutto,
+//                 ROUND((SELECT SUM(booking_total) FROM bills WHERE bills.client_id = client.client_id AND date_storno = '0000-00-00'),2) booking_total,
+//                 ROUND((SELECT SUM(brutto ) - SUM( booking_total ) FROM bills WHERE bills.client_id = client.client_id AND date_storno = '0000-00-00'),2) amound_open,
+//                 if (client.tel, CONCAT('<button class=client_info title=\"Tel:',client.tel,'\">Info</button>'),'') info
+//                 " );
+
+?>

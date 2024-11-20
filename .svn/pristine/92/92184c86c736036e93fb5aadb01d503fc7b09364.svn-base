@@ -1,0 +1,37 @@
+<?php
+
+// AJAX Konfiguration für erfolgreiches Absenden des Formulars
+$arr['ajax'] = array(
+    'success' => "after_form_server(data)", // JavaScript-Funktion, die nach dem erfolgreichen Absenden aufgerufen wird
+    'dataType' => "html" // Erwarteter Datentyp der Antwort
+);
+
+// SQL-Abfrage (Beispiel, anpassen nach Bedarf)
+$arr['sql'] = array(
+    'query' => "SELECT * FROM ssi_trader.server WHERE server_id = '{$_POST['update_id']}'"
+);
+
+// Definition der Eingabefelder für das Server-Formular
+$arr['field']['url'] = array(
+    'tab' => '1',
+    'type' => 'input',
+    'label' => 'URL', // Eingabefeld für die Server-IP-Adresse
+    'focus' => true, // Fokus auf dieses Feld beim Laden des Formulars
+    'placeholder' => 'https://trade.example.com:443', // Platzhalter für das Eingabefeld
+    'required' => true // Feld ist Pflichtfeld
+);
+
+$arr['field']['name'] = array(
+    'tab' => '1',
+    'type' => 'input',
+    'label' => 'Server Name', // Eingabefeld für den Namen des Servers
+);
+
+$arr['field']['description'] = array(
+    'tab' => '1',
+    'type' => 'textarea', // Änderung zu 'textarea' für längere Beschreibungen
+    'label' => 'Description', // Eingabefeld für die Beschreibung des Servers
+);
+
+// JavaScript-Ressourcen für das Formular
+$add_js = "<script type=\"text/javascript\" src=\"js/form_server.js\"></script>";

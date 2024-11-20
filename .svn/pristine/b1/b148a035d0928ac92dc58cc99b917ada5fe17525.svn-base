@@ -1,0 +1,9 @@
+@CHARSET "UTF-8";
+
+img[style*="left"] {
+	margin: 0 10px 10px 0;
+}
+
+img[style*="right"] {
+	margin: 0 0 10px 10px;
+}

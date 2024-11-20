@@ -1,0 +1,11 @@
+$(function() {
+    $(".sortable-list, .sortable-structure").sortable({
+        connectWith: ".sortable-list, .sortable-structure", // Erlaube das Verschieben zwischen den beiden Bereichen
+        opacity: 0.6,
+        cursor: "grabbing",
+        revert: true,
+        delay: 100,
+        helper: "clone",
+        zIndex: 1000,
+    }).disableSelection(); // Verhindere Textauswahl während des Ziehens
+});

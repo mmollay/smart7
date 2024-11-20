@@ -1,0 +1,73 @@
+/**
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+ * For licensing, see https://ckeditor.com/legal/ckeditor-oss-license
+ */
+
+CKEDITOR.dtd.$removeEmpty['i'] = false;
+CKEDITOR.addCss( 'img[style*="left"] {margin:0 10px 10px 0;} img[style*="right"] {margin:0 0 10px 10px;' );
+
+CKEDITOR.editorConfig = function( config ) {
+	// Define changes to default configuration here. For example:
+	 config.language = 'de';
+	 //config.uiColor = '#DFFFD9';
+	 
+	 config.contentsCss  = 'body { padding: 10; margin:15px;  font-size: 14px; font-family: verdana; }'; //font-family: arial;
+	config.removeButtons = 'Blockquote,';
+	config.format_tags = 'p;h1;h2;h3;h4;pre';
+	config.scayt_sLang = 'de_DE';
+	config.resize_enabled =  false;
+	
+	config.extraPlugins = 'tableresize';
+	config.removePlugins = 'magicline,exportpdf'; //elementspath,
+	
+
+	config.toolbar  = [
+		{ name: 'clipboard', items: [ 'Sourcedialog','-', 'Undo', 'Redo' ] },
+		{ name: 'editing', items: [ 'Find', 'Replace', '-',  'Scayt' ] },
+		{ name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'CopyFormatting', 'RemoveFormat', 'SelectAll' ] },
+		{ name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+		{ name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
+		'/',
+		{ name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'EmojiPanel'] },
+		{ name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize','lineheight' ] },
+		{ name: 'colors', items: [ 'TextColor', 'BGColor' ] },
+		{ name: 'tools', items: [ 'Maximize', 'ShowBlocks' ] },
+		
+	];
+	
+	
+	config.toolbar_basic = [
+		{ name: 'clipboard', items: [ 'Sourcedialog','-', 'Undo', 'Redo' ] },
+		{ name: 'editing', items: [ 'Scayt' ] },
+		{ name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'CopyFormatting', 'RemoveFormat', 'SelectAll' ] },
+		{ name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+		{ name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
+		'/',
+		{ name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'EmojiPanel','SpecialChar' ] },
+		{ name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize','lineheight' ] },
+		{ name: 'colors', items: [ 'TextColor', 'BGColor' ] },
+		{ name: 'tools', items: [ 'Maximize', 'ShowBlocks' ] },
+	];
+	
+	
+	config.toolbar_simple =
+		[
+		    ['Sourcedialog'],
+		    ['TextColor','BGColor'],['RemoveFormat'],
+		    ['Bold','Italic','Underline'],
+		    ['JustifyLeft','JustifyCenter','JustifyRight'],
+		    ['Font','FontSize'],['Link','Unlink'],['HorizontalRule','CreateDiv']
+		];
+
+	config.toolbar_mini =
+		[
+		    ['Sourcedialog','RemoveFormat','CopyFormatting'],
+		    ['SpellChecker', 'Scayt'],
+		    ['Bold','Italic','Underline','Strike'],
+		    ['TextColor','BGColor','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','Format','FontSize'],
+		    ['Link','Unlink'],
+		    ['Image','HorizontalRule','Maximize']
+		];
+};
+
+

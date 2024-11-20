@@ -1,0 +1,16 @@
+<?php
+// FREE ICONS
+// http://www.flaticon.com/categories/business/
+session_start ();
+include_once ('functions.inc');
+include_once (__DIR__."/../login/config_main.inc.php");
+
+$module['ID'] = 'trader';
+$module['version'] = '0.0.2';
+$module['title'] = 'Trader';
+
+$cfg_mysql['user'] = 'smart';
+$cfg_mysql['password'] = 'Eiddswwenph21;';
+$cfg_mysql['server'] = 'localhost';
+$cfg_mysql['db'] = 'ssi_trader'; // Default db - SSI
+

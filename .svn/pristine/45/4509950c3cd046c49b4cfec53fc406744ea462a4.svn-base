@@ -1,0 +1,31 @@
+Version 0.3 (23.Feb.2024)
+- Server-liste in Funktionen erweitert (Auswahl: lotsize,broker,strategy)
+- Order-Liste mit Gruppierfunktion
+- Umstrukturierung des Menüs zur besseren Bedienung
+- Statgie-Liste und Formular erweitert
+
+
+Version 0.2 (21.Feb.2024)
+- Code cleaning
+- Neustrukturierung des Menüs
+- Neue Filter für Orders (Server und Datum)
+- Select bei Server der Hedging-Strategy
+- Anlegen einer Datenbank für Client für Finanzierung und Gewinnbeteiligung
+- Formular für Investement für den Clienten
+
+Version 0.1 (17.Feb.2024) 
+- Multi Serverusing
+- Client-Db (Edit and Del)
+- Importschnittstelle für Orders
+- Ausgabe der Orders mit Filterfunktion 
+- Aktuelle Anzeige des "Dax" auf der Startseite
+
+Version 0.0.8 (7.Feb.2024)
+- Hedging strategy clone button 
+
+Version 0.0.7 (6.Feb.2024) 
+- Ajax loading - ema strategy buttons
+
+Version 0.0.6 (1.Feb. 2024)
+- Basics are online now
+- auto reload for stock data every 60sec

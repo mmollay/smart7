@@ -1,0 +1,42 @@
+<?php
+function getBrokerUserByClientId($db, $clientId)
+{
+    // Überprüfen Sie zunächst, ob $clientId gültig ist
+    if (!isset ($clientId) || $clientId <= 0) {
+        return null; // Ungültige client_id
+    }
+
+    // SQL-Abfrage vorbereiten
+    $sql = "SELECT b.user FROM broker AS b 
+            INNER JOIN clients AS c ON b.broker_id = c.broker_id 
+            WHERE c.client_id = ?";
+
+    // Prepared Statement vorbereiten
+    if ($stmt = $db->prepare($sql)) {
+        // Parameter binden und SQL-Abfrage ausführen
+        $stmt->bind_param("i", $clientId);
+        $stmt->execute();
+
+        // Ergebnis abrufen
+        $result = $stmt->get_result();
+
+        if ($row = $result->fetch_assoc()) {
+            // Benutzername (user) auslesen
+            $user = $row['user'];
+
+            // Statement schließen
+            $stmt->close();
+
+            return $user;
+        } else {
+            // Statement schließen
+            $stmt->close();
+
+            // Kein Benutzer gefunden
+            return "Kein Broker-User für die gegebene client_id gefunden.";
+        }
+    } else {
+        // Fehler beim Vorbereiten des Statements
+        return "Fehler beim Vorbereiten der SQL-Abfrage.";
+    }
+}

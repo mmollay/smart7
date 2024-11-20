@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DAX Value Display</title>
+    <style>
+        #daxValue {
+            font-size: 24px;
+            margin: 20px;
+            font-family: Arial, sans-serif;
+            transition: color 0.5s ease-in-out, opacity 0.5s ease-in-out;
+            color: #000; /* Startfarbe */
+        }
+        .highlight {
+            color: #007bff; /* Highlight-Farbe */
+        }
+    </style>
+</head>
+<body>
+    <h2>Current DAX Value (GER30 ASK)</h2>
+    <div id="daxValue">Waiting for data...</div>
+    
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            var socket = new WebSocket('ws://85.215.176.20:6969/ws'); // Ensure this is the correct address
+            var daxValueDisplay = document.getElementById('daxValue');
+
+            function updateDaxValue(newValue) {
+                // Highlight-Effekt anwenden
+                daxValueDisplay.classList.add('highlight');
+                daxValueDisplay.style.opacity = '0';
+
+                setTimeout(() => {
+                    daxValueDisplay.textContent = `DAX ASK Value: ${newValue}`;
+                    daxValueDisplay.style.opacity = '1';
+                }, 250); // Wartezeit sollte kürzer als die CSS-Transition sein
+                
+                // Highlight nach einiger Zeit entfernen
+                setTimeout(() => {
+                    daxValueDisplay.classList.remove('highlight');
+                }, 2000); // Länger als die Transition, um den Effekt zu zeigen
+            }
+
+            socket.onopen = function(event) {
+                console.log('WebSocket connection established.');
+            };
+
+            socket.onmessage = function(event) {
+                try {
+                    const data = JSON.parse(event.data);
+                    if (data.SYMBOL === "GER30") {
+                        updateDaxValue(data.ASK);
+                    }
+                } catch (e) {
+                    console.error('Error parsing message:', e);
+                }
+            };
+
+            socket.onclose = function(event) {
+                console.log('WebSocket connection closed.');
+            };
+
+            socket.onerror = function(error) {
+                console.error('WebSocket error:', error);
+                daxValueDisplay.textContent = 'WebSocket error. Please check the console.';
+            };
+        });
+    </script>
+</body>
+</html>
