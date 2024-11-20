@@ -9,7 +9,7 @@
 //
 
 // Kamagne wird auf status = 3 = Senden gesetzt, wenn auto-campagne gestartet werden soll
-$GLOBALS['mysqli']->query("UPDATE session SET `release`=1, session.status = '3', datetime_start = NOW()  WHERE send_date < NOW() AND session.status = 2 AND send_auto = 1") or die (mysqli_error($GLOBALS['mysqli']));
+$GLOBALS['mysqli']->query("UPDATE session SET `release`=1, session.status = '3', datetime_start = NOW()  WHERE send_date < NOW() AND session.status = 2 AND send_auto = 1") or die(mysqli_error($GLOBALS['mysqli']));
 
 // $count_sent = "(SELECT COUNT(*) FROM logfile WHERE logfile.session_id = session.session_id AND (status='ok' OR status='sent' OR status='open' OR status='unsub' OR status='click') )";
 // $count_open = "(SELECT COUNT(*) FROM logfile WHERE logfile.session_id = session.session_id AND (status='open' OR status='click'))";
@@ -34,7 +34,7 @@ $count_mail = "COUNT(IF(contact.activate = 1,contact.activate,NULL))";
 // BUTTON zum versenden
 $sql_send_button = "CONCAT('<button class=\"ui small compact icon button green\" onclick=\"ReleaseNewsletter(',session.session_id,')\">','<i class=\"icon send\"></i> Jetzt versenden</button>')";
 
-$a_generate_send_user = "<a class=\'tooltip\' title=\'Schick an geöffnete User Mail\' href=# onclick=\"load_content_semantic(\'newsletter\',\'campagne\',\'\',{\'event\':\'send\',\'session_id\':\'',session.session_id,'\'})\">";
+$a_generate_send_user = "<a class=\'tooltip\' title=\'Schick an geöffnete User Mail\' href=# onclick=\"load_content_semantic(\'newsletter\',\'campagne\',\'\',{\'event\':\'sent\',\'session_id\':\'',session.session_id,'\'})\">";
 $a_generate_open_user = "<a class=\'tooltip\' title=\'Schick an geöffnete User Mail\' href=# onclick=\"load_content_semantic(\'newsletter\',\'campagne\',\'\',{\'event\':\'open\',\'session_id\':\'',session.session_id,'\'})\">";
 $a_generate_click_user = "<a class=\'tooltip\' title=\'Schick an geöffnete User Mail\' href=# onclick=\"load_content_semantic(\'newsletter\',\'campagne\',\'\',{\'event\':\'click\',\'session_id\':\'',session.session_id,'\'})\">";
 

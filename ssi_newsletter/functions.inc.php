@@ -108,14 +108,14 @@ function set_new_tag_from_session($session_id, $event)
 	}
 
 	// Contact den Tag zuweisen
-	echo "SELECT * FROM logfile WHERE session_id = '$session_id' and status = '$event' ";
+
 	$query = $GLOBALS['mysqli']->query("SELECT * FROM logfile WHERE session_id = '$session_id' and status = '$event' ");
 	while ($array = mysqli_fetch_array($query)) {
 		$contact_id = $array['client_id'];
-		echo $contact_id;
+
 		$GLOBALS['mysqli']->query("REPLACE INTO contact2tag SET tag_id = '$tag_id', contact_id = '$contact_id', activate = 1, verify_key='', set_listbuilding = 0 ") or die(msysql_error());
 	}
-	echo $tag_id;
+
 	return $tag_id;
 }
 
