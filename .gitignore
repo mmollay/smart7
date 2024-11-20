@@ -1,2 +1,10 @@
-*.log
-temp/
+cd /data/www/develop/smart7
+echo "webhook.php" >> .gitignore
+echo "webhook.log" >> .gitignore
+
+# Datei zu Git hinzufügen
+git add .gitignore
+git commit -m "Add webhook.php to gitignore"
+git push
+webhook.php
+webhook.log
