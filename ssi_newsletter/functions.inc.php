@@ -89,7 +89,7 @@ function email_split($str)
 function set_new_tag_from_session($session_id, $event)
 {
 
-	echo $event;
+
 	// Session-title abrufen
 	$query = $GLOBALS['mysqli']->query("SELECT title FROM session WHERE session_id = '$session_id' ");
 	$array = mysqli_fetch_array($query);
@@ -115,6 +115,7 @@ function set_new_tag_from_session($session_id, $event)
 
 		$GLOBALS['mysqli']->query("REPLACE INTO contact2tag SET tag_id = '$tag_id', contact_id = '$contact_id', activate = 1, verify_key='', set_listbuilding = 0 ") or die(msysql_error());
 	}
+	echo $tag_id;
 	return $tag_id;
 }
 
