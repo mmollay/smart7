@@ -1,1 +1,0 @@
-UPDATE tree_template SET group_id = (SELECT group_id FROM tree_group_lang WHERE tree_template.tree_group = tree_group_lang.matchcode LIMIT 1)

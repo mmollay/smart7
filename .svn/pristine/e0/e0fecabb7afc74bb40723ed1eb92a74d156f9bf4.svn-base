@@ -1,4 +1,0 @@
-@import "../../_variables/common";
-@import "../../_variables/default";
-@import "../../_partials/colorpicker";
-@import "default";
