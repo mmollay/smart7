@@ -88,6 +88,8 @@ function email_split($str)
 // Neuen Tag erstellen und die Session_ID + Event dem contact2tag zuweisen
 function set_new_tag_from_session($session_id, $event)
 {
+
+	echo $event;
 	// Session-title abrufen
 	$query = $GLOBALS['mysqli']->query("SELECT title FROM session WHERE session_id = '$session_id' ");
 	$array = mysqli_fetch_array($query);
