@@ -9,8 +9,6 @@
 require_once('../config.inc.php');
 include('../../ssi_smart/smart_form/include_form.php');
 
-echo $_POST['session_id'];
-echo $_POST['event'];
 if ($_POST['session_id'] && $_POST['event']) {
 	// Neuen Tag erzeugen, session+event einhängen und tag_id ausgeben
 	$tag_id = set_new_tag_from_session($_POST['session_id'], $_POST['event']);
