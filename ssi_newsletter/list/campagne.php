@@ -34,7 +34,7 @@ $count_mail = "COUNT(IF(contact.activate = 1,contact.activate,NULL))";
 // BUTTON zum versenden
 $sql_send_button = "CONCAT('<button class=\"ui small compact icon button green\" onclick=\"ReleaseNewsletter(',session.session_id,')\">','<i class=\"icon send\"></i> Jetzt versenden</button>')";
 
-$a_generate_send_user = "<a class=\'tooltip\' title=\'Schick an geöffnete User Mail\' href=# onclick=\"load_content_semantic(\'newsletter\',\'campagne\',\'\',{\'event\':\'sent\',\'session_id\':\'',session.session_id,'\'})\">";
+$a_generate_send_user = "<a class=\'tooltip\' title=\'Schick an Zugestellte aber noch nicht geöffnte User Mail\' href=# onclick=\"load_content_semantic(\'newsletter\',\'campagne\',\'\',{\'event\':\'sent\',\'session_id\':\'',session.session_id,'\'})\">";
 $a_generate_open_user = "<a class=\'tooltip\' title=\'Schick an geöffnete User Mail\' href=# onclick=\"load_content_semantic(\'newsletter\',\'campagne\',\'\',{\'event\':\'open\',\'session_id\':\'',session.session_id,'\'})\">";
 $a_generate_click_user = "<a class=\'tooltip\' title=\'Schick an geöffnete User Mail\' href=# onclick=\"load_content_semantic(\'newsletter\',\'campagne\',\'\',{\'event\':\'click\',\'session_id\':\'',session.session_id,'\'})\">";
 
